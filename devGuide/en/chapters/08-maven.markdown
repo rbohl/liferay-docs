@@ -1287,7 +1287,6 @@ But it's so hard to get out of this tiny chair. Someone save Lenore II!
 
 "Tell this soul with sorrow laden if, within the distant Aidenn,
 It shall clasp a sainted kitten whom the angels named Lenore II--"
-
 In memory of the late, now cripsy Lenore II, let's create a layout template
 plugin with Maven. 
 
