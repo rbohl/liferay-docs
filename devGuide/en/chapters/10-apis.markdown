@@ -10,7 +10,7 @@ Liferay comes with a host of APIs that provide powerful portal and portlet
 services. The following table shows you the entities for which services are
 available: 
 
-Portal Services      | Portlet Services              |
+Portal Services       | Portlet Services              |
 --------------------- | ----------------------------- |
  *User*               | *Documents and Media Library* |
  *Organization*       | *Blogs*                       |
@@ -27,7 +27,7 @@ gives you the flexibility to implement client code in Java or any language
 (even a scripting language such as PHP) that supports web service invocations.
 The APIs can be called from within portlet or non-portlet code. You can make
 calls to the APIs *locally* from within the portal or *remotely* outside of the
-portal's *Java virtual machine* (*JVM*).
+portal's *Java virtual machine (JVM)*.
 
 This chapter covers the following topics: 
 
@@ -49,13 +49,9 @@ This chapter covers the following topics:
 
 - Device Detection
 
-- LIferay's Deprecation Policy
+- Liferay's Deprecation Policy
 
 Before learning to invoke an API, you need to know where to find Liferay APIs. 
-
-<!--I know it's more than wordsmithing and formatting, but it seems important to
-elevate the Findining Services content since it's ncessary whether you'll
-invoke locally or remotely. Russ -->
 
 ## Finding Services 
 
@@ -77,16 +73,6 @@ the *Organization* services:
    package, since the services for the Organization entity belong to the
    *Portal* scope. 
 
-<!--I changed this based on navigating to the link specified and looking for the
-link. There was no Packages frame, but there was a Portal Services frame
-with the com.liferay.portal.service link Russ -->
-
-<!-- The Packages frame is the top left frame, but it's much easier to do it
-from the main frame, so I've left it. -Rich -->
-
-<!--Jim I left these comments in from me and Rich so you can see what I did and
-whether you think it's appropriate.-->
-
 3. Find and click on the `-ServiceUtil` class (in this case,
    `OrganizationLocalServiceUtil`) in the *Class Summary* table or the
 *Classes* list at the bottom of the page. 
@@ -107,8 +93,9 @@ Here's how you find services for a user's blogs statistics:
 [http://docs.liferay.com/portal/6.1/javadocs/](http://docs.liferay.com/portal/6.1/javadocs/)
 
 2. Under *Portlet Services*, click the link for the
-`com.liferay.portlet.blogs.service` package in the *Packages* frame, since the
-services are a part of the *blogs portlet*. 
+   `com.liferay.portlet.blogs.service` package, either in the *Packages* frame
+   or in the main part of the page, since the services are a part of the *blogs
+   portlet*. 
 
 3. Find and click on the `-ServiceUtil` class (in this case
 `BlogsStatsUserLocalServiceUtil`) in the *Class Summary* table or the *Classes*
@@ -387,8 +374,6 @@ Here's the WSDL Excerpt for the `addUserGroup` operation of `UserGroup`:
         <wsdl:input message="impl:addUserGroupRequest" name="addUserGroupRequest"/>
         <wsdl:outputMessage="impl:addUserGroupResponse" name="assUserGroupResponse"/>
     </wsdl:operation>
-
-<!--Jim, I removed the screenshot of this XML and just typed it out. Is it okay?-->
 
 To use the service, you pass in the WSDL URL along with your login credentials
 to the SOAP service locator for your service. We'll show you an example in the
@@ -944,12 +929,6 @@ to you annotate only those methods that you want exposed.
 Now only the `addFileEntry` method and any other method annotated with
 `@JSONWebService` will be part of the JSON Web Service API; all other methods
 of this service will be excluded from the API.
-
-<!-- Russ, while I love this pun, unfortunately for the survival of the
-statements about how easy it is to annotate, annotations are a standard Java
-thing that developers should know about before reading this. For that reason,
-it's neither a novel nor a new concept, and so I'm removing the statements about
-how easy it is. Maybe you can fit the pun in somewhere else? -->
 
 Next let's look at portal configuration options that apply to JSON Web Services. 
 
@@ -2033,9 +2012,8 @@ makes the most sense.
 
 The following table describes how we'll set things up: 
 
-| Destination |       |        |                                           |
-  Key         | Type  | Sender | Receivers                                 |
-------------- | ----- | ------ | ----------------------------------------- |
+| Destination Key | Type  | Sender | Receivers                                 |
+----------------- | ----- | ------ | ----------------------------------------- |
   `jungle/finance/purchase`          | synchronous | Procurement | Finance |
   `jungle/finance/purchase/response` | synchronous | Finance | Procurement |
   `jungle/legal/purchase`            | synchronous | Procurement | Legal   |
