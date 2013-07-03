@@ -1,4 +1,4 @@
-# Creating Liferay Layout Templates 
+# Creating Liferay Layout Templates
 
 By now, you've likely added portlets to a page by dragging them from the *Add*
 menu and dropping them into place. Are there times, though, when you find
@@ -21,7 +21,7 @@ templates:
 
 Let's create a custom layout template!
 
-## Creating a Layout Template 
+## Creating a Layout Template
 
 With the Plugins SDK you can deploy layout templates as plugins, and creating
 layout templates with Liferay Developer Studio is easier than ever. Let's call
@@ -59,7 +59,7 @@ the *create* script, followed by operating system-specific commands:
 Developer Studio's *New Project* wizard and the *create* scripts in terminal
 generate layout template projects in your Plugin SDK's `layouttpl` folder. 
 
-## Anatomy of a Layout Template Project 
+## Anatomy of a Layout Template Project
 
 Let's look at the directory structure of a layout template project and learn
 about its various files:  
@@ -83,7 +83,7 @@ and `.wap.tpl` file for each layout template in the `docroot/` folder. The
 Now that you're well-versed on the anatomy of a layout template, let's begin
 exploring layout template files. 
 
-### Layout template files 
+### Layout template files
 
 One or more layout template plugins can reside in a layout template project.
 Let's see what each of the template files does: 
@@ -101,7 +101,7 @@ Let's see what each of the template files does:
 
 Let's move on to Liferay configuration files.
 
-### Liferay configuration files  
+### Liferay configuration files
 
 In addition to the three template-specific files, a layout template project
 has two Liferay configuration files:
@@ -114,7 +114,7 @@ has two Liferay configuration files:
 Now that you're familiar with the layout template's files and directory
 structure, let's deploy a layout template on the server. 
 
-### Deploying Layout Templates 
+### Deploying Layout Templates
 
 If you've ever deployed a theme or portlet, you already know how to deploy
 layout templates! Use Developer Studio or the terminal to deploy your layout
@@ -140,7 +140,7 @@ Wait a minute! We can deploy the template, but we still haven't designed it.
 We'll need to add content to the TPL files that were generated when we created
 our layout template. 
 
-## Designing a layout template 
+## Designing a layout template
 
 Initially, the layout template's generated TPL files are empty, a fresh canvas
 on which you design layout templates. If this seems overwhelming, don't worry.
@@ -196,7 +196,7 @@ arranged and sized evenly.
 Now that we've generated some positive Feng Shui through the design of our
 layout, let's increase our control over the layout by embedding portlets. 
 
-## Embedding portlets in a layout template 
+## Embedding portlets in a layout template
 
 Are there portlets you need displayed in the same location on all pages using
 a particular layout template? Perhaps you want to prevent others from disrupting
@@ -291,7 +291,7 @@ See how simple it is to embed portlets in your pages?
 Wouldn't it be nice to have an organized reference of available layout template
 variables? You're in luck! We'll dive into available variables next!
 
-## Available variables 
+## Available variables
 
 A number of variables are available for you to use in your custom TPL files. For
 your convenience, we've listed all of them in the following table. 
@@ -318,7 +318,7 @@ your convenience, we've listed all of them in the following table.
 
 Now your layout template toolbox is complete. 
 
-## Summary  
+## Summary
 
 In this chapter we created layout templates, arranged their rows and columns,
 and embedded portlets in them. Congratulations on mastering the fundamentals of
