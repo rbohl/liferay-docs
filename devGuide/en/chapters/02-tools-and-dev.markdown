@@ -71,6 +71,9 @@ of Liferay's development tools), which comes with Liferay Portal Enterprise
 Edition, skip to the section titled *Testing/Launching Liferay Tomcat
 Server*--Liferay IDE comes preconfigured in Developer Studio. 
 
+<!-- Update section title Testing/Launching Liferay Tomcat
+Server to Testing/Launching Liferay Runtime Server - Jim -->
+
 ### Installing Liferay IDE 
 
 Liferay IDE is an extension of Eclipse IDE; before you install Liferay IDE,
@@ -231,7 +234,13 @@ your preferences--set one as the default SDK by checking its box in the list of
 
 Let's set up your Liferay Portal Tomcat runtime and server. 
 
-#### Liferay Portal Tomcat Runtime and Server Setup 
+#### Liferay Portal Runtime and Server Setup
+
+<!-- 
+Please explain that we're creating a Tomcat Runtime Server for demonstration
+purposes. 
+- Jim
+-->
 
 1.  In Eclipse, open the *Server Runtime Environments* dialog box--go to
     *Window* &rarr; *Preferences* &rarr; *Server* &rarr; *Runtime Environments*. 
@@ -265,7 +274,7 @@ Let's set up your Liferay Portal Tomcat runtime and server.
 
 Now your server is set up. Let's launch it and perform some tests! 
 
-### Testing and Launching Liferay Tomcat Server 
+### Testing and Launching Your Liferay Server 
 
 Once your Liferay Portal Server is set up, you can launch it from the servers
 tab in Eclipse. You have a few options for launching and stopping the server
@@ -301,6 +310,11 @@ social networking site for noses, *Nose-ster*? Well, the site's founder, Harry
 Schnozz, wants us to develop some plugins for him, so let's create an
 *event-listing-portlet* project to hold the site's portlet plugins. 
 
+<!-- For additional context, please borrow from service builder chapter
+description of event-listing-portlet project in the Configuring Service Builder
+and Defining Portlet Data section. - Jim
+-->
+
 Your Plugins SDK and portal server are configured in Liferay IDE--let's create
 a new Liferay plugin project in Liferay IDE. 
 
@@ -314,6 +328,47 @@ htis guide, and we'll call it *event-listing-portlet* in the *Project Name*
 field. It should have a *Display Name* of *Event Listing*. Click *Finish*. 
 
     ![Figure 2.5: Entering the information for the new project](../../images/ide-new-liferay-project.png)
+
+<!-- 
+Hold off on creating the Event Listing and Location Listing portlets until the
+section on creating plugins. For now we want to point out what the plugin
+project wizard creates.
+
+Please explain the purpose of the Project Name and Display Name. Also, please
+point out the Plugins SDK and Portal Runtime options. The IDE lists the Plugins
+SDK(s) and Server(s) that are currently configured (Either they came setup with
+Developer Studio and/or the reader set them up following the previous
+sections). The display name and the plugins SDK version affect the plugin
+package's name. This name is used as the app's name when you publish to
+Marketplace. The plugins SDK version is used in generating the Liferay version
+for which the application is intended. See the Marketplace chapter for
+background on this.   
+
+Instead of clicking Finish, have the reader click Next as we'll want them to
+select a portlet framework for the project. The framework he chooses is used
+in providing the default portlet type used in creating portlet plugins in the
+project. So please point out the portlet project options (MVC, Vaadin, JSF). And
+explain that we'll go into more details about them later in the next chapter on
+portlets.
+
+Please update the image so that the Next button is selected, so they select a
+default portlet framework. They should click finish after selecting the
+framework. 
+    
+Here's something you can start with as part of step 2:
+    
+    If you've selected Theme, Layout Template, Hook, or Ext as your plugin's
+    type, click Finish and Liferay IDE generates your project based on that
+    type. See chapters on the respective plugin types for information on
+    developing each plugin.  
+
+    But for demonstration purposes, we'll create a Portlet project that we'll
+    use as an example throughout this guide. 
+
+    (Explain the Nose-ster Event Listing portlet project. Explain that for now
+    we'll just create the project so we can highlight what the IDE does in
+    creating projects. We'll add portlets in the section on creating plugins.)
+-->
 
 Our *event-listing-portlet* plugin project should appear in the package
 explorer. Here's the project's directory structure: 
@@ -334,15 +389,30 @@ explorer. Here's the project's directory structure:
         - `icon.png`
         - `view.jsp`
 
+<!-- Inform the reader that the project is created to the Liferay Plugins SDK
+that he specified in the wizard. Explain that each project, regardless of type,
+is created with an Ant build file called `build.xml`. The build file provides
+the means to compile the project and deploy it to a Liferay Portal runtime
+server. Liferay IDE leverages the build file to perform these operations.
+
+Also draw their attention to the liferay-plugin-package.properties. This is
+created for all plugin projects, regardless of type. - Jim
+--> 
+        
 <!--I pulled the above structure from the portlets chapter. In IDE when I
 created the project though, there's also the docroot/WEB-INF/src folder and
 three libraries (is that the right word):JRE System Library, Liferay
 v6.2CE(Tomcat7), and Lifeay Portlet Plugin API. Should those be included here
-for completeness? I added docroot/WEB-INF/src already.-->
+for completeness? I added docroot/WEB-INF/src already. - Russ -->
+
+<!-- With regards to the project's file structure, no need to mention the JRE
+and Liferay v6.2CE Tomcat7. But, when you create the project you'll get a bunch
+of other files/folders. Please list all of them in this unordered list.
+- Jim --> 
 
 Now you need to deploy your new plugin project to your Liferay Server. 
 
-### Deploying New Liferay Projects to Liferay Server 
+### Deploying New Liferay Projects to a Liferay Server 
 
 You have a plugin project, but you need to deploy it onto your Liferay
 Server. Let's do it now: 
@@ -385,6 +455,27 @@ existing projects into Liferay IDE.
 Now your Liferay IDE contains a plugin project with the skeleton of the Event
 Listing portlet.  Along with the Event Listing portlet, let's create a Location
 Listing porlet inside the same project: 
+
+<!-- Mention the event-listing-portlet-project we created in the section on 
+creating new Liferay projects.
+
+Explain the purpose of the Event Listing and Location Listing portlets. You can
+move any helpful content from the Service Builder chapter on these portlets.
+(See Configuring Service Builder and Defining Portlet Data section) 
+
+Create the Event Listing portlet first and use it to point out all of the
+wizard's features and the end results it produces. The example portlets are
+required to have certain values; so we'll need to provide those values for the
+reader to enter. 
+
+See Chapter 4's Configuring Service Builder and Defining Portlet Data section.
+The section gives the wizard field values briskly, but comprehensively. Let's
+make sure the reader enters those values here too. Present them in a manner that
+seems best to you. 
+
+We can express to the reader that we'll go into more detail on the portlet
+fields in Chapter 3. - Jim -->
+-->
 
 1. Go to File &rarr; New  &rarr; Liferay Portlet. 
 
@@ -617,7 +708,7 @@ window; you can modify the targeted runtime in the *Project properties* &rarr;
 Let's verify the success of your imports and ensure that they're properly
 configured as Liferay IDE projects. 
 
-### Verifying That the Import Has Succeeded 
+### Verifying Successful Project Import 
 
 After importing projects into Liferay IDE, you'll want to verify that they
 imported successfully, and that they're properly configured as Liferay IDE
@@ -630,6 +721,11 @@ projects. Here's how you verify that your imports were successful:
 
 2.  Let's check the project's target runtime and facets to make sure it's
     configured as a *Liferay IDE* project:
+
+    <!--
+    Inform the user that he should configure it's runtime and facet if not
+    already configured - Jim
+    -->
 
     2.1. In the *Package Explorer*, right click *<project-name>* &rarr;
          *Properties* &rarr; *Targeted Runtimes*. 
@@ -840,6 +936,9 @@ Next let's talk about Liferay's Service Builder code generation tool,
 
 ### Using the Service Builder Graphical Editor 
 
+<!-- Please move this section just after Creating Plugins. It's an exciting
+feature that would dovetail nicely after creating your plugin. - Jim -->
+
 Service Builder is a model-based code generation tool that lets you define
 custom object models called entities. Service Builder reads the contents of a
 file you create called `service.xml` and automatically creates your
@@ -854,6 +953,20 @@ and your efforts will be duplicated with each application you write. Service
 Builder puts the generated code in a service `JAR` file inside of one plugin,
 but it can be easily shared among all portlets. 
 
+<!--
+Please describe Overview, Diagram, and Source modes of the graphical editor.
+
+Let's add a good svc builder screenshot maximizing stuff you can talk to.
+Here's one from Overview mode that shows entities and highlihghts the Build
+Services button (which I've highlighted in red). The image is at
+images/service-xml-entities-overivew.png
+
+Also, please include (if we can take another image, maybe at bottom of section),
+show Diagram mode - see images/service-builder-relate-entities.png
+
+-Jim
+-->
+
 In the Service Builder chapter of this guide we'll show you how two custom
 portlets, the Events Listing Portlet and the Location Listing Portlet, can be
 developed more efficiently and modularly by using Service Builder. We'll
@@ -863,11 +976,15 @@ tool. And if *code generator* is a bad word to you, let us assure you that
 Liferay always gives you full control over your code, even code generated by
 Serivce Builder. 
 
+<!-- Need to add a screenshot and talk to it. - Jim -->
+
 <!--Next we'll show you how to use Tag Libraery Snippets in Liferay IDE. -->
 
 <!--### Using Tag Library Snippets -->
 
 <!--Add content-->
+
+<!-- Missing transition -->
 
 ## Leveraging the Plugins SDK 
 
