@@ -1,12 +1,5 @@
 # Customizing and Extending Functionality with Hooks [](id=customize-and-extend-functionality-hooks-liferay-portal-6-2-dev-guide-en)
 
----
-
-![Note](../../images/tip-pen-paper.png) This chapter has not yet been updated to
-reflect the new features in Liferay 6.2. 
-
----
-
 Liferay Hooks are the best plugin for customizing Liferay's core features. If
 possible, use hooks whenever you need to override Liferay's core functionality.
 It's possible to use Ext plugins for many of the same tasks, but hooks are
@@ -532,8 +525,10 @@ Here's the current action in your portal's `struts-config.xml` file:
 1.  Navigate to your `example-hook/docroot/WEB-INF` folder and open
     `liferay-hook.xml`. 
 
-2.  Insert the following code before the closing `</hook>` tag:
+2.  Insert the following code between the `<hook>...</hook>` tags:
 
+		<portal-properties>portal.properties</portal-properties>
+		<custom-jsp-dir>/META-INF/custom_jsps</custom-jsp-dir>
         <struts-action>
             <struts-action-path>/portal/sample</struts-action-path>
             <struts-action-impl>
