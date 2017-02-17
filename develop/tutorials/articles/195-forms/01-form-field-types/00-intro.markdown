@@ -5,30 +5,22 @@ out-of-the-box. Most use cases will be met with one of the existing field types.
 
 ![Figure 1: The Forms application has useful out-of-the-box field types, but you can add your own if you need to.](../../../images/forms-field-types.png)
 
-If you're reading this, however, your use case probably wasn't met with the
-default field types. For example, perhaps you need a color picker field. You
-could create a select field that lists the color options, but some users don't
-know that *gamboge* is the color of spicy mustard (maybe a little darker), and
+If you're reading this, however, your use case probably goes beyond the default
+field types. For example, perhaps you need a color picker field. You could
+create a select field that lists the color options, but some users don't know
+that *gamboge* is the color of spicy mustard (maybe a little darker), and
 anyway, seeing colors is much more interesting than listing them. Another
 example is a dedicated *time* field. You can use a text field and add a tip to
 tell users something like *enter the time in the format `hour:minute`*, but some
-users will still enter something indecipherable, like *8:88*. Instead, add a
-*time* field to @product@'s Forms application. You can think of other uses where
-it's best to break free of the mold of existing field types and create your own
-that serve your needs best. Keep reading to find out how.
+users will still enter something indecipherable, like *8:88*. Instead, you can
+add a *time* field to @product@'s Forms application. You can think of other uses
+where it's best to break free of the mold of existing field types and create
+your own that serve your needs best. Keep reading to find out how.
 
-In these tutorials, learn to 
+In these tutorials, you'll learn to 
 
-- create a module that adds a *Time* form field type with a timepicker
+- create a module that adds a *Time* form field type with a time picker
 - learn to add custom configuration options to your field types (coming soon!)
-
-+$$$
-
-**Example project:** The source code for the example *time* project developed in
-these tutorials can be downloaded for your convenience. Click
-[here](https://dev.liferay.com/documents/10184/656312/Field+Type+Module+Source/de6203af-1bae-4c59-9f90-0ab5e58c5894) to begin downloading the source code zip file.
-
-$$$
 
 Before getting started, learn what @product@'s field types consist of. 
 
@@ -79,7 +71,7 @@ need to create:
     language, declares the namespace, and loads the template resources on
     activation of the Component. Extending the abstract class that implements
     the `DDMFormFieldRenderer` makes your work here easier.
-- `*DDMFormFieldType.java`: Define the form field type in the backend. If you
+- `*DDMFormFieldType.java`: Define the form field type in the back-end. If you
     extend the abstract class that implements the interface, you automatically
     include the default form configuration options for your form field type. In
     that case, override the interface's `getName` method and you're done. To see
@@ -97,9 +89,12 @@ need to create:
 out, according to the form fields tutorial planning section -->
 
 In addition to the Java classes, Soy templates, and JavaScript files, @product@
-applications contain a `bnd.bnd` file to manage the module's metadata, and a
+applications contain a `bnd.bnd` file to manage the module's metadata and a
 `build.gradle` file to manage its dependencies and build properties. This
 example follows those patterns.
+
+In the next article, you'll put these concepts to work and create a new form
+field type. 
 
 <!-- UPDATE WHEN TEMPLATE PROJECT IS PUBLISHED ON repository.liferay.com
 +$$$

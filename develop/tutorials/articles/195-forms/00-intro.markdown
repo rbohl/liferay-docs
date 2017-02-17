@@ -1,13 +1,13 @@
 # Liferay Forms [](id=liferay-forms)
 
 Many modern websites rely on forms for their functionality. Liferay's Forms
-application is maturing rapidly, offering [rich out-of-the-box
-functionality](/discover/portal/-/knowledge_base/7-0/collecting-information-from-users).
+application offers 
+[rich out-of-the-box functionality](/discover/portal/-/knowledge_base/7-0/collecting-information-from-users).
 Many use cases, from the simplest to the most complex, can be met using the
-Forms application as it is. However, why not make the application behave exactly
-as you'd like it to? Just because something is good, doesn't mean it's perfect
-for your specific use case. Liferay's Forms solution can be adapted to your
-specific needs. You can even develop forms using its API.
+Forms application as it is. Why not, however, make the application behave
+exactly as you want it to? Just because something is good, doesn't mean it's
+perfect for your specific use case. Liferay's Forms solution can be adapted to
+your specific needs. You can even develop forms using its API.
 
 In this section, learn to extend the Forms application's functionality and
 leverage its APIs.
@@ -21,3 +21,5 @@ leverage its APIs.
     - Create forms using annotations.
     - Create fields and reusable fieldsets using annotations.
     - Configure form rules using annotations.
+
+Read on to get started! 

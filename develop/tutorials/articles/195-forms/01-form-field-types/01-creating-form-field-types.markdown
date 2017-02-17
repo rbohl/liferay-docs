@@ -1,23 +1,32 @@
 # Creating Form Field Types [](id=creating-form-field-types)
 
 Liferay's Forms application does not contain a dedicated time field
-out-of-the-box. For ease of use and to ensure proper data is collected, develop
-a time field and learn how @product@'s field types work at the same time.
+out-of-the-box. For ease of use and to ensure proper data is collected, you can
+develop a time field and learn how @product@'s field types work at the same
+time.
 
 There are several steps involved in creating a form field type:
 
 1. Specify the OSGi metadata
-2. Configure your buildscript and dependencies
+2. Configure your build script and dependencies
 3. Create a `DDMFormFieldType` component
 4. Implement a `DDMFormFieldType`
 5. Render the field type
 
 Start by setting up the project's metadata.
 
++$$$
+
+**Example project:** The source code for the example *time* project developed in
+these tutorials can be downloaded for your convenience. Click
+[here](https://dev.liferay.com/documents/10184/656312/Field+Type+Module+Source/de6203af-1bae-4c59-9f90-0ab5e58c5894) to begin downloading the source code zip file.
+
+$$$
+
 ## Specifying OSGi Metadata [](id=specifying-osgi-metadata)
 
 First specify the necessary OSGi metadata in a `bnd.bnd` file (see
-[here](https://www.google.com/url?q=http://bnd.bndtools.org/chapters/800-headers.html&sa=D&ust=1484604445554000&usg=AFQjCNHA_3LxtNcRBblsT62vG5MoEvs6PQ)
+[here](http://bnd.bndtools.org/chapters/800-headers.html)
 for more information). Here's what it would look like for a module in a folder
 called `dynamic-data-mapping-type-time`:
 
@@ -27,7 +36,7 @@ called `dynamic-data-mapping-type-time`:
     Liferay-JS-Config: /META-INF/resources/config.js
     Web-ContextPath: /dynamic-data-mapping-type-time
 
-First name the bundle with a reader-friendly `Bundle-Name` and a unique
+Name the bundle with a reader-friendly `Bundle-Name` and a unique
 `Bundle-SymbolicName` (it's common to use the root package of your module's Java
 classes), then set the version. Point to the JavaScript configuration file
 (`config.js`) that defines JavaScript modules added by your module (you'll get
@@ -124,9 +133,9 @@ implementing the `DDMFormFieldType` service (`service=...`).
 : Integer that defines the field type's position in the *Choose a Field Type* dialog of the form builder.
 
 `ddm.form.field.type.icon`
-: The icon to be used for the field type. Choosing one of the [Lexicon
-Experience Language icons](http://liferay.github.io/lexicon/content/icons-lexicon/) makes your form
-field blends in with the existing form field types.
+: The icon to be used for the field type. Choosing one of the 
+[Lexicon Experience Language icons](http://liferay.github.io/lexicon/content/icons-lexicon/) makes your form
+field blend in with the existing form field types.
 
 `ddm.form.field.type.js.class.name`
 : The field type's JavaScript class name--the JavaScript file is used to define
@@ -167,7 +176,7 @@ type is rendered.
 
 ## Rendering Field Types [](id=rendering-field-types)
 
-Before you get to the frontend coding necessary to render your field type,
+Before you get to the front-end coding necessary to render your field type,
 there's another Component to define and a Java class to code.
 
 The Component only has one property, `ddm.form.field.type.name`, and then you
@@ -180,11 +189,11 @@ framework:
         service = DDMFormFieldRenderer.class
     )
 
-There's another abstract class to leverage, this time
+There's another abstract class to leverage; this time it's 
 `BaseDDMFormFieldRenderer`. It gives you a default implementation of the
 `render` method, the only required method for implementing the API. The form
 engine calls the render method for every form field type present in a form, and
-returns the plain HMTL of the rendered field type. The abstract implementation
+returns the plain HTML of the rendered field type. The abstract implementation
 also includes some utility methods. Here's what the time field's
 `DDMFormFieldRenderer` looks like:
 
@@ -302,6 +311,7 @@ There are three important things to do in the template:
 3.  Write the template logic (everything encapsulated by the
     `{template}...{/template}` block). In the above example the template does
     these things:
+
     - Checks whether to show the label of the field, and if so, adds it.
     - Checks if the field is required, and adds `icon-asterisk` if it is.
     - Checks if a tip is provided, and displays it.
@@ -370,10 +380,10 @@ you follow the conventions described above. In fact, if you use Blade CLI to
 generate a field type module, you won't need to modify anything in this file.
 So what is the `config.js` file for? It's a JavaScript file that defines the
 dependencies of the declared JavaScript components (`requires...`), and where
-the files are located (`path...`). The `config.js` is used by the Alloy loader
+the files are located (`path...`). The `config.js` is used by the AMD loader
 when it satisfies dependencies for each JavaScript component. For more
-information about the Alloy loader see the [tutorial on its
-usage](/developer/tutorials/-/knowledge_base/7-0/liferay-amd-module-loader).
+information about the AMD loader see the 
+[tutorial on its usage](/developer/tutorials/-/knowledge_base/7-0/liferay-amd-module-loader).
 
 [![Figure 1: Add your own form field types to the Forms application.](../../../images/forms-time-field-type.png)
 
@@ -384,7 +394,7 @@ course, that's not what you want! You need a time picker.
 ## Adding Behavior to the Field [](id=adding-behavior-to-the-field)
 
 If you want to do more than simply provide a text input field, define the
-behavior in the `time_field.js` file. To add an AlloyUI timepicker, first
+behavior in the `time_field.js` file. To add an AlloyUI time picker, first
 specify that your component requires the `aui-timepicker` in the `requires...`
 block: 
 
@@ -415,8 +425,7 @@ block:
 
 Invoke the original render method--it prints markup required by the Alloy time
 picker. Then instantiate the time picker, passing the field type input as a
-`trigger`. See the [Alloy documentation for more
-information](http://alloyui.com/tutorials/timepicker/). 
+`trigger`. See the [Alloy documentation for more information](http://alloyui.com/tutorials/timepicker/). 
 
 Now when the field is rendered, there's a real time picker.
 
@@ -425,5 +434,5 @@ Now when the field is rendered, there's a real time picker.
 
 Now you know how to create a new field type and define its behavior. Currently,
 the field type only contains the default settings it inherits from its
-superclasses. If that's not sufficinet, create additional settings for your
-field type. See the next tutorial (not yet written) to learn how.
+superclasses. If that's not sufficient, create additional settings for your
+field type. See the next tutorial to learn how.
