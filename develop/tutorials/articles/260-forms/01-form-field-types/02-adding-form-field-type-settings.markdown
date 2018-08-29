@@ -18,27 +18,28 @@ pick the mask you want.
 
 $$$
 
-To add settings to form field types, you'll use these steps:
+To add settings to form field types,
 
-- Write an interface that extends the default field type configuration,
-  `DefaultDDMFormFieldTypeSettings`.
-- Update the `*FormFieldRenderer` so it makes the new configuration options
-  available to the JavaScript component and/or the Soy template for rendering.
-- Update the JavaScript component (defined in `time_field.js` in our example) to
-  configure the new settings and their default values.
-- Update the Soy template to include any settings that need to be rendered
-  in a form (the placeholder, in our example).
+1.  Write an interface that extends the default field type configuration,
+    `DefaultDDMFormFieldTypeSettings`.
+2.  Update the `*FormFieldRenderer` so it makes the new configuration options
+    available to the JavaScript component and/or the Soy template for rendering.
+3.  Update the JavaScript component (defined in `time_field.js` in our example)
+    to configure the new settings and their default values.
+4.  Update the Soy template to include any settings that need to be rendered in
+    a form (the placeholder, in our example).
 
 Get started by crafting the interface that controls what settings your field
 has.
 
 ## Extending the Default Type Settings [](id=extending-the-default-type-settings)
 
-To add type settings, you need a `*TypeSettings` class that extends
+To add type settings, create a `*TypeSettings` class that extends
 `DefaultDDMFormFieldTypeSettings`. Since this example works with a Time field
 type, call it `TimeDDMFormFieldTypeSettings`.
 
-This class sets up the *Field Type* configuration form.
+This class uses `@DDMForm*` annotations to set up the *Field Type* configuration
+form.
 
 ![Figure 1: Like your custom field types, the text field type's settings are configured in a Java interface.](../../../images/forms-text-settings.png)
 
@@ -116,17 +117,17 @@ settings form. Note the list of settings present for each tab (each
 `@DDMFormLayoutPage`) above. If you need to make one of the default settings
 unusable in the settings form for your field type, configure a *hide rule* for
 the field. Form field rules are configured using the `@DDMFormRule`
-annotation. More information on configuring form rules will be written soon.
+annotation.
 
-Your interface is extending the `DefaultDDMFormFieldTypeSettings` class. That's
-why the default settings are available to use in the class annotation, without
-setting them up in the class, as was necessary for the mask and placeholder.
+The interface extends `DefaultDDMFormFieldTypeSettings`. That's why the default
+settings are available to use in the class annotation, without setting them up
+in the class, as was necessary for the mask and placeholder.
 
 +$$$
 
-**DDM Annotations:** The `@DDMForm` annotation on this class allows the form engine to
-convert the interface definition into a dynamic form. This makes it really
-intuitive to lay out your settings form. 
+**DDM Annotations:** The `@DDMForm` annotation on this class allows the form
+engine to convert the interface definition into a dynamic form. This makes it
+really intuitive to lay out your settings form. 
 
 For now, here are brief explanations for the annotations used in the above
 example:
@@ -145,8 +146,14 @@ Under `value`, specify any `@DDMFormLayoutPage`s that you want to use.
 `value`, where title is a String value that names the section of the form and
 value is one or more `@DDMFormLayoutRow`s.
 
-**Note:** The default title of the layout pages are `%basic` and `%properties` for all of
-@product@'s field types, but Forms allows it to be customized if it's desired. If you want to change the title of one of the layout pages, you just need to create a new key in the language resources files (`src/resources/content/Language_xx_XX.properties`) and replace the current title of a layout page by it. For example, consider you've created the key `advanced=Advanced` in the `src/resources/content/Language.properties` with its respective translations in the other language resources files, then you only need to change the `title` from `%basic` to `%advanced`.
+**Note:** The default title of the layout pages are `%basic` and `%properties`
+for all of @product@'s field types, but this is customizable. To change the
+title of one of the layout pages, create a new key in the language resources
+files (`src/resources/content/Language_xx_XX.properties`) and replace the
+current title of a layout page with it. For example, if you've created the key
+`advanced=Advanced` in the `src/resources/content/Language.properties` with its
+respective translations in the other language resources files, change the
+`title` from `%basic` to `%advanced`.
 
 `@DDMFormLayoutRow`
 : Use this to lay out the number of columns you want in the row. Most settings
@@ -169,9 +176,14 @@ class for your form field type.
 ## Updating the Renderer Class [](id=updating-the-renderer-class)
 
 To send the new configuration settings to the Soy template so they can be
-displayed to the end user, you need to create a new Java class which implements the interface `DDMFormFieldTemplateContextContributor` and modify the existent class `*DDMFormFieldRenderer`.
+displayed to the end user, create a new Java class that implements the
+`DDMFormFieldTemplateContextContributor` interface and modify
+`*DDMFormFieldRenderer`.
 
-The interface `DDMFormFieldTemplateContextContributor` only has one single method named `getParameters` that gets the new configuration settings, specific for a form field type, and sends for the resources which need them, like the Soy template. In order to get these settings, let's create the new class `TimeDDMFormFieldTemplateContextContributor`. First of all, create the OSGI component:
+`DDMFormFieldTemplateContextContributor` has one method, `getParameters`. It
+gets the field type's configuration settings, and the `*DDMFormFieldRenderer`
+makes them available to the rendering template. Create a new component class
+called `TimeDDMFormFieldTemplateContextContributor`:
 
     @Component(
         immediate = true,
@@ -181,18 +193,11 @@ The interface `DDMFormFieldTemplateContextContributor` only has one single metho
             TimeDDMFormFieldTemplateContextContributor.class
         }
     )
-
-Then, override the method `getParameters` and get the new configurations settings, `placeholder` and `mask`:
-
-    @Component(
-        immediate = true, property = "ddm.form.field.type.name=time",
-        service = {
-            DDMFormFieldTemplateContextContributor.class,
-            TimeDDMFormFieldTemplateContextContributor.class
-        }
-    )
     public class TimeDDMFormFieldTemplateContextContributor
         implements DDMFormFieldTemplateContextContributor {
+
+Override the `getParameters` method and get the new configurations settings,
+`placeholder` and `mask`:
 
         @Override
         public Map<String, Object> getParameters(
@@ -210,7 +215,8 @@ Then, override the method `getParameters` and get the new configurations setting
 
     }
 
-Now, it's time to pass the configuration settings to the template and you'll be able to do this task through the creation of the new method `populateOptionalContext` in `TimeDDMFormFieldRenderer`:
+Pass the configuration settings to the template by creating a new method in
+`TimeDDMFormFieldRenderer` called `populateOptionalContext`:
 
     @Override
 	protected void populateOptionalContext(
@@ -230,19 +236,22 @@ Now, it's time to pass the configuration settings to the template and you'll be 
 
 The `populateOptionalContext` method takes three parameters: The template
 object, the `DDMFormField`, and the `DDMFormFieldRenderingContext`. The
-`DDMFormField` represents the definition of the field type instance: you can
-use this object to access the configurations set for the field type (the mask
-and placeholder settings in our case). The `DDMFormFieldRenderingContext` object
+`DDMFormField` represents the definition of the field type instance: use this
+object to access the configurations set for the field type (the mask and
+placeholder settings in our case). The `DDMFormFieldRenderingContext` object
 contains extra information about the form such as the user's locale, the HTTP
-request and response objects, the portlet namespace, and more (all of
-its included properties can be found
+request and response objects, the portlet namespace, and more (all of its
+included properties can be found
 [here](https://docs.liferay.com/ce/apps/forms-and-workflow/latest/javadocs/com/liferay/dynamic/data/mapping/render/DDMFormFieldRenderingContext.html)).
 
-In addition, the above method uses an OSGI reference (`@Reference`) to access the `TimeDDMFormFieldTemplateContextContributor` and call its method `getParameters` to receive the specific configuration settings of the time field. Then, these settings are added into the template object.
+In addition, the above method uses an OSGI reference (`@Reference`) to access
+the `TimeDDMFormFieldTemplateContextContributor` and call its `getParameters`
+method to receive the specific configuration settings of the time field. Then,
+these settings are added into the template object.
 
 Now the JavaScript component and the Soy template can access the new settings.
-Next, update the JavaScript Component so it handles these properties and can
-use them, whether passing them to the template context (similar to the `*Renderer`,
+Next, update the JavaScript Component so it handles these properties and can use
+them, whether passing them to the template context (similar to the `*Renderer`,
 only this time for client-side rendering), or using them to configure the
 behavior of the JavaScript component itself.
 
@@ -251,11 +260,10 @@ behavior of the JavaScript component itself.
 **Note:** Remember that the Soy template can be used for server side or client
 side rendering. By defining the settings you're adding in both the Java Renderer
 and the JavaScript Renderer, you're allowing for the best possible user
-experience. For example, if a form builder is in the form builder, configuring a
-form field type, the configuration they enter can be directly passed to the
-template, and become visible in the UI, almost instantly. However, when the user
-clicks into a form field initially to begin editing, the rendering occurs from
-the server side.
+experience. For example, when in the Form Builder and configuring a form field
+type, the configuration can be directly passed to the template, and become
+visible in the UI, almost instantly. However, when the user clicks into a form
+field initially to begin editing, the rendering occurs from the server side.
 
 $$$
 
@@ -330,10 +338,11 @@ rendered in the form with the time field.
 After all that, adding the placeholder setting to your Soy template's logic is
 simple.
 
-The whole template is included below, but the only additions are in the list of parameters (adds the placeholder to the list of parameters--the `?` indicates that
-the placeholder is not required), and then in the `<input>` tag, where you use
-the parameter value to configure the placeholder HTML property with the proper
-value.
+The whole template is included below, but the only additions are in the list of
+parameters (adding the placeholder to the list of parameters--the `?` indicates
+that the placeholder is not required), and then in the `<input>` tag, where you
+use the parameter value to configure the placeholder HTML property with the
+proper value.
 
     {namespace DDMTime}
 

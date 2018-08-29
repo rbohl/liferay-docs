@@ -90,8 +90,8 @@ add this to your `build.gradle` file:
         }
     }
 
-It's all boilerplate and can be copied directly into your module's `build.gradle` if you follow the
-conventions presented here. 
+It's all boilerplate and can be copied directly into your module's
+`build.gradle` if you follow the conventions presented here. 
 
 Next craft the OSGi Component that marks your class as an implementation of
 `DDMFormFieldType`. 
@@ -121,15 +121,17 @@ implementing the `DDMFormFieldType` service (`service=...`).
 `DDMFormFieldType` Components can have several properties:
 
 `ddm.form.field.type.description`
-: It's an optional property which describes the field type. Its localized value appears in the sidebar of the form builder, just below the `ddm.form.field.type.label`.
+: An optional property containing a description of the field type. Its localized
+value appears in the sidebar of the form builder, just below the
+`ddm.form.field.type.label`.
 
 `ddm.form.field.type.display.order`
-: Integer that defines the field type's position in the sidebar.
+: An integer that defines the field type's position in the sidebar.
 
 `ddm.form.field.type.icon`
 : The icon to be used for the field type. Choosing one of the 
-[Lexicon icons](https://lexicondesign.io/docs/patterns/icons.html) makes your form
-field blends in with the existing form field types.
+[Lexicon icons](https://lexicondesign.io/docs/patterns/icons.html) 
+makes your form field blend in with the existing form field types.
 
 `ddm.form.field.type.js.class.name`
 : The field type's JavaScript class name--the JavaScript file is used to define
@@ -219,8 +221,8 @@ also includes some utility methods. Here's what the time field's
     }
 
 Here you're setting the templating language (Soy closure templates), the
-template namespace (`DDMTime`) and name (`render`), and pointing to the location of the templates
-within your module (`/META-INF/resource/time.soy`).
+template namespace (`DDMTime`) and name (`render`), and pointing to the location
+of the templates within your module (`/META-INF/resource/time.soy`).
 
 +$$$
 
@@ -313,7 +315,10 @@ There are four important things to do in the template:
 
         {namespace DDMTime}
 
-2.  Set the template that will be called to render the time field. The `variant="'time'"` identifies the time field and the `.render` names the template in charge to render it. The template comes just below this part and is defined through the block `{template .render}...{/template}`.
+2.  Set the template that's called to render the time field. The
+    `variant="'time'"` identifies the time field and `.render` names the
+    template used to render it. The `.render` template is defined just below, in
+    the `{template .render}...{/template}` block.
 
         /**
         * Defines the delegated template for the time field.
@@ -324,9 +329,9 @@ There are four important things to do in the template:
 
 3.  Describe the template parameters. The template above uses some of the
     parameters as flags to display or hide some parts of the HTML (for example,
-    the `$required` parameter). All listed parameters are available by default.
-    <!-- A figure with a screenshot of the time configuration sidebar or one of
-    the default field config sidebars would be helpful-->
+    the `$required` parameter). All parameters listed here are available by
+    default.  <!-- A figure with a screenshot of the time configuration sidebar
+    or one of the default field config sidebars would be helpful-->
 
         {@param name: string}
         {@param pathThemeImages: string}
@@ -413,13 +418,14 @@ All that's left to do is create the `config.js` file:
     })();
 
 This file is entirely boilerplate, and you'll never need anything different if
-you follow the conventions described above. In fact, if you use Blade CLI to
-generate a field type module, you will get this file ready to use. So what is the `config.js` file for? It's a JavaScript file that defines the
-dependencies of the declared JavaScript components (`requires...`), and where
-the files are located (`path...`). The `config.js` is used by the Alloy loader
-when it satisfies dependencies for each JavaScript component. For more
-information about the Alloy loader see the [tutorial on its
-usage](/develop/tutorials/-/knowledge_base/7-0/liferay-amd-module-loader).
+you follow the conventions described above. In fact, if you use Blade CLI or
+Liferay Developer Studio to generate a field type module, you'll automatically
+get this file ready to use. So what is the `config.js` file for? It's a
+JavaScript file that defines the dependencies of the declared JavaScript
+components (`requires...`), and where the files are located (`path...`). The
+`config.js` is used by the Alloy loader when it satisfies dependencies for each
+JavaScript component. For more information about loading AMD modules, see the
+[tutorial](/develop/tutorials/-/knowledge_base/7-1/loading-amd-modules-in-liferay).
 
 ![Figure 1: Add your own form field types to the Forms application.](../../../images/forms-time-field-type.png)
 
@@ -470,8 +476,8 @@ Since you're now changing the default rendering of the field, overwrite the base
 
 Invoke the original render method--it prints markup required by the Alloy time
 picker. Then instantiate the time picker, passing the field type input as a
-`trigger`. In addition, add a callback method (`afterSelectionChange`) to be executed `after` the time is chosen in the time picker. This method is resposible for update the field's value. See the [Alloy documentation for more
-information](http://alloyui.com/tutorials/timepicker/). 
+`trigger`. In addition, add a callback method (`afterSelectionChange`) to be executed `after` the time is chosen in the time picker. This method is resposible for update the field's value. See the 
+[Alloy documentation for more information](http://alloyui.com/tutorials/timepicker/). 
 
 Now when the field is rendered, there's a real time picker.
 
