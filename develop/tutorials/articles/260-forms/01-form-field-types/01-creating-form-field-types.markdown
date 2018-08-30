@@ -104,7 +104,7 @@ If you're creating a *Time* field type, define the Component at the top of your
     @Component(
       immediate = true,
       property = {
-        "ddm.form.field.type.description=time-field-type-description",
+        "ddm.form.field.type.description=time-form-field-type-description",
         "ddm.form.field.type.display.order:Integer=10",
         "ddm.form.field.type.icon=time",
         "ddm.form.field.type.js.class.name=Liferay.DDM.Field.Time",
@@ -424,7 +424,7 @@ get this file ready to use. So what is the `config.js` file for? It's a
 JavaScript file that defines the dependencies of the declared JavaScript
 components (`requires...`), and where the files are located (`path...`). The
 `config.js` is used by the Alloy loader when it satisfies dependencies for each
-JavaScript component. For more information about loading AMD modules, see the
+JavaScript component. For more information about loading AMD modules, see the 
 [tutorial](/develop/tutorials/-/knowledge_base/7-1/loading-amd-modules-in-liferay).
 
 ![Figure 1: Add your own form field types to the Forms application.](../../../images/forms-time-field-type.png)
@@ -444,7 +444,9 @@ block of the `time_field.js` and `config.js`:
         requires: ['aui-timepicker','liferay-ddm-form-renderer-field']
     }
 
-Since you're now changing the default rendering of the field, overwrite the base `render` logic, instantiate the time picker and add the chosen time to the field. This occurs in the `prototype` block:
+Since you're now changing the default rendering of the field, overwrite the base
+`render` logic, instantiate the time picker and add the chosen time to the
+field. This occurs in the `prototype` block:
 
     prototype: {
         render: function() {
@@ -476,8 +478,10 @@ Since you're now changing the default rendering of the field, overwrite the base
 
 Invoke the original render method--it prints markup required by the Alloy time
 picker. Then instantiate the time picker, passing the field type input as a
-`trigger`. In addition, add a callback method (`afterSelectionChange`) to be executed `after` the time is chosen in the time picker. This method is resposible for update the field's value. See the 
-[Alloy documentation for more information](http://alloyui.com/tutorials/timepicker/). 
+`trigger`. In addition, add a callback method (`afterSelectionChange`) to be
+executed `after` the time is chosen in the time picker. This method is
+resposible for update the field's value. See the [Alloy documentation for more
+information](http://alloyui.com/tutorials/timepicker/). 
 
 Now when the field is rendered, there's a real time picker.
 

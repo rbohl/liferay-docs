@@ -24,8 +24,6 @@ In these tutorials, learn to
 
 +$$$
 
-<!-- TODO: Update the example project code to be compatible with Liferay 7.1. -->
-
 **Example project:** The source code for the example *time* project developed in
 these tutorials can be downloaded for your convenience. Click
 [here](https://dev.liferay.com/documents/10184/656312/Field+Type+Module+Source/de6203af-1bae-4c59-9f90-0ab5e58c5894) to begin downloading the source code zip file.
@@ -72,8 +70,8 @@ The `dynamic-data-mapping-type-*` modules in @product@'s source code are good te
 Custom field type modules are nearly identical in structure to those included in
 @product@, as presented above. You won't need a `*TemplateContextContributor` or
 `*TypeSettings` class in your initial module (see the tutorial on adding
-settings to your form field types to learn more about `*TypeSettings`). These
-are the Java classes and resources you'll need to create:
+settings to your form field types to learn more about these classes). These are
+the Java classes and resources you'll need to create:
 
 - `*DDMFormFieldRenderer.java`: Controls the rendering of the template. Sets the
     language, declares the namespace, and loads the template resources on
