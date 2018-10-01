@@ -2,8 +2,8 @@
 
 Once you develop a 
 [Form Field Type](/develop/tutorials/-/knowledge_base/7-1/creating-form-field-types), 
-you might need to add settings to it. For example, your time field might need to
-be configured to accept different time formats. Here you'll learn how to add
+you might need to add settings to it. For example, a Time field could be
+configured to accept different time formats. Here you'll learn how to add
 settings to form field types by adding a *mask* and a *placeholder* to the Time
 field type created in the previous tutorial. 
 
@@ -11,10 +11,11 @@ field type created in the previous tutorial.
 
 **Note:** 
 To learn more about using masks with the AUI Timepicker, go
-[here](http://alloyui.com/tutorials/timepicker/). The mask just sets the format
-the timepicker uses to display the time choices. Use the [strftime
-format](http://pubs.opengroup.org/onlinepubs/007908799/xsh/strftime.html) to
-pick the mask you want.
+[here](http://alloyui.com/tutorials/timepicker/). 
+The mask just sets the format the timepicker uses to display the time choices.
+Use the 
+[strftime format](http://pubs.opengroup.org/onlinepubs/007908799/xsh/strftime.html) 
+to pick the mask you want.
 
 $$$
 
@@ -22,10 +23,13 @@ To add settings to form field types,
 
 1.  Write an interface that extends the default field type configuration,
     `DefaultDDMFormFieldTypeSettings`.
+
 2.  Update the `*FormFieldRenderer` so it makes the new configuration options
     available to the JavaScript component and/or the Soy template for rendering.
+
 3.  Update the JavaScript component (defined in `time_field.js` in our example)
     to configure the new settings and their default values.
+
 4.  Update the Soy template to include any settings that need to be rendered in
     a form (the placeholder, in our example).
 
@@ -38,22 +42,10 @@ To add type settings, create a `*TypeSettings` class that extends
 `DefaultDDMFormFieldTypeSettings`. Since this example works with a Time field
 type, call it `TimeDDMFormFieldTypeSettings`.
 
-This class uses `@DDMForm*` annotations to set up the *Field Type* configuration
-form.
-
 ![Figure 1: Like your custom field types, the text field type's settings are configured in a Java interface.](../../../images/forms-text-settings.png)
 
-Here's what it looks like:
-
-    package com.liferay.dynamic.data.mapping.type.time;
-
-    import com.liferay.dynamic.data.mapping.annotations.DDMForm;
-    import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
-    import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
-    import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
-    import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
-    import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
-    import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
+The class uses `@DDMForm*` annotations to set up the *Field Type* configuration
+form.
 
     @DDMForm
     @DDMFormLayout(
@@ -104,8 +96,7 @@ Here's what it looks like:
         
     }
 
-Would you look at that! Most of the work you need to do is in the class's
-annotations. 
+Look at that! Most of the real work is done in the class annotations. 
 
 In this class you're setting up a dynamic form with all the settings your form
 field type needs. The form layout presented here gives your form the
@@ -125,7 +116,7 @@ in the class, as was necessary for the mask and placeholder.
 
 +$$$
 
-**DDM Annotations:** The `@DDMForm` annotation on this class allows the form
+**DDM Annotations:** The `@DDMForm` class annotation tells the form
 engine to convert the interface definition into a dynamic form. This makes it
 really intuitive to lay out your settings form. 
 
@@ -335,11 +326,10 @@ rendered in the form with the time field.
 
 ## Updating the Soy Template [](id=updating-the-soy-template)
 
-After all that, adding the placeholder setting to your Soy template's logic is
-simple.
+Add the placeholder setting to your Soy template's logic.
 
 The whole template is included below, but the only additions are in the list of
-parameters (adding the placeholder to the list of parameters--the `?` indicates
+parameters (adding the placeholder to the list of parameters---the `?` indicates
 that the placeholder is not required), and then in the `<input>` tag, where you
 use the parameter value to configure the placeholder HTML property with the
 proper value.
