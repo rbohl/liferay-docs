@@ -1,20 +1,18 @@
 # Indexing Framework
 
-Each asset in @product@ must be indexed in the search engine. The indexing code
-is specific to each asset, as the asset's developers know what fields to index
-and what filters to apply to the search query.
+Unless you're searching for model entities using database queries (not
+recommended in most cases), each asset in @product@ must be indexed in the
+search engine. The indexing code is specific to each asset, as the asset's
+developers know what fields to index and what filters to apply to the search
+query.
 
 In past versions of @product@, when your asset required indexing, you would
 implement a new Indexer by extending
-`com.liferay.portal.kernel.search.BaseIndexer<T>`. However, in @product-ver@, 
-
-For more information, consult the Javadocs for
-`com.liferay.portal.kernel.search.Indexer<T>` and
-`com.liferay.portal.kernel.search.BaseIndexer<T>`:
-[@platform-ref@/7.0-latest/javadocs](@platform-ref@/7.0-latest/javadocs)
-
-To enable search behavior and to make your custom entities into Assets, the
-entities must be indexed in the search engine.
+`com.liferay.portal.kernel.search.BaseIndexer<T>`. However, in @product-ver@ is
+a new pattern that relies on 
+[composition instead of inheritance](https://stackoverflow.com/questions/2399544/difference-between-inheritance-and-composition). 
+If you want to use the old approach, feel free to extend `BaseIndexer`. It's
+still supported. 
 
 ## Search and Indexing Overview
 
@@ -49,8 +47,7 @@ the _name_ field. During the cycle's Indexing step, you prepare the model entity
 to be searchable by defining the model's fields that are sent to the search
 engine, later used during a search.
 
-**To influence the way model entity fields are indexed in search engine
-documents,**
+**To control how model entity fields are indexed in search engine documents,**
 
 [`ModelDocumentContributor`](https://github.com/liferay/liferay-portal/blob/7.1.1-ga2/modules/apps/portal-search/portal-search-spi/src/main/java/com/liferay/portal/search/spi/model/index/contributor/ModelDocumentContributor.java) 
 classes specify which database fields are indexed in the model entity's search
@@ -78,7 +75,7 @@ keywords are processed by the back-end search infrastructure, transformed into a
 *query* the search engine can understand, and used to match against each search
 document's fields.
 
-**To exert control over the way your model entity documents are searched,**
+**To control the way model entity documents are searched,**
 
 [`KeywordQueryContributor`](https://github.com/liferay/liferay-portal/blob/7.1.1-ga2/modules/apps/portal-search/portal-search-spi/src/main/java/com/liferay/portal/search/spi/model/query/contributor/KeywordQueryContributor.java) 
 classes contribute clauses to the ongoing search query. This is called at search
@@ -101,7 +98,7 @@ section on workflow-enabling Guestbooks.
 When a model entity's indexed search document is obtained during a search
 request, it's converted into a summary of the model entity.
 
-**To influence the result summaries for your model entity documents,**
+**To control the result summaries for model entity documents,**
 
 [`ModelSummaryContributor`](https://github.com/liferay/liferay-portal/blob/7.1.1-ga2/modules/apps/portal-search/portal-search-spi/src/main/java/com/liferay/portal/search/spi/model/result/contributor/ModelSummaryContributor.java) 
 classes get the `Summary` object created for each search document, so you can
@@ -119,7 +116,7 @@ the search framework.
 
 ### Search Service Registration
 
-To register the model entity with Liferay's search framework,
+**To register model entities with Liferay's search framework,**
 
 `SearchRegistrar`s use the 
 [search framework's registry](https://github.com/liferay/liferay-portal/tree/7.1.1-ga2/modules/apps/portal-search/portal-search-spi/src/main/java/com/liferay/portal/search/spi/model/registrar) 
@@ -161,7 +158,7 @@ accomplished in `BaseIndexer`'s `getBaseModelDocument`. Now you implement an
 [`DLFileEntryExpandoBridgeRetriever`](https://github.com/liferay/liferay-portal/blob/7.1.1-ga2/modules/apps/document-library/document-library-service/src/main/java/com/liferay/document/library/internal/search/DLFileEntryExpandoBridgeRetriever.java)
 for an example implementation.
 
-## Indexing Permissions
+## Permissions Aware Searching and Indexing
 
 In previous versions of @product@, search was only _permissions
 aware_ (indexed with the entity's permissions and searched with those
