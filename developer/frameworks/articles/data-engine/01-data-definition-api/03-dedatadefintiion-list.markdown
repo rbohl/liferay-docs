@@ -1,12 +1,13 @@
 # Listing Data Definitions
 
-There's an API for retrieving a `List` collection of `DEDataDefinition` objects.
+To demonstrate the use of the Data Definitions API, consider the operation for
+getting a `List` of `DEDataDefinition` objects.
 
-The API for listing Data Definitions does not support filtering. To get an
-unfiltered list of all the `DEDataDefinition`s in the database, first build a
-`DEDataDefionitionRequest` that includes the `CompanyId` and `GroupId`
-(pagination start and end parameters are optional), and then pass the request to
-the `DEDataDefinitionService`'s `execute` method.
+The API for listing Data Definitions does not support filtering (use the search
+operation for that). To get an unfiltered list of all the `DEDataDefinition`s
+in the database, first build a `DEDataDefionitionRequest` that includes the
+`CompanyId` and `GroupId` (pagination start and end parameters are optional),
+and then pass the request to the `DEDataDefinitionService`'s `execute` method.
 
 1. Create a `DEDataDefinitionListRequest`, with or without pagination start and
    end parameters. 

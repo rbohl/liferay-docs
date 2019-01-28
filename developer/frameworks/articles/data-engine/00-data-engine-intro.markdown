@@ -4,12 +4,10 @@ Past versions of @product@ included a robust framework for creating form and
 list-based applications, either programmatically or from the Dynamic Data Lists
 Application. While Dynamic Data Lists continue to exist, a new framework was
 written to be based on the Forms Application's backend. ????? SAY WHY ?????. In
-@product-ver@, only the backend APIs are available for developers
+@product-ver@, only the backend APIs are available for developers.
 
-As part of the rewrite of the Dynamic Data List framework, there are new names
-and new APIs to leverage in your own code. The Data Engine framework has three
-fundamental entities. You'll be familiar with these entities if you used the
-Dynamic Data List framework in the past.
+The Data Engine framework has three fundamental entities. You'll be familiar
+with these entities if you used the Dynamic Data List framework in the past.
 
 1.  Data Definitions
 2.  Data Record Collections
@@ -40,9 +38,9 @@ Collection.
 
 There's another important piece to the Data Engine framework: displays.
 
-Once you have a Data Definition and a Data Collection, it's common to need
-control over display. Do this with FreeMarker templates, like in the Dynamic
-Data Lists application.
+NOT WITH TEMPLATES. TALK TO JEYVISON. Once you have a Data Definition and a Data
+Collection, it's common to need control over display. Do this with FreeMarker
+templates, like in the Dynamic Data Lists application.
 
 
 
