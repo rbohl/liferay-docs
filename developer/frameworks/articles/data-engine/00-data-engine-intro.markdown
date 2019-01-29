@@ -20,7 +20,7 @@ boolean, date, radio buttons, selector menus, etc.) and those fields' labels and
 settings. Data definitions effectively serve as data models for a Data
 Collection. For example, you could create a data definition with two text
 fields: one for a user's name, and one for their comments. You could then
-display a form that gathers user feedback via a dynamic data list that uses that
+display a form that gathers user feedback via a data record collection that uses that
 data definition. 
 
 ## Data Record Collections
