@@ -9,7 +9,7 @@ The Data Definitions API allows the following operations:
 - Counting the Searched Data Definitions
 - Saving Data Definitions
 - Deleting Data Definitions
-<!--Defining Permissions on Data Definitions-->
+- Defining Permissions on Data Definitions
 
 To call the `DEDataDefinition` operations in your own code, use these general
 steps:
