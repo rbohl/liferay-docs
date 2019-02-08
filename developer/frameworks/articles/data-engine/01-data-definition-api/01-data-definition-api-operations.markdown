@@ -6,9 +6,11 @@ have optional parameters, which will change the nature of the operation's
 outcome if included. 
 
 Some operations even have additional methods that can be called while the
-request is being constructed. These are referred to as _Optional <!--are they
-optional though?--> builder methods_ in this article, because they are methods
-you can call while building the request. Perhaps the most complex 
+request is being constructed. These are referred to as _optional builder
+methods_ in this article, because they are methods you can call while building
+the request. Perhaps the most complex request you can build is for defining
+permissions on a Data Definition. This example gives Site Member Users
+permission to update, delete, and view a particular Data Definition:
 
     DEDataDefinitionSaveModelPermissionsRequest deDataDefinitionSaveModelPermissionsRequest =
             DEDataDefinitionRequestBuilder.saveModelPermissionsBuilder(
@@ -16,16 +18,24 @@ you can call while building the request. Perhaps the most complex
                 deDataDefinition.getDEDataDefinitionId(), new String[] {"Site Member"}
                 ).allowUpdate().allowView().allowDelete().build();
 
+For a request that can contain optional builder methods, if no optional builder
+methods are called when building the request, nothing at all happens. No
+exceptions are thrown because these are optional, but nothing useful happens in
+the system either. Make sure that you build the request properly to return the
+proper response.
+
 ## Getting a List of Data Definitions
 
 To get a `List` of `DEDataDefinition`s, pass a `DEDataDefinitionListRequest` to
 `DEDataDefinitionService.execute()`.
 
 Required parameters: 
+
 - `long companyId`
 - `long groupId`
 
 Optional parameters:
+
 - `int start`
 - `int end`
 
@@ -46,6 +56,7 @@ system, pass a `DEDataDefinitionCountRequest` to
 `DEDataDefinitionService.execute()`.
 
 Required parameters: 
+
 - `long companyId`
 - `long groupId`
 
@@ -58,18 +69,20 @@ matching the specified `keywords`, pass a `DEDataDefinitionSearchRequest` to
 `DEDataDefinitionService.execute()`.
 
 Required parameters: 
+
 - `long companyId`
 - `long groupId`
 - `String keywords`
 
 Optional parameters:
+
 - `int start`
 - `int end`
 
 When a data definition is created, it includes a name and description field. The
 search operation returns any data definition with at least one of the keywords
-in its name or description. It also implements relevance scoring, so that data
-definitions that best match the keywords are returned first.  Results are
+in its name or description. It also implements relevance scoring, so data
+definitions that best match the keywords are returned first. Results are
 paginated if the optional `start` and `end` parameters are included.
 
 ## Counting the Searched Data Definitions
@@ -79,6 +92,7 @@ parameter, pass a `DEDataDefinitionSearchCountRequest` to
 `DEDataDefinitionService.execute()`.
 
 Required parameters: 
+
 - `long companyId`
 - `long groupId`
 - `String keywords`
@@ -92,6 +106,7 @@ programmatically created `DEDataDefinition`, pass a
 `DEDataDefinitionSaveRequest` to `DEDataDefinitionService.execute()`.
 
 Required parameters:
+
 - `long groupId`
 - `long userId`
 
@@ -119,6 +134,7 @@ permission to add a new Data Definition to the system, and/or the ability to
 manage User permissions on Data Definitions.
 
 Required parameters: 
+
 - `long companyId`
 - `long scopeGroupId`
 - `String[] roleNames`
@@ -126,14 +142,25 @@ Required parameters:
 Optional parameters: none
 
 Optional builder methods:
-- `allowAddDefinition()` to grant Add permissions
-- `allowDefinePermissions()` to grant permissions to grant permissions
-<!-- Find a better way to say the above -->
+
+- `allowAddDefinition()` to give Role Users permission Add new Data Definitions
+- `allowDefinePermissions()` to give Role Users permission to grant Data
+    Definition permissions for other Roles. Once a Role has this permission, its
+    Users can 
+    - Grant other Roles permission to Add, Delete, View, Update, or Define
+        Permissions.
+    - Revoke the same permissions.
+    - Grant themselves permission to Add, Delete, View, Update, or Define
+        Permissions if they don't already have those permissions. 
+
+Specify more than one builder method to grant multiple permissions
+simultaneously.
 
 `DEDataDefinitionDeletePermissionsRequest` is for revoking the same permissions
 granted by the `DeDataDefinitionSavePermissionsRequest`. 
 
 Required parameters: 
+
 - `long companyId`
 - `long scopeGroupId`
 - `String[] roleNames`
@@ -147,9 +174,10 @@ Definitions or manage permissions for Data Definitions.
 ### Granting and Revoking Permission to View, Update, or Delete a specific Data Definition
 
 `DEDataDefinitionSaveModelPermissionsRequest` is for granting permission to
-update, view, and delete a specific Data Definition already in the system. 
+update, view, and/or delete a specific Data Definition already in the system. 
 
 Required parameters:
+
 - `long companyId`
 - `long groupId`
 - `long scopeUserId`
@@ -160,23 +188,22 @@ Required parameters:
 Optional parameters: none
 
 Optional builder methods:
+
 - `allowDelete()` to grant deletion permission
 - `allowUpdate()` to grant update permission
 - `allowView()` to grant view permission
 
-Specify more than one builder method to grant mutliple permissions
+Specify more than one builder method to grant multiple permissions
 simultaneously.
 
-Here's an example request builder that grants Site Members all three permissions:
-
 `DEDataDefinitionDeleteModelPermissionsRequest` is for revoking permission to
-view, update, or delete two permissions: the permission to define new Data
-Definition permissions for a User, and the permission to add a new entity
-registry in the system. If a user choose to make this type of delete request,
-all the roles listed in the request will lose both permissions at the same
-time. 
+view, update, and/or delete a specific data definition already in the system. If
+a user choose to make this type of delete request, all the roles listed in the
+request will lose whichever permissions are specified in the `actionIds`
+parameter for the given Data Definition.
 
 Required parameters:
+
 - `long companyId`
 - `long scopeGroupId`
 - `long deDataDefinitionId`
