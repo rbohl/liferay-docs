@@ -207,7 +207,7 @@ $$$
 For more information on configuring an Elasticsearch cluster, see the
 documentation on [Elasticsearch Index Settings](https://www.elastic.co/guide/en/elasticsearch/guide/current/_index_settings.html).
 
-## Elasticsearch Connector System Settings, By Operation Mode 
+## Elasticsearch Connector System Settings, By Operation Mode [](id=elasticsearch-connector-system-settings-by-operation-mode)
 
 Some of the settings available for the Elasticsearch connector are applicable
 for only one operation mode (REMOTe or EMBEDDED). Refer to the table below:
