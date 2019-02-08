@@ -1,4 +1,7 @@
 # Data Definitions API
+<!--Should maybe describe the details of what each operation is for in this
+article instead of in the next one on building each request, which is getting
+long-->
 
 The Data Definitions API allows the following operations:
 
@@ -20,10 +23,12 @@ steps:
 3.  Store the returned response in a variable of the appropriate response type.
     For example, `DEDataDefinitionListResponse`.
 
+See a complete example demonstrating for the `DEDataDefinitionListRequest/Response` [here](LINK TO HOW-TO ARTICLE)
+
 The following outline describes the general pattern used for the
 `DEDataDefinitionService` operations.
 
-- List Request/Response (data-engine-api module)
+- Operation Request/Response (data-engine-api module)
     - `DEDataDefinition[Operation]Request`
         - Build the request.
             - Include required parameters (for example, the Group ID and Company ID are required for the List operation, for retrieval and permission checking).
@@ -37,6 +42,6 @@ The following outline describes the general pattern used for the
         - The overloaded `execute` method receives a `DEDataDefinition[Operation]Request` and returns a
             `DEDataDefinition[Operation]Response`.
 
-For each operation you can invoke, it's important to understand the required and
-the optional parameters.
+For each operation you can invoke, it's important to understand the required
+and the optional parameters.
 
