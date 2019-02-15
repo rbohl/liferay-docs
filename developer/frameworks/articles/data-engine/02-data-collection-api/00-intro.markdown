@@ -10,8 +10,9 @@ records associated with its Primary Key. The `DEDataRecordCollection` has a
 unique ID, a name, and a description. Each individual Data Record Collection is
 associated with a single Data Definition's Primary Key. 
 
-It's beneficial to add this extra layer between the records and the backing data
-definition because it lets you reuse the data definition.
+It's beneficial to add this extra layer between the records and the backing
+data definition because it lets you reuse the data definition for different
+purposes. OTHER BENEFITS?
 
 The Data Collections API allows the following operations:
 

@@ -21,7 +21,7 @@ the request. Perhaps the most complex request you can build is for defining
 permissions on a Data Record Collection. This example gives Site Member Users
 permission to update, delete, and view a particular Data Record Collection:
 
-<!--EXAMPLE WHEN THOSE DOCS ARE READY-->
+<!--ADD EXAMPLE CODE FROM GDOC-->
 
 For a request that can contain optional builder methods, if no optional builder
 methods are called when building the request, nothing at all happens. No
