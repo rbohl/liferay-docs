@@ -144,3 +144,11 @@ The possible action IDs are:
     `VIEW_DATA_RECORD` for revoking permissions on the Data Records contained in
     the Data Record collection
 
+## Deleting a Data Record Collection
+
+To delete a `DEDataRecordCollection`, pass a `DEDataRecordCollectionDeleteRequest` to
+`DEDataRecordCollectionService.execute()`.
+
+Required parameter: `long dataRecordCollectionId`
+Optional parameters: none
+
