@@ -160,3 +160,11 @@ To get a single `DEDataRecordCollection`, pass a `DEDataRecordCollectionGetReque
 Required parameter: `deDataRecordCollectionId`
 Optional parameters: none
 
+## Getting a Data Record
+
+To get a single `DEDataRecord`, pass a `DEDataRecordCollectionGetRecordRequest`
+to `DEDataRecordCollectionService.execute()`.
+
+Required parameter: `deDataRecordId`
+Optional parameters: none
+
