@@ -152,6 +152,14 @@ To delete a `DEDataRecordCollection`, pass a `DEDataRecordCollectionDeleteReques
 Required parameter: `long deDataRecordCollectionId`
 Optional parameters: none
 
+## Deleting a Data Record
+
+To delete a `DEDataRecordCollection`, pass a `DEDataRecordCollectionDeleteRequest` to
+`DEDataRecordCollectionService.execute()`.
+
+Required parameter: `long deDataRecordCollectionId`
+Optional parameters: none
+
 ## Getting a Data Record Collection
 
 To get a single `DEDataRecordCollection`, pass a `DEDataRecordCollectionGetRequest` to
@@ -167,4 +175,21 @@ to `DEDataRecordCollectionService.execute()`.
 
 Required parameter: `deDataRecordId`
 Optional parameters: none
+
+## Adding or Editing a Data Record
+
+To add or edit a new `DEDataRecord`, pass a
+`DEDataRecordCollectionSaveRecordRequest` to
+`DEDataRecordCollectionService.execute()`.
+
+Required parameter: `DEDataRecord` object
+Required parameter: `long groupId`
+Required parameter: `long userId`
+Optional parameters: none
+
+Whatever `DEDataRecord` object you construct is saved once the request is
+executed. 
+
+<!--Shouldn't a DEDataRecord have field data with it? -->
+
 
