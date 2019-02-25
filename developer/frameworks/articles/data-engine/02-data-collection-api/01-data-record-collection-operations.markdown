@@ -18,16 +18,13 @@ Some operations even have additional methods that can be called while the
 request is being constructed. These are referred to as _optional builder
 methods_ in this article, because they are methods you can call while building
 the request. Perhaps the most complex request you can build is for defining
-permissions on a Data Record Collection. This example gives Site Member Users
-permission to update, delete, and view a particular Data Record Collection:
+permissions on a Data Record Collection. See the 
+[dedicated article on crafting Data Record collection permissions requests for details on this](LINK).
 
-<!--ADD EXAMPLE CODE FROM GDOC-->
-
-For a request that can contain optional builder methods, if no optional builder
-methods are called when building the request, nothing at all happens. No
-exceptions are thrown because these are optional, but nothing useful happens in
-the system either. Make sure that you build the request properly to return the
-proper response.
+If no optional builder methods are called when building a request that accepts
+them, nothing at all happens. No exceptions are thrown because these are
+optional, but nothing useful happens in the system either. Make sure that you
+build the request properly to return the proper response.
 
 ## Granting and Revoking Permissions on Data Record Collections
 
@@ -187,6 +184,30 @@ Required parameter: `long groupId`
 Required parameter: `long userId`
 Optional parameters: none
 
-Whatever `DEDataRecord` object you construct is saved once the request is
-executed. 
+Whatever 
+[`DEDataRecord` object you construct](LINK TO CREATION ARTICLE) 
+is saved once the request is executed. 
+
+## Getting a List of Data Collections
+
+To get a `List` of `DEDataRecordCollection`s from the database, pass a
+`DEDataRecordCollectionListRequest` to
+`DEDataRecordCollectionService.execute()`.
+
+Required parameters: none
+Optional parameters: none
+
+Optional builder methods:
+
+- `inGroup(long groupId)` narrows the results to a particular `Group`.
+- `startingAt(int start)` sets the start position for pagination
+- `endingAt(int end)` sets the ending position for pagination
+
+Always include the `inGroup` method, otherwise no data will be returned. If the
+results are to be paginated, it's best to include the start and end parameters.
+If you only include the start method, you'll get an empty list returned, and
+you probably don't want this. If you only include the `endingAt` position,
+pagination will work as expected, with the initial index beginning at the first
+item in the list.
+
 
