@@ -176,9 +176,9 @@ to `DEDataRecordCollectionService.execute()`.
 Required parameter: `deDataRecordId`
 Optional parameters: none
 
-## Adding or Editing a Data Record
+## Saving a Data Record
 
-To add or edit a new `DEDataRecord`, pass a
+To save new or edited `DEDataRecord`s to the database, pass a
 `DEDataRecordCollectionSaveRecordRequest` to
 `DEDataRecordCollectionService.execute()`.
 
@@ -189,7 +189,4 @@ Optional parameters: none
 
 Whatever `DEDataRecord` object you construct is saved once the request is
 executed. 
-
-<!--Shouldn't a DEDataRecord have field data with it? -->
-
 
