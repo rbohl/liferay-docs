@@ -143,11 +143,17 @@ The possible action IDs are:
 
 ## Deleting a Data Record Collection
 
-To delete a `DEDataRecordCollection`, pass a `DEDataRecordCollectionDeleteRequest` to
+To delete a `DEDataRecordCollection`, pass a `DEDataRecordCollectionDeleteRequest` as parameter to
 `DEDataRecordCollectionService.execute()`.
 
-Required parameter: `long deDataRecordCollectionId`
+Required parameter: none
 Optional parameters: none
+
+Optional builder methods:
+
+- `byId(long deDataRecordCollectionId)` sets the ID from the DEDataRecordCollection that will be deleted
+
+Always include the `byId` method, otherwise no data will be deleted.
 
 ## Deleting a Data Record
 
