@@ -188,13 +188,18 @@ Optional parameters: none
 ## Saving a Data Record
 
 To save new or edited `DEDataRecord`s to the database, pass a
-`DEDataRecordCollectionSaveRecordRequest` to
+`DEDataRecordCollectionSaveRecordRequest` as parameter to
 `DEDataRecordCollectionService.execute()`.
 
 Required parameter: `DEDataRecord` object
-Required parameter: `long groupId`
-Required parameter: `long userId`
 Optional parameters: none
+
+Optional builder methods:
+
+- `onBehalfOf(long userId)` sets the user ID responsible for the request
+- `inGroup(long groupId)` sets the group ID responsible for the request
+
+Always include the `inGroup` and `onBehalfOf` methods, otherwise no data will be saved.
 
 Whatever 
 [`DEDataRecord` object you construct](LINK TO CREATION ARTICLE) 
