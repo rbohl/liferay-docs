@@ -165,11 +165,17 @@ Optional parameters: none
 
 ## Getting a Data Record Collection
 
-To get a single `DEDataRecordCollection`, pass a `DEDataRecordCollectionGetRequest` to
+To get a single `DEDataRecordCollection`, pass a `DEDataRecordCollectionGetRequest` as parameter to
 `DEDataRecordCollectionService.execute()`.
 
-Required parameter: `deDataRecordCollectionId`
+Required parameter: none
 Optional parameters: none
+
+Optional builder methods:
+
+- `byId(long deDataRecordCollectionId)` sets the DEDataRecordCollection ID that will be retrieved
+
+Always include the `byId` method, otherwise no data will be retrieved.
 
 ## Getting a Data Record
 
