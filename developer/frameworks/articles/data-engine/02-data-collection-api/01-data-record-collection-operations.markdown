@@ -106,7 +106,7 @@ Optional builder methods:
 - `allowDelete()` to grant deletion permission
 - `allowUpdate()` to grant update permission
 - `allowView()` to grant view permission
-- `allowAddDataRecord()` to grant add permissions, to add `DEDataRecord`
+- `allowAddDataRecord()` to grant add permissions to add `DEDataRecord`
     entities in the Data Record Collection
 - `allowDeleteDataRecord()` to grant permission to delete `DEDataRecord`s in
     the Data Record Collection
