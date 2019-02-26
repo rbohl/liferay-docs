@@ -179,8 +179,8 @@ Always include the `byId` method, otherwise no data will be retrieved.
 
 ## Getting a Data Record
 
-To get a single `DEDataRecord`, pass a `DEDataRecordCollectionGetRecordRequest`
-to `DEDataRecordCollectionService.execute()`.
+To get a single `DEDataRecord`, pass a `DEDataRecordCollectionGetRecordRequest` as parameter to
+`DEDataRecordCollectionService.execute()`.
 
 Required parameter: `deDataRecordId`
 Optional parameters: none
