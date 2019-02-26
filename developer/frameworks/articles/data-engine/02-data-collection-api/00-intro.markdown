@@ -5,7 +5,7 @@ long-->
 
 Data Record Collections (`DEDataRecordCollection`s) are used to collect
 `DEDataRecord`s. A Data Definition defines the fields present in the Data
-Collection, while the Data Record Collection forms a boundary, collecting only
+Record, while the Data Record Collection forms a boundary, collecting only
 records associated with its Primary Key. The `DEDataRecordCollection` has a
 unique ID, a name, and a description. Each individual Data Record Collection is
 associated with a single Data Definition's Primary Key. 
