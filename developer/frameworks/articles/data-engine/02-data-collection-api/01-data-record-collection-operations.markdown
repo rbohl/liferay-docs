@@ -151,7 +151,7 @@ Optional parameters: none
 
 ## Deleting a Data Record
 
-To delete a `DEDataRecordCollection`, pass a `DEDataRecordCollectionDeleteRequest` to
+To delete a `DEDataRecord`, pass a `DEDataRecordCollectionDeleteRecordRequest` as parameter to
 `DEDataRecordCollectionService.execute()`.
 
 Required parameter: `long deDataRecordCollectionId`
