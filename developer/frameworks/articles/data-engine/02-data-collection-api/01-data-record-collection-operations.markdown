@@ -227,4 +227,18 @@ you probably don't want this. If you only include the `endingAt` position,
 pagination will work as expected, with the initial index beginning at the first
 item in the list.
 
+## Getting a List of Data Records
 
+To get a `List` of all the `DEDataRecord`s in a Record Collection, pass a
+`DEDataRecordCollectionListRecordRequest` to
+`DEDataRecordCollectionService.execute()`.
+
+Required parameter: `deDataRecordCollectionId`
+
+Optional builder methods:
+
+- `startingAt` sets the start position for pagination
+- `endingAt` sets the ending position for pagination
+
+All the Data Records associated with the Data Record collection are returned
+when the request is executed. 
