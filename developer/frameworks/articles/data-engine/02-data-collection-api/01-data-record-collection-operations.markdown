@@ -205,7 +205,7 @@ Whatever
 [`DEDataRecord` object you construct](LINK TO CREATION ARTICLE) 
 is saved once the request is executed. 
 
-## Getting a List of Data Collections
+## Getting a List of Data Record Collections
 
 To get a `List` of `DEDataRecordCollection`s from the database, pass a
 `DEDataRecordCollectionListRequest` to
@@ -242,3 +242,23 @@ Optional builder methods:
 
 All the Data Records associated with the Data Record collection are returned
 when the request is executed. 
+
+## Searching for Data Record Collections
+
+To get a paginated List of `DEDataRecordCollections` with a name or description
+matching the specified keywords, pass a `DEDataRecordCollectionSearchRequest`
+to `DEDataDefinitionService.execute()`. 
+
+To build the request you'll need these parameters and builder methods:
+
+Required parameters: none, this request is built entirely with builder methods
+
+Optional builder methods:
+
+- `havingKeywords(String keywords)` stores the keywords to search by 
+- `inCompany(long companyId)` sets the ID of the virtual instance of the Data Record Collections
+- `inGroup(long groupId)` sets the ID of the group where the Data Record Collections are found
+- `startingAt` sets the start position for pagination
+- `endingAt` sets the ending position for pagination
+
+
