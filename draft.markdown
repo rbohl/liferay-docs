@@ -1,4 +1,4 @@
-# Metrics and Cardinality Aggregations
+# Statistical Aggregations
 
 * Target Audience: Developers
 * Article Type: Development Frameworks
