@@ -1,3 +1,5 @@
+# Cardinality Aggregations
+
 * Target Audience: Developers
 * Article Type: Development Frameworks
 
@@ -27,7 +29,6 @@ API (FQCN) | Provided by Artifact |
 * SearchSearchRequest#getStats()
 * SearchSearchRequest#setStats(Map<String, Stats> stats)
 
-## Cardinality Aggregations
 
 Support for [GroupBy](https://github.com/liferay/liferay-portal/blob/7.2.x/portal-kernel/src/com/liferay/portal/kernel/search/GroupBy.java) and [Stats](https://github.com/liferay/liferay-portal/blob/7.2.x/portal-kernel/src/com/liferay/portal/kernel/search/Stats.java) aggregations were introduced in 7.0.
 
