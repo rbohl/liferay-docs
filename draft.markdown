@@ -46,13 +46,14 @@ Provides a map of field names and the metric aggregations that are to be compute
     	}
 
 2. Get SearchRequestBuilder for the search context:
-
+```
     SearchRequestBuilder searchRequestBuilder = _searchRequestBuilderFactory.getSearchRequestBuilder(searchContext);
+```
 
 3. Get SearchRequest from the builder:
-
+```
     SearchRequest searchRequest = searchRequestBuilder.build();
-
+```
 4. Obtain a reference to StatsRequestBuilderFactory:
 
     	@Reference(unbind = "-")
@@ -88,12 +89,13 @@ Provides a map of field names and the metric aggregations that are to be compute
     		).build();
 
 6. Set Statsrequest on the SearchRequest:
-
+```
     searchRequest.statsRequests(statsRequest);
-
+```
 7. Execute search using SearchEngineAdapter (This should be explained earlier in an introduction article)
-
+```
     _searchEngineAdapter.execute(searchRequest);
+```
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L128
 
