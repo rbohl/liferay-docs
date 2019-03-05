@@ -21,7 +21,7 @@ API (FQCN) | Provided by Artifact |
 **`com.liferay.portal.search.stats.StatsResponse`** |	com.liferay.portal.search.api
 
 ## Deprecated APIs
-* SearchSearchRequestgetStats()
+* SearchSearchRequest#getStats()
 * SearchSearchRequest#setStats(Map<String, Stats> stats)
 
 ## Cardinality Aggregations
