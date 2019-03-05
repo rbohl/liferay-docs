@@ -25,6 +25,7 @@ API (FQCN) | Provided by Artifact |
 `com.liferay.portal.search.stats.StatsRequestBuilder` |	com.liferay.portal.search.api
 `com.liferay.portal.search.stats.StatsRequestBuilderFactory` |	com.liferay.portal.search.api
 **`com.liferay.portal.search.stats.StatsResponse`** |	com.liferay.portal.search.api
+`com.liferay.portal.kernel.search.Stats` | portal-kernel
 
 ## Deprecated APIs
 * SearchSearchRequest#getStats()
