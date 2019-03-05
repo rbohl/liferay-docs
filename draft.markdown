@@ -36,7 +36,7 @@ As part of the modularization efforts, [StatsRequest](https://github.com/liferay
 
 Provides a map of field names and the metric aggregations that are to be computed for each field.
 
-Obtain a reference to SearchRequestBuilderFactory:
+1. Obtain a reference to SearchRequestBuilderFactory:
 
     	@Reference(unbind = "-")
     	protected void setSearchRequestBuilderFactory(
@@ -45,15 +45,15 @@ Obtain a reference to SearchRequestBuilderFactory:
     		_searchRequestBuilderFactory = searchRequestBuilderFactory;
     	}
 
-Get SearchRequestBuilder for the search context:
+2. Get SearchRequestBuilder for the search context:
 
     SearchRequestBuilder searchRequestBuilder = _searchRequestBuilderFactory.getSearchRequestBuilder(searchContext);
 
-Get SearchRequest from the builder:
+3. Get SearchRequest from the builder:
 
     SearchRequest searchRequest = searchRequestBuilder.build();
 
-Obtain a reference to StatsRequestBuilderFactory:
+4. Obtain a reference to StatsRequestBuilderFactory:
 
     	@Reference(unbind = "-")
     	protected void setStatsRequestBuilderFactory(
@@ -62,7 +62,7 @@ Obtain a reference to StatsRequestBuilderFactory:
     		_statsRequestBuilderFactory = statsRequestBuilderFactory;
     	}
 
-Get StatsRequestBuilder and build StatsRequest with the desired metrics:
+5. Get StatsRequestBuilder and build StatsRequest with the desired metrics:
 
     		StatsRequestBuilder statsRequestBuilder =
     			_statsRequestBuilderFactory.getStatsRequestBuilder();
@@ -87,13 +87,13 @@ Get StatsRequestBuilder and build StatsRequest with the desired metrics:
     			true
     		).build();
 
-Set Statsrequest on the SearchRequest:
+6. Set Statsrequest on the SearchRequest:
 
     searchRequest.statsRequests(statsRequest);
 
-    Execute search using SearchEngineAdapter (This should be explained earlier in an introduction article)
+7. Execute search using SearchEngineAdapter (This should be explained earlier in an introduction article)
 
-    _searchEngineAdapter.execute(searchRequest)
+    _searchEngineAdapter.execute(searchRequest);
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L128
 
