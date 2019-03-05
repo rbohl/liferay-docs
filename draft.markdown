@@ -116,8 +116,9 @@ Provides a map of field names and the metric aggregations that are to be compute
     		};
 
 2. Set Stats on the SearchContext:
-
+```
     searchContext.addStats(stats)
+```
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L42
 
@@ -126,15 +127,16 @@ Provides a map of field names and the metric aggregations that are to be compute
 Contains the metrics aggregations computed by the search engine for a given field.
 
 1. Get the map containing the metrics aggregations computed by the search engine:
-
+```
     Map<String, StatsResponse> map = searchResponse.getStatsResponseMap();
-
+```
 2. Get the StatsResponse for a given field:
-
+```
     StatsResponse statsResponse = map.get(field);
-
+```
 3. Get the desired metric, for example "cardinality":
-
+```
     statsResponse.getCardinality();
+```
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L128
