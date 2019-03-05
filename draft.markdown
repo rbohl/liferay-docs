@@ -1,3 +1,6 @@
+* Target Audience: Developers
+* Article Type: Development Frameworks
+
 ## External References
 
 https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-aggregations-metrics-cardinality-aggregation
