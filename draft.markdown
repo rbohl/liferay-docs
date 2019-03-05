@@ -6,7 +6,7 @@
 ## External References
 
 * https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-aggregations-metrics.html
-* https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-aggregations-metrics-cardinality-aggregation
+* https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-aggregations-metrics-cardinality-aggregation.html
 * https://lucene.apache.org/solr/guide/7_5/the-stats-component.html
 
 ## Search Engine Connector Support
