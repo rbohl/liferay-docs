@@ -43,6 +43,7 @@ As part of the modularization efforts, [StatsRequest](https://github.com/liferay
 Provides a map of field names and the metric aggregations that are to be computed for each field.
 
 1. Obtain a reference to SearchRequestBuilderFactory:
+```java
 
     	@Reference(unbind = "-")
     	protected void setSearchRequestBuilderFactory(
@@ -50,17 +51,20 @@ Provides a map of field names and the metric aggregations that are to be compute
 
     		_searchRequestBuilderFactory = searchRequestBuilderFactory;
     	}
-
-2. Get SearchRequestBuilder for the search context:
 ```
+2. Get SearchRequestBuilder for the search context:
+```java
+
     SearchRequestBuilder searchRequestBuilder = _searchRequestBuilderFactory.getSearchRequestBuilder(searchContext);
 ```
 
 3. Get SearchRequest from the builder:
-```
+```java
+
     SearchRequest searchRequest = searchRequestBuilder.build();
 ```
 4. Obtain a reference to StatsRequestBuilderFactory:
+```java
 
     	@Reference(unbind = "-")
     	protected void setStatsRequestBuilderFactory(
@@ -68,8 +72,9 @@ Provides a map of field names and the metric aggregations that are to be compute
 
     		_statsRequestBuilderFactory = statsRequestBuilderFactory;
     	}
-
+```
 5. Get StatsRequestBuilder and build StatsRequest with the desired metrics:
+```java
 
     		StatsRequestBuilder statsRequestBuilder =
     			_statsRequestBuilderFactory.getStatsRequestBuilder();
@@ -93,13 +98,15 @@ Provides a map of field names and the metric aggregations that are to be compute
     		).sumOfSquares(
     			true
     		).build();
-
-6. Set Statsrequest on the SearchRequest:
 ```
+6. Set Statsrequest on the SearchRequest:
+```java
+
     searchRequest.statsRequests(statsRequest);
 ```
 7. Execute search using SearchEngineAdapter (This should be explained earlier in an introduction article)
-```
+```java
+
     _searchEngineAdapter.execute(searchRequest);
 ```
 
@@ -108,6 +115,7 @@ Provides a map of field names and the metric aggregations that are to be compute
 **Note:** there is still support internally for the legacy Stats object
 
 1. Create a Stats object with the desired metrics:
+```java
 
     		Stats stats = new Stats() {
     			{
@@ -120,9 +128,10 @@ Provides a map of field names and the metric aggregations that are to be compute
     				setSumOfSquares(true);
     			}
     		};
-
-2. Set Stats on the SearchContext:
 ```
+2. Set Stats on the SearchContext:
+```java
+
     searchContext.addStats(stats)
 ```
 
@@ -133,15 +142,18 @@ Provides a map of field names and the metric aggregations that are to be compute
 Contains the metrics aggregations computed by the search engine for a given field.
 
 1. Get the map containing the metrics aggregations computed by the search engine:
-```
+```java
+
     Map<String, StatsResponse> map = searchResponse.getStatsResponseMap();
 ```
 2. Get the StatsResponse for a given field:
-```
+```java
+
     StatsResponse statsResponse = map.get(field);
 ```
 3. Get the desired metric, for example "cardinality":
-```
+```java
+
     statsResponse.getCardinality();
 ```
 
