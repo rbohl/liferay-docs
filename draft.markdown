@@ -70,21 +70,21 @@ StatsRequestBuilderFactory statsRequestBuilderFactory;
 StatsRequestBuilder statsRequestBuilder = statsRequestBuilderFactory.getStatsRequestBuilder();
 
 StatsResponse expectedStatsResponse = statsResponseBuilder.cardinality(
-	31
+    31
 ).count(
-	31
+    31
 ).field(
-	field
+    field
 ).max(
-	31
+    31
 ).mean(
-	16
+    16
 ).min(
-	1
+    1
 ).sum(
-	496
+    496
 ).sumOfSquares(
-	10416
+    10416
 ).build();
 ```
 6. Set Statsrequest on the SearchRequest:
