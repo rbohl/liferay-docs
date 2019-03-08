@@ -45,90 +45,86 @@ Provides a map of field names and the metric aggregations that are to be compute
 1. Get a reference to `com.liferay.portal.search.searcher.SearchRequestBuilderFactory`:
 ```java
 
-    	@Reference
-    	SearchRequestBuilderFactory searchRequestBuilderFactory;
+@Reference
+SearchRequestBuilderFactory searchRequestBuilderFactory;
 ```
 2. Get an instace of `com.liferay.portal.search.searcher.SearchRequestBuilder`:
 ```java
 
-    SearchRequestBuilder searchRequestBuilder = searchRequestBuilderFactory.getSearchRequestBuilder();
+SearchRequestBuilder searchRequestBuilder = searchRequestBuilderFactory.getSearchRequestBuilder();
 ```
 3. Get a`com.liferay.portal.search.searcher.SearchRequest` instance from the builder:
 ```java
 
-    SearchRequest searchRequest = searchRequestBuilder.build();
+SearchRequest searchRequest = searchRequestBuilder.build();
 ```
 4. Get a reference to `com.liferay.portal.search.stats.StatsRequestBuilderFactory`:
 ```java
 
-    	@Reference
-    	StatsRequestBuilderFactory statsRequestBuilderFactory;
+@Reference
+StatsRequestBuilderFactory statsRequestBuilderFactory;
 ```
 5. Get a `com.liferay.portal.search.stats.StatsRequestBuilder` instance and build `com.liferay.portal.search.stats.StatsRequest` with the desired metrics:
 ```java
 
-    		StatsRequestBuilder statsRequestBuilder =
-    			statsRequestBuilderFactory.getStatsRequestBuilder();
+StatsRequestBuilder statsRequestBuilder = statsRequestBuilderFactory.getStatsRequestBuilder();
 
-    		StatsRequest statsRequest = statsRequestBuilder.cardinality(
-    			true
-    		).count(
-    			true
-    		).field(
-    			field
-    		).max(
-    			true
-    		).mean(
-    			true
-    		).min(
-    			true
-    		).missing(
-    			true
-    		).sum(
-    			true
-    		).sumOfSquares(
-    			true
-    		).build();
+StatsResponse expectedStatsResponse = statsResponseBuilder.cardinality(
+	31
+).count(
+	31
+).field(
+	field
+).max(
+	31
+).mean(
+	16
+).min(
+	1
+).sum(
+	496
+).sumOfSquares(
+	10416
+).build();
 ```
 6. Set Statsrequest on the SearchRequest:
 ```java
 
-    searchRequest.statsRequests(statsRequest);
+searchRequest.statsRequests(statsRequest);
 ```
 7. Get a reference to `com.liferay.portal.search.searcher.Searcher`:
 ```java
-    @Reference
-    protected Searcher searcher;
+@Reference
+protected Searcher searcher;
 ```
-8. Perform a search using Searcher and SearchRequest:
+8. Perform a search using Searcher and SearchRequest to get `com.liferay.portal.search.searcher.SearchResponse`:
 ```java
 
-    SearchResponse searcher.search(searchRequest);
+SearchResponse searcher.search(searchRequest);
 ```
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L128
 
-**Note:** there is still support internally for the legacy Stats object
+**Note:** there is still support for the legacy `com.liferay.portal.kernel.search.Stats` object:
 
-1. Create a Stats object with the desired metrics:
+1. Create a Stats instace with the desired metrics:
 ```java
 
-    		Stats stats = new Stats() {
-    			{
-    				setCount(true);
-    				setField(field);
-    				setMax(true);
-    				setMean(true);
-    				setMin(true);
-    				setSum(true);
-    				setSumOfSquares(true);
-    			}
-    		};
+Stats stats = new Stats() {
+   {
+       setCount(true);
+    			setField(field);
+    			setMax(true);
+    			setMean(true);
+    			setMin(true);
+    			setSum(true);
+    			setSumOfSquares(true);
+   }
+};
 ```
-2. Set Stats on the SearchContext:
+3. Set Stats on the SearchContext:
 ```java
-
-    searchContext.addStats(stats)
+searchRequestBuilder.withSearchContext(searchContext -> searchContext.addStats(stats));
 ```
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L42
@@ -140,17 +136,17 @@ Contains the metrics aggregations computed by the search engine for a given fiel
 1. Get the map containing the metrics aggregations computed by the search engine:
 ```java
 
-    Map<String, StatsResponse> map = searchResponse.getStatsResponseMap();
+Map<String, StatsResponse> map = searchResponse.getStatsResponseMap();
 ```
 2. Get the StatsResponse for a given field:
 ```java
 
-    StatsResponse statsResponse = map.get(field);
+StatsResponse statsResponse = map.get(field);
 ```
 3. Get the desired metric, for example "cardinality":
 ```java
 
-    statsResponse.getCardinality();
+statsResponse.getCardinality();
 ```
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L128
