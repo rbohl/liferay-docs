@@ -104,10 +104,15 @@ Provides a map of field names and the metric aggregations that are to be compute
 
     searchRequest.statsRequests(statsRequest);
 ```
-7. Execute search using SearchEngineAdapter (This should be explained earlier in an introduction article)
+7. Get a reference to `com.liferay.portal.search.searcher.Searcher`:
+```java
+    @Reference
+	   protected Searcher searcher;
+```
+8. Perform a search using Searcher and SearchRequest:
 ```java
 
-    _searchEngineAdapter.execute(searchRequest);
+    SearchResponse searcher.search(searchRequest);
 ```
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L128
