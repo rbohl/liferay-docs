@@ -42,42 +42,33 @@ As part of the modularization efforts, [StatsRequest](https://github.com/liferay
 
 Provides a map of field names and the metric aggregations that are to be computed for each field.
 
-1. Obtain a reference to SearchRequestBuilderFactory:
+1. Get a reference to `com.liferay.portal.search.searcher.SearchRequestBuilderFactory`:
 ```java
 
-    	@Reference(unbind = "-")
-    	protected void setSearchRequestBuilderFactory(
-    		SearchRequestBuilderFactory searchRequestBuilderFactory) {
-
-    		_searchRequestBuilderFactory = searchRequestBuilderFactory;
-    	}
+    	@Reference
+    	SearchRequestBuilderFactory searchRequestBuilderFactory;
 ```
-2. Get SearchRequestBuilder for the search context:
+2. Get an instace of `com.liferay.portal.search.searcher.SearchRequestBuilder`:
 ```java
 
-    SearchRequestBuilder searchRequestBuilder = _searchRequestBuilderFactory.getSearchRequestBuilder(searchContext);
+    SearchRequestBuilder searchRequestBuilder = searchRequestBuilderFactory.getSearchRequestBuilder();
 ```
-
-3. Get SearchRequest from the builder:
+3. Get a`com.liferay.portal.search.searcher.SearchRequest` instance from the builder:
 ```java
 
     SearchRequest searchRequest = searchRequestBuilder.build();
 ```
-4. Obtain a reference to StatsRequestBuilderFactory:
+4. Get a reference to `com.liferay.portal.search.stats.StatsRequestBuilderFactory`:
 ```java
 
-    	@Reference(unbind = "-")
-    	protected void setStatsRequestBuilderFactory(
-    		StatsRequestBuilderFactory statsRequestBuilderFactory) {
-
-    		_statsRequestBuilderFactory = statsRequestBuilderFactory;
-    	}
+    	@Reference
+    	StatsRequestBuilderFactory statsRequestBuilderFactory;
 ```
-5. Get StatsRequestBuilder and build StatsRequest with the desired metrics:
+5. Get a `com.liferay.portal.search.stats.StatsRequestBuilder` instance and build `com.liferay.portal.search.stats.StatsRequest` with the desired metrics:
 ```java
 
     		StatsRequestBuilder statsRequestBuilder =
-    			_statsRequestBuilderFactory.getStatsRequestBuilder();
+    			statsRequestBuilderFactory.getStatsRequestBuilder();
 
     		StatsRequest statsRequest = statsRequestBuilder.cardinality(
     			true
