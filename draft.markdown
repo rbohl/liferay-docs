@@ -107,7 +107,7 @@ SearchResponse searcher.search(searchRequest);
 
 **Note:** there is still support for the legacy `com.liferay.portal.kernel.search.Stats` object:
 
-1. Create a Stats instace with the desired metrics:
+1. Create a Stats instance with the desired metrics:
 ```java
 
 Stats stats = new Stats() {
