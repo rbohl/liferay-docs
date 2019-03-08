@@ -107,7 +107,7 @@ Provides a map of field names and the metric aggregations that are to be compute
 7. Get a reference to `com.liferay.portal.search.searcher.Searcher`:
 ```java
     @Reference
-	   protected Searcher searcher;
+    protected Searcher searcher;
 ```
 8. Perform a search using Searcher and SearchRequest:
 ```java
