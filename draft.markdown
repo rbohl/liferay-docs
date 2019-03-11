@@ -35,76 +35,87 @@ API (FQCN) | Provided by Artifact |
 
 ## Draft
 
-Support for [GroupBy](https://github.com/liferay/liferay-portal/blob/7.2.x/portal-kernel/src/com/liferay/portal/kernel/search/GroupBy.java) and [Stats](https://github.com/liferay/liferay-portal/blob/7.2.x/portal-kernel/src/com/liferay/portal/kernel/search/Stats.java) aggregations were introduced in 7.0.
+Support for 
+[GroupBy](https://github.com/liferay/liferay-portal/blob/7.2.x/portal-kernel/src/com/liferay/portal/kernel/search/GroupBy.java) 
+and 
+[Stats](https://github.com/liferay/liferay-portal/blob/7.2.x/portal-kernel/src/com/liferay/portal/kernel/search/Stats.java) 
+aggregations were introduced in 7.0.
 
-To extend Liferay's search aggregation capabilities, in @product-ver@, we added support for Cardinality Aggregations which provides an approximate (aka. statistical) count of distinct values. Please refer to the "External References" above for more details.
+Cardinality Aggregations extend @product@'s metrics aggregation capabilities,
+providing an approximate (i.e., statistical) count of distinct values returned
+by a search query. For example, you could compute a count of distinct values of
+the _tag_ field. Refer to the 
+[Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-aggregations-metrics-cardinality-aggregation.html) 
+for more details.
 
-As part of the modularization efforts, [StatsRequest](https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-api/src/main/java/com/liferay/portal/search/stats/StatsRequest.java) and [StatsResponse](https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-api/src/main/java/com/liferay/portal/search/stats/StatsResponse.java) were introduced in the `com.liferay.portal.search.api` module to avoid modifying `portal-kernel`. StatsRequest provides the same statistical features that the legacy `com.liferay.portal.kernel.search.Stats` does besides the new "cardinality" option.
+While this functionality was available in the past directly in the portal kernel
+code, it's been extracted and re-implemented ion 
+[`StatsRequest`](https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-api/src/main/java/com/liferay/portal/search/stats/StatsRequest.java) 
+and 
+[`StatsResponse`](https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-api/src/main/java/com/liferay/portal/search/stats/StatsResponse.java), 
+both introduced in the `com.liferay.portal.search.api` module to avoid modifying
+`portal-kernel`. `StatsRequest` provides the same statistical features that the
+legacy `com.liferay.portal.kernel.search.Stats` does, and adds the new
+cardinality option.
 
 ### StatsRequest
 
-Provides a map of field names and the metric aggregations that are to be computed for each field.
+The `StatsRequest` Provides a map of field names and the metric aggregations
+that are to be computed for each field.
 
 1. Get a reference to `com.liferay.portal.search.searcher.SearchRequestBuilderFactory`:
-```java
 
-@Reference
-SearchRequestBuilderFactory searchRequestBuilderFactory;
-```
+        @Reference
+        SearchRequestBuilderFactory searchRequestBuilderFactory;
+
 2. Get an instace of `com.liferay.portal.search.searcher.SearchRequestBuilder`:
-```java
 
-SearchRequestBuilder searchRequestBuilder = searchRequestBuilderFactory.getSearchRequestBuilder();
-```
+        SearchRequestBuilder searchRequestBuilder = searchRequestBuilderFactory.getSearchRequestBuilder();
+
 3. Get a`com.liferay.portal.search.searcher.SearchRequest` instance from the builder:
-```java
 
-SearchRequest searchRequest = searchRequestBuilder.build();
-```
+        SearchRequest searchRequest = searchRequestBuilder.build();
+
 4. Get a reference to `com.liferay.portal.search.stats.StatsRequestBuilderFactory`:
-```java
 
-@Reference
-StatsRequestBuilderFactory statsRequestBuilderFactory;
-```
+        @Reference
+        StatsRequestBuilderFactory statsRequestBuilderFactory;
+
 5. Get a `com.liferay.portal.search.stats.StatsRequestBuilder` instance and build `com.liferay.portal.search.stats.StatsRequest` with the desired metrics:
-```java
 
-StatsRequestBuilder statsRequestBuilder = statsRequestBuilderFactory.getStatsRequestBuilder();
+        StatsRequestBuilder statsRequestBuilder = statsRequestBuilderFactory.getStatsRequestBuilder();
 
-StatsResponse expectedStatsResponse = statsResponseBuilder.cardinality(
-    31
-).count(
-    31
-).field(
-    field
-).max(
-    31
-).mean(
-    16
-).min(
-    1
-).sum(
-    496
-).sumOfSquares(
-    10416
-).build();
-```
+        StatsResponse expectedStatsResponse = statsResponseBuilder.cardinality(
+            31
+        ).count(
+            31
+        ).field(
+            field
+        ).max(
+            31
+        ).mean(
+            16
+        ).min(
+            1
+        ).sum(
+            496
+        ).sumOfSquares(
+            10416
+        ).build();
+
 6. Set Statsrequest on the SearchRequest:
-```java
 
-searchRequest.statsRequests(statsRequest);
-```
+        searchRequest.statsRequests(statsRequest);
+
 7. Get a reference to `com.liferay.portal.search.searcher.Searcher`:
-```java
-@Reference
-protected Searcher searcher;
-```
-8. Perform a search using Searcher and SearchRequest to get `com.liferay.portal.search.searcher.SearchResponse`:
-```java
 
-SearchResponse searcher.search(searchRequest);
-```
+        @Reference
+        protected Searcher searcher;
+
+8. Perform a search using Searcher and SearchRequest to get `com.liferay.portal.search.searcher.SearchResponse`:
+
+        SearchResponse searcher.search(searchRequest);
+
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L128
 
