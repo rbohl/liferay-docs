@@ -1,40 +1,5 @@
 # Statistical Aggregations
 
-* Target Audience: Developers
-* Article Type: Development Frameworks
-
-## External References
-
-* https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-aggregations-metrics.html
-* https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-aggregations-metrics-cardinality-aggregation.html
-* https://lucene.apache.org/solr/guide/7_5/the-stats-component.html
-
-## Search Engine Connector Support
-* Elasticsearch 6: Yes
-* Solr 7: Yes
-
-## New/Related APIs
-
-Listed those which are relevant for developers.
- 
-API (FQCN) | Provided by Artifact |
----------: | :------------------: |
-`com.liferay.portal.search.searcher.SearchRequestBuilder#statsRequests(StatsRequest... statsRequests)` | com.liferay.portal.search.api
-`com.liferay.portal.search.searcher.SearchResponse#getStatsResponseMap()` | com.liferay.portal.search.api
-**`com.liferay.portal.search.stats.StatsRequest`** |	com.liferay.portal.search.api
-`com.liferay.portal.search.stats.StatsRequestBuilder` |	com.liferay.portal.search.api
-`com.liferay.portal.search.stats.StatsRequestBuilderFactory` |	com.liferay.portal.search.api
-**`com.liferay.portal.search.stats.StatsResponse`** |	com.liferay.portal.search.api
-`com.liferay.portal.kernel.search.Stats` | portal-kernel
-
-## Deprecated APIs
-* SearchSearchRequest#getStats()
-* SearchSearchRequest#setStats(Map<String, Stats> stats)
-
-----
-
-## Draft
-
 Support for 
 [GroupBy](https://github.com/liferay/liferay-portal/blob/7.2.x/portal-kernel/src/com/liferay/portal/kernel/search/GroupBy.java) 
 and 
@@ -164,3 +129,34 @@ statsResponse.getCardinality();
 ```
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L128
+## External References
+
+* https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-aggregations-metrics.html
+* https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-aggregations-metrics-cardinality-aggregation.html
+* https://lucene.apache.org/solr/guide/7_5/the-stats-component.html
+
+## Search Engine Connector Support
+* Elasticsearch 6: Yes
+* Solr 7: Yes
+
+## New/Related APIs
+
+These are the relevant APIs for building Stats Aggregations (with or without
+cardinality):
+ 
+API (FQCN) | Provided by Artifact |
+---------: | :------------------: |
+`com.liferay.portal.search.searcher.SearchRequestBuilder#statsRequests(StatsRequest... statsRequests)` | `com.liferay.portal.search.api`
+`com.liferay.portal.search.searcher.SearchResponse#getStatsResponseMap()` | `com.liferay.portal.search.api`
+**`com.liferay.portal.search.stats.StatsRequest`** |	`com.liferay.portal.search.api`
+`com.liferay.portal.search.stats.StatsRequestBuilder` |	`com.liferay.portal.search.api`
+`com.liferay.portal.search.stats.StatsRequestBuilderFactory` |	`com.liferay.portal.search.api`
+**`com.liferay.portal.search.stats.StatsResponse`** |	`com.liferay.portal.search.api`
+`com.liferay.portal.kernel.search.Stats` | `portal-kernel`
+
+## Deprecated APIs
+* SearchSearchRequest#getStats()
+* SearchSearchRequest#setStats(Map<String, Stats> stats)
+
+----
+
