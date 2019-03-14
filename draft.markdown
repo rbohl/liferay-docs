@@ -114,21 +114,21 @@ If you prefer, you can continue using the legacy
 
 1. Create a `Stats` instance with the desired metrics:
 ```java
-Stats stats = new Stats() {
-{
-setCount(true);
-setField(field);
-setMax(true);
-setMean(true);
-setMin(true);
-setSum(true);
-setSumOfSquares(true);
-}
-};
+        Stats stats = new Stats() {
+            {
+                setCount(true);
+                setField(field);
+                setMax(true);
+                setMean(true);
+                setMin(true);
+                setSum(true);
+                setSumOfSquares(true);
+            }
+        };
 ```
 3. Set `Stats` on the `SearchContext`:
 ```java
-searchRequestBuilder.withSearchContext(searchContext -> searchContext.addStats(stats));
+        searchRequestBuilder.withSearchContext(searchContext -> searchContext.addStats(stats));
 ```
 
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L42
