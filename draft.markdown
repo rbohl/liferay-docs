@@ -29,26 +29,35 @@ The `StatsRequest` Provides a map of field names and the metric aggregations
 that are to be computed for each field.
 
 1. Get a reference to `com.liferay.portal.search.searcher.SearchRequestBuilderFactory`:
+
 ```java
         @Reference
         SearchRequestBuilderFactory searchRequestBuilderFactory;
 ```
+
 2. Get an instance of `com.liferay.portal.search.searcher.SearchRequestBuilder`:
+
 ```java
         SearchRequestBuilder searchRequestBuilder = searchRequestBuilderFactory.getSearchRequestBuilder();
 ```
+
 3. Get a`com.liferay.portal.search.searcher.SearchRequest` instance from the builder:
+
 ```java
         SearchRequest searchRequest = searchRequestBuilder.build();
 ```
+
 4. Get a reference to `com.liferay.portal.search.stats.StatsRequestBuilderFactory`:
+
 ```java
         @Reference
         StatsRequestBuilderFactory statsRequestBuilderFactory;
 ```
+
 5. Get a `com.liferay.portal.search.stats.StatsRequestBuilder` instance and
    build `com.liferay.portal.search.stats.StatsRequest` with the desired
    metrics:
+
 ```java
         StatsRequestBuilder statsRequestBuilder = statsRequestBuilderFactory.getStatsRequestBuilder();
 
@@ -70,17 +79,23 @@ that are to be computed for each field.
             10416
         ).build();
 ```
+
 6. Set `StatsRequest` on the `SearchRequest`:
+
 ```java
         searchRequest.statsRequests(statsRequest);
 ```
+
 7. Get a reference to `com.liferay.portal.search.searcher.Searcher`:
+
 ```java
         @Reference
         protected Searcher searcher;
 ```
+
 8. Perform a search using `Searcher` and `SearchRequest` to get
    `com.liferay.portal.search.searcher.SearchResponse`:
+
 ```java
         SearchResponse searcher.search(searchRequest);
 ```
@@ -93,17 +108,23 @@ Contains the metrics aggregations computed by the search engine for a given
 field.
 
 1. Get the map containing the metrics aggregations computed by the search engine:
+
 ```java
         Map<String, StatsResponse> map = searchResponse.getStatsResponseMap();
 ```
+
 2. Get the `StatsResponse` for a given field:
+
 ```java
         StatsResponse statsResponse = map.get(field);
 ```
+
 3. Get the desired metric, for example _cardinality_:
+
 ```java
         statsResponse.getCardinality();
 ```
+
 **Example:** https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/portal-search/portal-search-test-util/src/main/java/com/liferay/portal/search/test/util/stats/BaseStatisticsTestCase.java#L128
 
 <!-->
