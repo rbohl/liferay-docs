@@ -112,7 +112,10 @@ $$$
 
 When preparing a system for production deployment, you want to use a repeatable
 deployment process. Therefore, it's best to use the OSGi configuration file,
-where your configuration is maintained in a controlled source.
+where your configuration is maintained in a controlled source. If the adapter is
+configured in both locations (System Settings and via configuration file),  the
+settings in the configuration file override those set from the System settings
+interface.
 
 Follow these steps to configure the Elasticsearch adapter using a configuration
 file:
