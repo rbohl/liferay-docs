@@ -1,6 +1,6 @@
 # Creating SLA Calendars
 
-By default, an internal calendar assumes the 
+By default, an internal calendar assumes the
 [SLA deadline clock](/docs/7-2/user/-/knowledge_base/u/workflow-metrics-the-service-level-agreement-sla)
 should continue counting all the time: in other words, 24 hours per day, seven
 days per week. If you need a different calendar format, provide your own
@@ -36,11 +36,11 @@ during lunch hours if you need to.
 
 Along with some artifacts you're probably used to depending on (like
 `com.liferay.portal.kernel`, you'll need the
-`com.liferay.portal.workflow.metrics.api-[version].jar` artifact. For @product@
+`com.liferay.portal.workflow.metrics.sla.api-[version].jar` artifact. For @product@
 version 7.2.10-GA1, here's an example Gradle build dependency declaration:
 
 ```groovy
-compileOnly group: "com.liferay", name: "com.liferay.portal.workflow.metrics.api", version: "1.0.2"
+compileOnly group: "com.liferay", name: "com.liferay.portal.workflow.metrics.sla.api", version: "1.1.0"
 compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.4.0"
 compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
@@ -54,7 +54,7 @@ I do not have confirmation of yet. -->
 Implement a
 `com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar` to
 define your own SLA calendar logic. When you're finished, use the created
-calendar when creating the 
+calendar when creating the
 [SLA definition](/docs/7-2/user/-/knowledge_base/u/workflow-metrics-the-service-level-agreement-sla).
 
 Let's walk through the default calendar:
@@ -107,7 +107,7 @@ SLA will be considered overdue given the parameter values. For example; given
 that `nowLocalDateTime`=_2019-05-13T17:00:00_ and `remainingDuration`=_24H_, The
 24/7 calendar return a `localDateTime` of _2019-05-14T17:00:00_ as the overdue
 date. Given the same parameters, the 9-17 weekdays calendar returns
-_2019-05-17T09:00:00_. 
+_2019-05-17T09:00:00_.
 
 ```java
     @Override
@@ -121,7 +121,7 @@ _2019-05-17T09:00:00_.
 
 }
 
-Use `getTitle` to provide the title for the given locale. Make sure you 
+Use `getTitle` to provide the title for the given locale. Make sure you
 [properly localize](/docs/7-2/frameworks/-/knowledge_base/f/localizing-your-application)
 this extension by providing a `Language.properties` file, and any
 `Language_xx.properties` files for translation of the value. At runtime, the
