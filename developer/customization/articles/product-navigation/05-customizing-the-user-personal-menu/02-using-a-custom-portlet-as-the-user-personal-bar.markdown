@@ -1,14 +1,13 @@
 ---
-header-id: providing-the-user-personal-menu
+header-id: using-a-custom-portlet-as-the-user-personal-bar
 ---
 
-# Providing the User Personal Menu
+# Using a Custom Portlet as the User Personal Bar
 
 [TOC levels=1-4]
 
-In this article, you'll learn how to customize the User Personal Menu. You'll
-create a single Java class where you'll specify a portlet to replace the
-existing default portlet.
+In this article, you'll learn how to replace the default User Personal Bar with 
+a custom portlet. This only requires a single Java class. Follow these steps:
 
 1.  [Create an OSGi module](/docs/7-2/reference/-/knowledge_base/r/creating-a-project).
 
@@ -30,7 +29,7 @@ existing default portlet.
 
      The `model.class.name` property must be set to the class name of the entity
      type you want the portlet to handle. In this case, you want your portlet to
-     be provided based on whether it can be displayed in the User Personal Menu.
+     be provided based on whether it can be displayed in the User Personal Bar.
 
      You may recall from the 
      [Portlet Providers](/docs/7-2/frameworks/-/knowledge_base/f/embedding-portlets-in-themes)
@@ -42,11 +41,11 @@ existing default portlet.
      property to a number that is ranked higher than the portlet being used by
      default.
 
-     Since you only want the User Personal Menu to display your portlet, the
+     Since you only want the User Personal Bar to display your portlet, the
      `service` element should be `ViewPortletProvider.class`.
 
 4.  Update the class's declaration to extend the 
-    [BasePortletProvider](/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/BasePortletProvider.html)
+    [BasePortletProvider](@platform-ref@/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/BasePortletProvider.html)
     abstract class and implement `ViewPortletProvider`:
 
     ```java
@@ -71,7 +70,7 @@ existing default portlet.
     `com_liferay_product_navigation_user_personal_bar_web_portlet_ProductNavigationPersonalBarPortlet`
     for its default User Personal Bar portlet.
 
-You've successfully provided a portlet to be displayed in the User Personal
+You've successfully provided a portlet to be displayed in the User Personal 
 Menu. If you want to inspect the entire module used for Liferay's default User
 Personal Bar, see
 [product-navigation-user-personal-bar-web](https://github.com/liferay/liferay-portal/tree/7.2.0-ga1/modules/apps/product-navigation/product-navigation-user-personal-bar-web).
@@ -79,3 +78,9 @@ Besides the `*ViewPortletProvider` class, this module contains two classes
 defining constants and a portlet class defining the default portlet to provide.
 Although these additional classes are not required, your module should have
 access to the portlet you want to provide.
+
+## Related Topics
+
+- [Customizing the User Personal Menu](/docs/7-2/customization/-/knowledge_base/c/providing-the-user-personal-menu)
+- [Customizing the Product Menu](/docs/7-2/customization/-/knowledge_base/c/customizing-the-product-menu)
+- [Customizing the Control Menu](/docs/7-2/customization/-/knowledge_base/c/customizing-the-control-menu)
