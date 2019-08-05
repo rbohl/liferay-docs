@@ -16,31 +16,25 @@ default field types. For example, perhaps you need a color picker field. You
 could create a select field that lists color names. Some users don't, however,
 know that *Gamboge* is the color of spicy mustard (maybe a little darker), and
 anyway, seeing colors is better than reading their names, so you can create
-a field that shows colors. 
-
-Another example is a dedicated *time* field. Even with a text field and
-a tooltip that tells people to *enter the time in the format `hour:minute`*,
-some users still enter something indecipherable. You can fix this by adding
-a *time* field to @product@'s Forms application. If you have your own ideas for
-create your own field types, keep reading to find out how.
+a field that shows colors. Or, for instance, maybe you need to add a Slider (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range) to measure the level of satisfaction of a product.
 
 These tutorials show you how to
 
-- create a module that adds a *Time* form field type with a timepicker
+- create a module that adds a *Slider* form field type
 
 - add custom configuration options to your field types
 
-| **Example project:** The source code for the example *time* project developed in
+| **Example project:** The source code for the example *slider* project developed in
 | these tutorials can be downloaded for your convenience. Click
-| [here](https://portal.liferay.dev/documents/113763090/114000653/dynamic-data-mapping-type-time.zip) to begin downloading the source code zip file.
+| [here](https://portal.liferay.dev/documents/113763090/114000653/dynamic-data-mapping-type-slider.zip) to begin downloading the source code zip file.
 
 
-Before getting started, learn the structure of a form field type. 
+Before getting started, learn the structure of a form field type.
 
 ## Anatomy of a Field Type Module
 
 All form field type modules have a similar structure. Here's the directory
-structure of the `dynamic-data-mapping-type-time` module developed in these
+structure of the `dynamic-data-mapping-type-slider` module developed in these
 tutorials:
 
     .babelrc
@@ -52,36 +46,30 @@ tutorials:
     src
     └── main
         ├── java
-        │   └── com
-        │       └── liferay
-        │           └── dynamic
-        │               └── data
-        │                   └── mapping
-        │                       └── type
-        │                           └── time
-        │                               ├── TimeDDMFormFieldRenderer.java
-        │                               ├── TimeDDMFormFieldTemplateContextContributor.java
-        │                               ├── TimeDDMFormFieldType.java
-        │                               └── TimeDDMFormFieldTypeSettings.java
+        │   └── com
+        │       └── liferay
+        │           └── dynamic
+        │               └── data
+        │                   └── mapping
+        │                       └── type
+        │                           └── slider
+        │                               ├── SliderDDMFormFieldTemplateContextContributor.java
+        │                               ├── SliderDDMFormFieldType.java
+        │                               └── SliderDDMFormFieldTypeSettings.java
         └── resources
             ├── content
-            │   └── Language.properties
+            │   └── Language.properties
             └── META-INF
                 └── resources
-                    ├── config.js
-                    ├── time.es.js
-                    ├── time_field.js
-                    └── time.soy
+                    ├── Slider
+                        ├── Slider.es.js
+                        ├── Slider.soy
+                        └── SliderRegister.soy
 
 You don't need `*TemplateContextContributor.java` or `*TypeSettings.java` in the
 initial module (see [Rendering Form Field Settings](/docs/7-1/tutorials/-/knowledge_base/t/rendering-form-field-settings) 
 to learn more about these classes). The initial module consists of these Java
 classes and resources:
-
-`*DDMFormFieldRenderer.java`: Controls the template's rendering. Sets the
-language, declares the namespace, and loads the template resources on
-activation of the Component. Extending the abstract class that implements
-the `DDMFormFieldRenderer` makes your work here easier.
 
 `*DDMFormFieldType.java`: Defines the form field type in the back-end. If you
 extend the abstract class that implements the interface, you automatically
@@ -91,15 +79,12 @@ the default configuration options your form field type inherits, look at
 the `DefaultDDMFormFieldTypeSettings` class in the `dynamic-data-mapping-api`
 module.
 
-`config.js`: Auto-generated if you use Blade CLI, `config.js` defines the
-dependencies of all declared JavaScript components.
-
-`[name-of-field-type]_field.js`: The JavaScript file modeling your field.
-
 `[name-of-field-type].es.js`: The JavaScript file that configures the template
 rendering (the `[name-of-field-type].soy` rendering).
 
-`[name-of-field-type].soy`: The template that defines the appearance of the field. 
+`[name-of-field-type].soy`: The template that defines the appearance of the field.
+
+`[name-of-field-type]Register.soy`: The template that calls the template of field soy.
 
 `Language_xx_XX.properties`: Define any terms that must be 
 [translated into different languages](/docs/7-1/tutorials/-/knowledge_base/t/localizing-your-application).
