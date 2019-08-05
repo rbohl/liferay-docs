@@ -6,38 +6,36 @@ header-id: creating-form-field-types
 
 [TOC levels=1-4]
 
-Liferay's Forms application does not contain a dedicated time field
-out-of-the-box. For ease of use and to ensure proper time data is collected,
-you'll develop a time field and learn how @product@'s field types work at the
+Liferay's Forms application does not contain a dedicated slider field
+out-of-the-box. For ease of use and to ensure proper slider data is collected,
+you'll develop a slider field and learn how @product@'s field types work at the
 same time.
 
 There are several steps involved in creating a form field type:
 
 1.  Creating the Form Field Type's Java class.
 
-2.  Creating the Form Field Type Renderer Java class.
-
-3.  Defining the field's behavior in JavaScript and Soy templates.
+2.  Defining the field's behavior in JavaScript and Soy templates.
 
 | **Blade Template:**  To jump-start your project, use
 | [Blade CLI](/docs/7-1/tutorials/-/knowledge_base/t/blade-cli)
 | or
 | [Liferay Dev Studio](/docs/7-1/tutorials/-/knowledge_base/t/creating-modules-with-liferay-ide).
 | There's a Blade template for creating form fields. Using the CLI, enter
-| 
-|     blade create -t form-field -v 7.1 -p com.liferay.docs.formfieldtype -c Time DDMTypeTime
-| 
-| This gives you a `DDMTypeTime` module with a similar structure to what's above.
+|
+|     blade create -t form-field -v 7.2 -p com.liferay.docs.formfieldtype -c Slider DDMTypeSlider
+|
+| This gives you a `DDMTypeSlider` module with a similar structure to what's above.
 | The Java classes are in the package `com.liferay.docs.formfield` under
 | `src/main/java/` and the frontend resources (JavaScript and Soy files) are in
-| `sr/main/resources/META-INF/resources`.
-| 
+| `src/main/resources/META-INF/resources`.
+|
 | A known limitation in the form-field template requires the use of camel case in
-| the project name (`DDMTypeTime`). Trying to use kebab case instead
-| (`ddm-type-time`) generates a non-functioning module. This is fixed with the
+| the project name (`DDMTypeSlider`). Trying to use kebab case instead
+| (`ddm-type-slider`) generates a non-functioning module. This is fixed with the
 | release of Blade 3.3. Run `blade version` from the command line to see the
 | version of Blade you're running.
-| 
+|
 | Using Blade CLI or Liferay Dev Studio, you get a project skeleton with much of
 | the boilerplate filled in, so you can focus immediately on coding.
 
@@ -46,39 +44,35 @@ Start by setting up the project's metadata.
 ## Specifying OSGi Metadata
 
 First specify the necessary OSGi metadata in a `bnd.bnd` file (see
-[here](http://bnd.bndtools.org/chapters/800-headers.html) 
+[here](http://bnd.bndtools.org/chapters/800-headers.html)
 for more information).  Here's what it would look like for a module in a folder
-called `dynamic-data-mapping-type-time`:
+called `dynamic-data-mapping-type-slider`:
 
-    Bundle-Name: Liferay Dynamic Data Mapping Type Time
-    Bundle-SymbolicName: com.liferay.dynamic.data.mapping.type.time
+    Bundle-Name: Liferay Dynamic Data Mapping Type Slider
+    Bundle-SymbolicName: com.liferay.dynamic.data.mapping.type.slider
     Bundle-Version: 1.0.0
-    Liferay-JS-Config: /META-INF/resources/config.js
-    Web-ContextPath: /dynamic-data-mapping-type-time
+    Web-ContextPath: /dynamic-data-mapping-type-slider
 
-Point to the JavaScript configuration file (`config.js`) that defines JavaScript
-modules added by your module (you'll get to that later) and set the Web Context
 Path to the modules root folder, so your module's resources are made available
-upon module activation. 
+upon module activation.
 
 Next craft the OSGi Component that marks your class as an implementation of
-`DDMFormFieldType`. 
+`DDMFormFieldType`.
 
 ## Creating a DDMFormFieldType Component
 
-If you're creating a *Time* field type, define the Component at the top of your
+If you're creating a *Slider* field type, define the Component at the top of your
 `*DDMFormFieldType` class like this:
 
     @Component(
       immediate = true,
       property = {
-        "ddm.form.field.type.description=time-field-type-description",
-        "ddm.form.field.type.display.order:Integer=10",
-        "ddm.form.field.type.icon=time",
-        "ddm.form.field.type.js.class.name=Liferay.DDM.Field.Time",
-        "ddm.form.field.type.js.module=liferay-ddm-form-field-time",
-        "ddm.form.field.type.label=time-field-type-label",
-        "ddm.form.field.type.name=time"
+        "ddm.form.field.type.description=slider-field-type-description",
+		"ddm.form.field.type.display.order:Integer=10",
+		"ddm.form.field.type.group=basic",
+        "ddm.form.field.type.icon=control-panel",
+		"ddm.form.field.type.label=slider-field-type-label",
+		"ddm.form.field.type.name=slider"
       },
       service = DDMFormFieldType.class
     )
@@ -96,17 +90,9 @@ the form builder's sidebar, just below the field's label.
 : An Integer defining the field type's position in the sidebar.
 
 `ddm.form.field.type.icon`
-: The icon for the field type. Choosing one of the 
-[Lexicon icons](https://lexicondesign.io/docs/patterns/icons.html) 
+: The icon for the field type. Choosing one of the
+[Lexicon icons](https://lexicondesign.io/docs/patterns/icons.html)
 makes your form field blend in with the existing form field types.
-
-`ddm.form.field.type.js.class.name`
-: The field type's JavaScript class name---the JavaScript file defines the field
-type's behavior.
-
-`ddm.form.field.type.js.module`
-: The name of the JavaScript module provided to the Form engine so the module
-can be loaded when needed.
 
 `ddm.form.field.type.label`
 : The field type's label. Its localized value appears in the form builder's
@@ -127,11 +113,11 @@ Implementing the field type in Java is made easier because of
 After extending `BaseDDMFormFieldType`, override the `getName` method by
 specifying the name of your new field type:
 
-    public class TimeDDMFormFieldType extends BaseDDMFormFieldType {
+    public class SliderDDMFormFieldType extends BaseDDMFormFieldType {
 
         @Override
         public String getName() {
-            return "time";
+            return "slider";
         }
 
     }
