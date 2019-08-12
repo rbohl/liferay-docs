@@ -133,21 +133,26 @@ type="hidden" value="<%= ParamUtil.getString(request, "openId") %>" />
 <%=html %>
 ```
 
-| **Note:** An OSGi fragment can access all of the fragment host's packages---it
-| doesn't need to import them from another bundle. bnd adds external packages the
-| fragment uses (even ones in the fragment host) to the fragment's
-| `Import-Package: [package],...` OSGi manifest header. That's fine for packages
-| exported to the OSGi runtime. The problem is, however, when bnd tries to import
-| a host's internal package (a package the host doesn't export). The OSGi runtime
-| can't activate the fragment because the internal package remains an `Unresolved
-| requirement`---a fragment shouldn't import a fragment host's packages.
+| **Note:** Without using an `Import-Package` BND instruction, an OSGi fragment
+| can access all of the fragment host's packages, and any other package exported
+| by the OSGi runtime. That's because BND automatically adds all exported packages
+| used by the fragment to its `Import-Package` OSGi manifest header.  This
+| automatic importing is not necessary for packages in the host bundle, but it's
+| not problematic either, except in one case: referencing the host's internal
+| packages. Internal packages are not exported by the host, but they can still be
+| referenced from a fragment because of its attached nature. Its classpath is
+| identical to the host's. When BND tries to import the referenced internal
+| packages, the OSGi runtime can't resolve the fragment. The resulting
+| `Unresolved requirement` error in the fragment is unnecessary, since a fragment
+| doesn't need to import a fragment host's packages at all. The solution for this
+| is to explicitly exclude the internal package from your fragment bundle's
+| `Import-Package` OSGi manifest header. This `Import-Package` header, for
+| example, excludes packages that match
+| `com.liferay.portal.search.web.internal.*`.
 | 
-| If your fragment uses an internal package from the fragment host, continue using
-| it but explicitly exclude the package from your bundle's `Import-Package` OSGi
-| manifest header. This `Import-Package` header, for example, excludes packages
-| that match `com.liferay.portal.search.web.internal.*`.
-| 
-|     Import-Package: !com.liferay.portal.search.web.internal.*,*
+| ```properties
+| Import-Package: !com.liferay.portal.search.web.internal.*,*
+| ```
 
 Now you can easily modify the JSPs of any application in Liferay.
 
