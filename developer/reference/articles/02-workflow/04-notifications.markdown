@@ -147,6 +147,71 @@ attribute of the `<recipients>` tag as _To_, _CC_, or _BCC_.
 
 By default, `recipientType` is `to`.
 
+## Injected Notification Variables
+
+When using a templating language like FreeMarker to write workflow
+notifications, there are several variables you can reference.
+
+### Variables that are Always Available
+
+These variables can always be referenced in a workflow notification template:
+
+[`${kaleoInstanceToken}`](https://github.com/liferay/liferay-portal/blob/7.2.0-ga1/modules/apps/portal-workflow/portal-workflow-kaleo-api/src/main/java/com/liferay/portal/workflow/kaleo/model/KaleoInstanceToken.java)
+: A workflow instance and corresponding instance token (the
+`KaleoInstanceToken`) are created each time a User clicks _Submit for
+Publication_. All of the attributes of the `KaleoInstanceTokenModel` are
+accessible in the notification template. For example,
+`${kaleoInstanceToken.modifiedDate?datetime}`.
+
+`${userId}` and `${userName}`
+: The User information returned is context dependent. If the notification is in
+a workflow task node, the User is retrieved from the `ServiceContext`.
+Otherwise, the User information is retrieved from the `KaleoInstanceToken`.
+Practically, this means that <!--What does it mean to an end user?-->.
+
+### Variables Available in Workflow Task Notifications
+
+These variables are available in notification templates that are inside a
+workflow task node:
+
+[`${kaleoTaskInstanceToken}`](https://github.com/liferay/liferay-portal/blob/7.2.0-ga1/modules/apps/portal-workflow/portal-workflow-kaleo-api/src/main/java/com/liferay/portal/workflow/kaleo/model/KaleoTaskInstanceToken.java)
+: The task's token itself is available, with all of the
+`KaleoTaskInstanceTokenModel`'s attributes. For example,
+`${kaleoTaskInstanceToken.completionDate?datetime}`.
+
+`${taskName}`
+: The task's name is accessible (returns the same as `KaleoTask.getName()`).
+
+`${workflowTaskAssignees}` (`List<`[`WorkflowTaskAssignee`](https://github.com/liferay/liferay-portal/blob/7.2.0-ga1/portal-kernel/src/com/liferay/portal/kernel/workflow/WorkflowTaskAssignee.java)`>`)
+: Get a `List` of the task's assignees.
+
+[`${kaleoTimerInstanceToken}`](https://github.com/liferay/liferay-portal/blob/7.2.0-ga1/modules/apps/portal-workflow/portal-workflow-kaleo-api/src/main/java/com/liferay/portal/workflow/kaleo/model/KaleoTimerInstanceToken.java)
+: If a [task
+timer](/docs/7-2/reference/-/knowledge_base/r/workflow-task-nodes/#task-timers)
+exists, the `KaleoTimerInstanceTokenModel`'s attributes are accessible. For
+example, `${kaleoTimerInstanceToken.userName}`.
+
+<!--
+${kaleoInstanceToken.modifiedDate?datetime}
+
+KaleoInstanceTokenModifiedDate = ?datetime${kaleoInstanceToken.modifiedDate}
+User ID = ${userId}
+User Name = ${userName}
+Task Name = ${taskName}
+KaleoTaskInstanceToken = ${kaleoTaskInstanceToken}
+Task Assignees = ${workflowTaskAssignees}
+
+What's this?
+
+```java
+for (Map.Entry<String, Serializable> entry :
+        workflowContext.entrySet()) {
+
+    template.put(entry.getKey(), entry.getValue());
+}
+```
+-->
+
 As always, read the
 [schema for all the details](https://www.liferay.com/dtd/liferay-workflow-definition_7_1_0.xsd).
 
