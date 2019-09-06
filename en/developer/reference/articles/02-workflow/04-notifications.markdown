@@ -177,6 +177,7 @@ workflow task node:
 : The task's token itself is available, with all of the
 `KaleoTaskInstanceTokenModel`'s attributes. For example,
 `${kaleoTaskInstanceToken.completionDate?datetime}`.
+You can check all available methods here: https://docs.liferay.com/ce/apps/portal-workflow/latest/javadocs/com/liferay/portal/workflow/kaleo/model/KaleoTaskInstanceToken.html
 
 `${taskName}`
 : The task's name is accessible (returns the same as `KaleoTask.getName()`).
