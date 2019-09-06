@@ -165,9 +165,8 @@ accessible in the notification template. For example,
 
 `${userId}` and `${userName}`
 : The User information returned is context dependent. If the notification is in
-a workflow task node, the User is retrieved from the `ServiceContext`.
-Otherwise, the User information is retrieved from the `KaleoInstanceToken`.
-Practically, this means that <!--What does it mean to an end user?-->.
+a workflow task node, it is the User who transitioned to this task.
+Otherwise, the User information is the user who submitted the workflow.
 
 ### Variables Available in Workflow Task Notifications
 
