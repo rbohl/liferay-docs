@@ -203,6 +203,8 @@ Task Assignees = ${workflowTaskAssignees}
 
 What's this?
 
+All variables that are within the workflowContext. What depends on the context of who is sending the action.
+
 ```java
 for (Map.Entry<String, Serializable> entry :
         workflowContext.entrySet()) {
