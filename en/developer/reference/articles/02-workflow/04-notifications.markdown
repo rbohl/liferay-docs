@@ -165,8 +165,9 @@ accessible in the notification template. For example,
 
 `${userId}` and `${userName}`
 : The User information returned is context dependent. If the notification is in
-a workflow task node, it is the User who transitioned to this task.
-Otherwise, the User information is the user who submitted the workflow.
+a workflow task node, these variables are for the User who executed a transition
+to this task. Otherwise, the User information is for the user who submitted the
+asset to the workflow.
 
 ### Variables Available in Workflow Task Notifications
 
@@ -177,7 +178,8 @@ workflow task node:
 : The task's token itself is available, with all of the
 `KaleoTaskInstanceTokenModel`'s attributes. For example,
 `${kaleoTaskInstanceToken.completionDate?datetime}`.
-You can check all available methods here: https://docs.liferay.com/ce/apps/portal-workflow/latest/javadocs/com/liferay/portal/workflow/kaleo/model/KaleoTaskInstanceToken.html
+You can see all the available methods 
+[here](https://docs.liferay.com/ce/apps/portal-workflow/latest/javadocs/com/liferay/portal/workflow/kaleo/model/KaleoTaskInstanceToken.html).
 
 `${taskName}`
 : The task's name is accessible (returns the same as `KaleoTask.getName()`).
@@ -191,28 +193,8 @@ timer](/docs/7-2/reference/-/knowledge_base/r/workflow-task-nodes/#task-timers)
 exists, the `KaleoTimerInstanceTokenModel`'s attributes are accessible. For
 example, `${kaleoTimerInstanceToken.userName}`.
 
-<!--
-${kaleoInstanceToken.modifiedDate?datetime}
-
-KaleoInstanceTokenModifiedDate = ?datetime${kaleoInstanceToken.modifiedDate}
-User ID = ${userId}
-User Name = ${userName}
-Task Name = ${taskName}
-KaleoTaskInstanceToken = ${kaleoTaskInstanceToken}
-Task Assignees = ${workflowTaskAssignees}
-
-What's this?
-
-All variables that are within the workflowContext. What depends on the context of who is sending the action.
-
-```java
-for (Map.Entry<String, Serializable> entry :
-        workflowContext.entrySet()) {
-
-    template.put(entry.getKey(), entry.getValue());
-}
-```
--->
+In addition, all variables that are within the `workflowContext` are available
+in the notification template. This is entirely context dependent.
 
 As always, read the
 [schema for all the details](https://www.liferay.com/dtd/liferay-workflow-definition_7_1_0.xsd).
