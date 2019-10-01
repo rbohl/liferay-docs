@@ -15,6 +15,7 @@
 <%@ page import="com.liferay.portal.kernel.model.PersistedModel" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchEntry" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
+<%@ page import="com.liferay.docs.guestbook.display.context.GuestbookSearchDisplayContext" %>
 <%@ page import="com.liferay.docs.guestbook.model.Guestbook" %>
 <%@ page import="com.liferay.docs.guestbook.service.GuestbookEntryLocalServiceUtil" %>
 <%@ page import="com.liferay.docs.guestbook.service.GuestbookLocalServiceUtil" %>
