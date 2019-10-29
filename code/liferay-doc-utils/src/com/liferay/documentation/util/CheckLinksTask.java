@@ -51,7 +51,7 @@ public class CheckLinksTask extends Task {
 			currentArticles = addDxpOnlyArticles(currentArticles, docDir);
 		}
 
-		assignReferencedDirArticles(articleDirs);
+		assignReferencedDirArticles(DocsConstants.articleDirs);
 
 		try {
 		userGuideHeaders = findHeaders(userGuideArticles);
@@ -74,9 +74,9 @@ public class CheckLinksTask extends Task {
 					logInvalidUrl(article, in.getLineNumber(), line, false);
 				}
 
-				if (line.contains("](/docs/" + PORTAL_VERSION) ||
-					line.contains("](/docs/" + PORTAL_VERSION_LEGACY_1) ||
-					line.contains("](/docs/" + PORTAL_VERSION_LEGACY_2)) {
+				if (line.contains("](/docs/" + DocsConstants.PORTAL_VERSION) ||
+					line.contains("](/docs/" + DocsConstants.PORTAL_VERSION_LEGACY_1) ||
+					line.contains("](/docs/" + DocsConstants.PORTAL_VERSION_LEGACY_2)) {
 
 					int urlsInLine = countStrings(line);
 
@@ -271,35 +271,35 @@ public class CheckLinksTask extends Task {
 		String lineSubstring = line.substring(lineIndex, line.length());		
 
 		// The first link in the substring will have its headers applied.
-		if (lineSubstring.contains(userGuideLinkFolder + findStr)) {
+		if (lineSubstring.contains(DocsConstants.userGuideLinkFolder + DocsConstants.findStr)) {
 			headers = userGuideHeaders;
 		}
 
-		else if (lineSubstring.contains(deploymentGuideLinkFolder + findStr)) {
+		else if (lineSubstring.contains(DocsConstants.deploymentGuideLinkFolder + DocsConstants.findStr)) {
 			headers = deploymentGuideHeaders;
 		}
 
-		else if (lineSubstring.contains(distributeGuideLinkFolder + findStr)) {
+		else if (lineSubstring.contains(DocsConstants.distributeGuideLinkFolder + DocsConstants.findStr)) {
 			headers = distributeGuideHeaders;
 		}
 
-		else if (lineSubstring.contains(appDevLinkFolder + findStr)) {
+		else if (lineSubstring.contains(DocsConstants.appDevLinkFolder + DocsConstants.findStr)) {
 			headers = appDevHeaders;
 		}
 
-		else if (lineSubstring.contains(customizationDevLinkFolder + findStr)) {
+		else if (lineSubstring.contains(DocsConstants.customizationDevLinkFolder + DocsConstants.findStr)) {
 			headers = customizationDevHeaders;
 		}
 
-		else if (lineSubstring.contains(frameworksDevLinkFolder + findStr)) {
+		else if (lineSubstring.contains(DocsConstants.frameworksDevLinkFolder + DocsConstants.findStr)) {
 			headers = frameworksDevHeaders;
 		}
 
-		else if (lineSubstring.contains(tutorialsDevLinkFolder + findStr)) {
+		else if (lineSubstring.contains(DocsConstants.tutorialsDevLinkFolder + DocsConstants.findStr)) {
 			headers = tutorialsHeaders;
 		}
 
-		else if (lineSubstring.contains(referenceDevLinkFolder + findStr)) {
+		else if (lineSubstring.contains(DocsConstants.referenceDevLinkFolder + DocsConstants.findStr)) {
 			headers = referenceDevHeaders;
 		}
 
@@ -315,38 +315,38 @@ public class CheckLinksTask extends Task {
 	 */
 	private static void assignReferencedDirArticles(String[] dirs) {
 
-		for (String articleDir : articleDirs) {
+		for (String articleDir : DocsConstants.articleDirs) {
 
-			if (articleDir.equals(userGuideDir)) {
-				userGuideArticles = findArticles(userGuideDir);
+			if (articleDir.equals(DocsConstants.userGuideDir)) {
+				userGuideArticles = findArticles(DocsConstants.userGuideDir);
 			}
 
-			if (articleDir.equals(deploymentGuideDir)) {
-				deploymentGuideArticles = findArticles(deploymentGuideDir);
+			if (articleDir.equals(DocsConstants.deploymentGuideDir)) {
+				deploymentGuideArticles = findArticles(DocsConstants.deploymentGuideDir);
 			}
 
-			if (articleDir.equals(distributeGuideDir)) {
-				distributeGuideArticles = findArticles(distributeGuideDir);
+			if (articleDir.equals(DocsConstants.distributeGuideDir)) {
+				distributeGuideArticles = findArticles(DocsConstants.distributeGuideDir);
 			}
 
-			if (articleDir.equals(appDevDir)) {
-				appDevArticles = findArticles(appDevDir);
+			if (articleDir.equals(DocsConstants.appDevDir)) {
+				appDevArticles = findArticles(DocsConstants.appDevDir);
 			}
 
-			if (articleDir.equals(customizationDevDir)) {
-				customizationDevArticles = findArticles(customizationDevDir);
+			if (articleDir.equals(DocsConstants.customizationDevDir)) {
+				customizationDevArticles = findArticles(DocsConstants.customizationDevDir);
 			}
 
-			if (articleDir.equals(frameworksDevDir)) {
-				frameworksDevArticles = findArticles(frameworksDevDir);
+			if (articleDir.equals(DocsConstants.frameworksDevDir)) {
+				frameworksDevArticles = findArticles(DocsConstants.frameworksDevDir);
 			}
 
-			if (articleDir.equals(tutorialsDir)) {
-				tutorialsArticles = findArticles(tutorialsDir);
+			if (articleDir.equals(DocsConstants.tutorialsDir)) {
+				tutorialsArticles = findArticles(DocsConstants.tutorialsDir);
 			}
 
-			if (articleDir.equals(referenceDevDir)) {
-				referenceDevArticles = findArticles(referenceDevDir);
+			if (articleDir.equals(DocsConstants.referenceDevDir)) {
+				referenceDevArticles = findArticles(DocsConstants.referenceDevDir);
 			}
 		}
 	}
@@ -363,7 +363,7 @@ public class CheckLinksTask extends Task {
 			throws IOException {
 
 		// Extract headers into map with <header, index> pairs
-		LinkedHashMap<String, Integer> headerMaps = extractMultiStrings(line, article, in, findStr, 2);
+		LinkedHashMap<String, Integer> headerMaps = extractMultiStrings(line, article, in, DocsConstants.findStr, 2);
 
 		Iterator<?> it = headerMaps.entrySet().iterator();
 
@@ -381,11 +381,11 @@ public class CheckLinksTask extends Task {
 
 			// Find version for each header so we can accurately check them
 			String substringLineStart = line.substring(headerIndex);
-			int headerStart = substringLineStart.indexOf(findStr) + findStr.length();
+			int headerStart = substringLineStart.indexOf(DocsConstants.findStr) + DocsConstants.findStr.length();
 			String version = substringLineStart.substring(headerStart, headerStart + 3);
 			boolean differingDefaultVersion = false;
 
-			if (!version.equals(PORTAL_VERSION)) {
+			if (!version.equals(DocsConstants.PORTAL_VERSION)) {
 				differingDefaultVersion = true;
 			}
 
@@ -466,11 +466,11 @@ public class CheckLinksTask extends Task {
 
 		while(lastIndex != -1){
 
-		    lastIndex = line.indexOf(findStr,lastIndex);
+		    lastIndex = line.indexOf(DocsConstants.findStr,lastIndex);
 
 		    if(lastIndex != -1){
 		        count ++;
-		        lastIndex += findStr.length();
+		        lastIndex += DocsConstants.findStr.length();
 		    }
 		}
 		return count;
@@ -510,7 +510,7 @@ public class CheckLinksTask extends Task {
 		//int endIndex = lineSubstring.indexOf("/", begIndex);
 		String folder1 = lineSubstring.substring(begIndex, begIndex + 1);
 		
-		int begIndex2 = lineSubstring.indexOf(findStr) + findStr.length();
+		int begIndex2 = lineSubstring.indexOf(DocsConstants.findStr) + DocsConstants.findStr.length();
 		
 		String folder2 = lineSubstring.substring(begIndex2, begIndex2 + 1);
 		
@@ -552,8 +552,8 @@ public class CheckLinksTask extends Task {
 	private static String extractHeader(String line, File article, LineNumberReader in)
 			throws IOException {
 
-		int strIndex = line.indexOf(findStr);
-		int begIndex = strIndex + findStr.length() + 2;
+		int strIndex = line.indexOf(DocsConstants.findStr);
+		int begIndex = strIndex + DocsConstants.findStr.length() + 2;
 		int endIndex = line.indexOf(")", begIndex);
 
 		String header = "";
@@ -724,7 +724,7 @@ public class CheckLinksTask extends Task {
 
 			while ((line = in.readLine()) != null) {
 
-				if (line.startsWith(headerSyntax + primaryHeader)) {
+				if (line.startsWith(DocsConstants.headerSyntax + primaryHeader)) {
 					matchingArticle = article;
 					break;
 				}
@@ -856,9 +856,9 @@ public class CheckLinksTask extends Task {
 
 			while ((line = in.readLine()) != null) {
 
-				if (line.startsWith(headerSyntax)) {
+				if (line.startsWith(DocsConstants.headerSyntax)) {
 
-					int begIndex = headerSyntax.length();
+					int begIndex = DocsConstants.headerSyntax.length();
 					int endIndex = line.length();
 
 					header = line.substring(begIndex, endIndex);
@@ -871,11 +871,11 @@ public class CheckLinksTask extends Task {
 					String headerKeyValue = generateVirtualSecondaryHeader(line, article.getCanonicalPath());
 					secondaryHeaders.add(headerKeyValue);
 				}
-				else if (line.contains("<a name=" + quotation)) {
+				else if (line.contains("<a name=" + DocsConstants.quotation)) {
 
 					int begIndex = line.indexOf("<a name=");
-					int quotStart = line.indexOf(quotation, begIndex);
-					int quotClose = line.indexOf(quotation, quotStart + 1);
+					int quotStart = line.indexOf(DocsConstants.quotation, begIndex);
+					int quotClose = line.indexOf(DocsConstants.quotation, quotStart + 1);
 
 					String htmlHeaderAnchor = line.substring(quotStart + 1, quotClose);
 
@@ -974,36 +974,36 @@ public class CheckLinksTask extends Task {
 		String path = "";
 
 		// The first link in the substring will have its headers applied.
-		if (lineSubstring.contains(userGuideLinkFolder + findStr)) {
-			path = userGuideDir;
+		if (lineSubstring.contains(DocsConstants.userGuideLinkFolder + DocsConstants.findStr)) {
+			path = DocsConstants.userGuideDir;
 		}
 
-		else if (lineSubstring.contains(deploymentGuideLinkFolder + findStr)) {
-			path = deploymentGuideDir;
+		else if (lineSubstring.contains(DocsConstants.deploymentGuideLinkFolder + DocsConstants.findStr)) {
+			path = DocsConstants.deploymentGuideDir;
 		}
 
-		else if (lineSubstring.contains(distributeGuideLinkFolder + findStr)) {
-			path = distributeGuideDir;
+		else if (lineSubstring.contains(DocsConstants.distributeGuideLinkFolder + DocsConstants.findStr)) {
+			path = DocsConstants.distributeGuideDir;
 		}
 
-		else if (lineSubstring.contains(appDevLinkFolder + findStr)) {
-			path = appDevDir;
+		else if (lineSubstring.contains(DocsConstants.appDevLinkFolder + DocsConstants.findStr)) {
+			path = DocsConstants.appDevDir;
 		}
 
-		else if (lineSubstring.contains(customizationDevLinkFolder + findStr)) {
-			path = customizationDevDir;
+		else if (lineSubstring.contains(DocsConstants.customizationDevLinkFolder + DocsConstants.findStr)) {
+			path = DocsConstants.customizationDevDir;
 		}
 
-		else if (lineSubstring.contains(frameworksDevLinkFolder + findStr)) {
-			path = frameworksDevDir;
+		else if (lineSubstring.contains(DocsConstants.frameworksDevLinkFolder + DocsConstants.findStr)) {
+			path = DocsConstants.frameworksDevDir;
 		}
 
-		else if (lineSubstring.contains(tutorialsDevLinkFolder + findStr)) {
-			path = tutorialsDir;
+		else if (lineSubstring.contains(DocsConstants.tutorialsDevLinkFolder + DocsConstants.findStr)) {
+			path = DocsConstants.tutorialsDir;
 		}
 
-		else if (lineSubstring.contains(referenceDevLinkFolder + findStr)) {
-			path = referenceDevDir;
+		else if (lineSubstring.contains(DocsConstants.referenceDevLinkFolder + DocsConstants.findStr)) {
+			path = DocsConstants.referenceDevDir;
 		}
 
 		return path;
@@ -1188,10 +1188,10 @@ public class CheckLinksTask extends Task {
 
 		while ((line = in.readLine()) != null) {
 
-			if (line.contains("<a name=" + quotation + secondaryHeader + quotation + ">")) {
+			if (line.contains("<a name=" + DocsConstants.quotation + secondaryHeader + DocsConstants.quotation + ">")) {
 				validUrl = true;
 			}
-			else if (line.contains("<div") && line.contains("id=" + quotation + secondaryHeader + quotation + ">")) {
+			else if (line.contains("<div") && line.contains("id=" + DocsConstants.quotation + secondaryHeader + DocsConstants.quotation + ">")) {
 				validUrl = true;
 			}
 		}
@@ -1229,7 +1229,7 @@ public class CheckLinksTask extends Task {
 		headers = assignDirHeaders(line, lineIndex);
 
 		// Check 7.2 portal and 1.1 commerce links from local liferay-docs repo
-		if ((line.contains("/" + PORTAL_VERSION + "/") || line.contains("/" + COMMERCE_VERSION + "/")) &&
+		if ((line.contains("/" + DocsConstants.PORTAL_VERSION + "/") || line.contains("/" + DocsConstants.COMMERCE_VERSION + "/")) &&
 				!differingDefaultVersion) {
 
 			boolean docFoldersMatch = doesDocFoldersMatch(line, lineIndex);
@@ -1240,14 +1240,14 @@ public class CheckLinksTask extends Task {
 			if (headers.isEmpty()) {
 
 				// Allow linking to parent folders of site
-				if (line.contains("/docs/" + PORTAL_VERSION + "/" + userGuideLinkFolder + ")") ||
-					line.contains("/docs/" + PORTAL_VERSION + "/" + deploymentGuideLinkFolder + ")") ||
-					line.contains("/docs/" + PORTAL_VERSION + "/" + distributeGuideLinkFolder + ")") ||
-					line.contains("/docs/" + PORTAL_VERSION + "/" + appDevLinkFolder + ")") ||
-					line.contains("/docs/" + PORTAL_VERSION + "/" + customizationDevLinkFolder + ")") ||
-					line.contains("/docs/" + PORTAL_VERSION + "/" + frameworksDevLinkFolder + ")") ||
-					line.contains("/docs/" + PORTAL_VERSION + "/" + tutorialsDevLinkFolder + ")") ||
-					line.contains("/docs/" + PORTAL_VERSION + "/" + referenceDevLinkFolder + ")")) {
+				if (line.contains("/docs/" + DocsConstants.PORTAL_VERSION + "/" + DocsConstants.userGuideLinkFolder + ")") ||
+					line.contains("/docs/" + DocsConstants.PORTAL_VERSION + "/" + DocsConstants.deploymentGuideLinkFolder + ")") ||
+					line.contains("/docs/" + DocsConstants.PORTAL_VERSION + "/" + DocsConstants.distributeGuideLinkFolder + ")") ||
+					line.contains("/docs/" + DocsConstants.PORTAL_VERSION + "/" + DocsConstants.appDevLinkFolder + ")") ||
+					line.contains("/docs/" + DocsConstants.PORTAL_VERSION + "/" + DocsConstants.customizationDevLinkFolder + ")") ||
+					line.contains("/docs/" + DocsConstants.PORTAL_VERSION + "/" + DocsConstants.frameworksDevLinkFolder + ")") ||
+					line.contains("/docs/" + DocsConstants.PORTAL_VERSION + "/" + DocsConstants.tutorialsDevLinkFolder + ")") ||
+					line.contains("/docs/" + DocsConstants.PORTAL_VERSION + "/" + DocsConstants.referenceDevLinkFolder + ")")) {
 
 					validURL = true;
 				}
@@ -1275,8 +1275,8 @@ public class CheckLinksTask extends Task {
 
 		// Check legacy URLs by checking remote LDN site. These links must be
 		// published to LDN before this tool can verify them.
-		else if (checkLegacyLinks && (line.contains("/" + PORTAL_VERSION_LEGACY_1 + "/") ||
-				line.contains("/" + PORTAL_VERSION_LEGACY_2 + "/"))) {
+		else if (checkLegacyLinks && (line.contains("/" + DocsConstants.PORTAL_VERSION_LEGACY_1 + "/") ||
+				line.contains("/" + DocsConstants.PORTAL_VERSION_LEGACY_2 + "/"))) {
 
 			String ldnUrl = extractLdnUrl(line, in.getLineNumber(), article);
 			validURL = isLdnUrlValid(ldnUrl, article, in.getLineNumber());
@@ -1334,69 +1334,35 @@ public class CheckLinksTask extends Task {
 	private static boolean checkDxpLinks;
 	private static boolean checkLegacyLinks;
 	private static List<File> fileOverrides = new ArrayList<File>();
-	private static String findStr = "/-/knowledge_base/";
-	private static String headerSyntax = "header-id: ";
 	private static List<String> secondaryKeyValues = new ArrayList<String>();
 	private static String ldnArticle;
 	private static String platformReferenceSite;
 	private static String platformToken;
-	private static char quotation = '"';
-	private static int resultsNumber = 0;
 	private static boolean validUrl;
+	private static int resultsNumber = 0;
 
-	// Versions
-
-	private static String COMMERCE_VERSION = "1-1";
-	private static String PORTAL_VERSION = "7-2";
-	private static String PORTAL_VERSION_LEGACY_1 = "7-1";
-	private static String PORTAL_VERSION_LEGACY_2 = "7-0";
-
-	// User Guide
-
-	private static String userGuideDir = "user";
-	private static String userGuideLinkFolder = "user";
 	private static List<File> userGuideArticles = new ArrayList<File>();
 	private static ArrayList<List<String>> userGuideHeaders = new ArrayList<List<String>>();
 
-	// Deployment Guide
-
-	private static String deploymentGuideDir = "deployment";
-	private static String deploymentGuideLinkFolder = "deploy";
 	private static List<File> deploymentGuideArticles = new ArrayList<File>();
 	private static ArrayList<List<String>> deploymentGuideHeaders = new ArrayList<List<String>>();
 
-	private static String distributeGuideDir = "distribute/publish";
-	private static String distributeGuideLinkFolder = "publish";
 	private static List<File> distributeGuideArticles = new ArrayList<File>();
 	private static ArrayList<List<String>> distributeGuideHeaders = new ArrayList<List<String>>();
 
-	// Dev Guide
-
-	private static String appDevDir = "developer/appdev";
-	private static String appDevLinkFolder = "appdev";
 	private static List<File> appDevArticles = new ArrayList<File>();
 	private static ArrayList<List<String>> appDevHeaders = new ArrayList<List<String>>();
 
-	private static String customizationDevDir = "developer/customization";
-	private static String customizationDevLinkFolder = "customization";
 	private static List<File> customizationDevArticles = new ArrayList<File>();
 	private static ArrayList<List<String>> customizationDevHeaders = new ArrayList<List<String>>();
 
-	private static String frameworksDevDir = "developer/frameworks";
-	private static String frameworksDevLinkFolder = "frameworks";
 	private static List<File> frameworksDevArticles = new ArrayList<File>();
 	private static ArrayList<List<String>> frameworksDevHeaders = new ArrayList<List<String>>();
 
-	private static String tutorialsDir = "developer/tutorials";
-	private static String tutorialsDevLinkFolder = "tutorials";
 	private static List<File> tutorialsArticles = new ArrayList<File>();
 	private static ArrayList<List<String>> tutorialsHeaders = new ArrayList<List<String>>();
 
-	private static String referenceDevDir = "developer/reference";
-	private static String referenceDevLinkFolder = "reference";
 	private static List<File> referenceDevArticles = new ArrayList<File>();
 	private static ArrayList<List<String>> referenceDevHeaders = new ArrayList<List<String>>();
 
-	private static String[] articleDirs = {appDevDir, customizationDevDir, frameworksDevDir, userGuideDir,
-			deploymentGuideDir, distributeGuideDir, tutorialsDir, referenceDevDir};
 }
