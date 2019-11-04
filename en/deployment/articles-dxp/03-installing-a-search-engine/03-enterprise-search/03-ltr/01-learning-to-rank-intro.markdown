@@ -60,7 +60,7 @@ queries sent to Elasticsearch:
 
 - A [Liferay Enterprise Search](https://help.liferay.com/hc/en-us/articles/360014400932) 
   (LES) is required for Learning to Rank. Once you have a subscription, 
-  [download LES and install the LPKG files](/docs/7-2/user/-/knowledge_base/u/installing-apps-manually#installing-apps-manually)
+  [download LES and install the LPKG files](/docs/7-2/user/-/knowledge_base/u/installing-apps-manually)
   to your @product@ server.
 
 - A remote Elasticsearch server, with your data indexed into it.

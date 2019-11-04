@@ -511,9 +511,8 @@ Now restart WebSphere.
 
 ## Start @product@
 
-1.  If you plan to use @product@'s [setup
-
-    wizard](/docs/7-2/deploy/-/knowledge_base/d/installing-product#using-the-setup-wizard),
+1.  If you plan to use @product@'s
+    [setup wizard](/docs/7-2/deploy/-/knowledge_base/d/installing-product#using-the-setup-wizard),
     skip to the next step. If you wish to use WebSphere's data source and mail
     session, create a file called `portal-ext.properties` in your Liferay Home
     folder. Place the following configuration in the file: 
