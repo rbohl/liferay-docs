@@ -46,7 +46,7 @@ Installing Elasticsearch is pretty easy and takes only six steps:
 | using the same version and distribution (e.g., Oracle Open JDK 1.8.0_201). You can
 | specify this in `[Elasticsearch Home]/bin/elasticsearch.in.sh`:
 | 
-|         JAVA_HOME=/path/to/java
+| `JAVA_HOME=/path/to/java`
 | 
 | Consult the
 | [Elasticsearch compatibility matrix](https://www.elastic.co/support/matrix#matrix_jvm)
@@ -91,6 +91,9 @@ A JSON document is returned that looks similar to this:
 
 The version of Elasticsearch that's running is the value of the `"number"` field.
 In this example, it's 6.5.1. 
+
+| **Note:** Although the embedded server uses Elasticsearch 6.5, Elasticsearch
+| 6.8.x has been tested with @product-ver@, and is fully supported.
 
 Shut down the @product@ server. In a local, single-machine testing environment,
 if you continue without shutting down, the Elasticsearch server you're about to
@@ -165,6 +168,10 @@ Elasticsearch starts, and one of its status messages includes a transport addres
 Take note of this address; you'll need to give it to your @product@ server so it
 can find Elasticsearch on the network. 
 
+| **X-Pack Security:** You must also disable X-Pack  Security unless you have a
+| Liferay Enterprise Search subscription and are installing security at the same
+| time. To disbale it, add this to `elasticsearch.yml`: `xpack.security.enabled:false`.
+
 ### Step Five: Configure @product@ to Connect to your Elasticsearch Cluster
 
 Now that you're ready to configure @product@, start it if you haven't already,
@@ -193,5 +200,5 @@ and click on *Control Panel* &rarr; *Configuration* &rarr; *Search* and
 click the *Execute* button for *Reindex all search indexes*. When you do that,
 you should see some messages scroll up in the Elasticsearch log. 
 
-For more details refer to the [Elasticsearch installation guide](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/_installation.html).
+For more details refer to the [Elasticsearch installation guide](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/install-elasticsearch.html).
 

@@ -46,7 +46,7 @@ effect.
 `bootstrapMlockAll=false`
 : A boolean setting that, when set to `true`, tries to lock the process address
 space into RAM, preventing any Elasticsearch memory from being swapped out (see
-[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/setup-configuration-memory.html#bootstrap-memory_lock))
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/setup-configuration-memory.html#bootstrap-memory_lock))
 for more information)
 
 `logExceptionsOnly=true`
@@ -56,56 +56,56 @@ Elasticsearch, and does not rethrow them.
 `retryOnConflict=5`
 : Set an int value for the number of retries to attempt if a version conflict
 occurs because the document was updated between getting it and updating it (see
-[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/docs-update.html#_parameters_3)
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/docs-update.html#_parameters_3)
 for more information).
 
 `discoveryZenPingUnicastHostsPort=9300-9400`
 : Set a String value for the range of ports to use when building the value for
 discovery.zen.ping.unicast.hosts. Multiple Elasticsearch nodes on a range of
 ports can act as gossip routers at the same computer (see
-[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/modules-discovery-zen.html)
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-discovery-zen.html)
 for more information).
 
 `networkHost=`
 : Set this String value to instruct the node to bind to this hostname or IP
 address and publish (advertise) this host to other nodes in the cluster. This is
 a shortcut which sets the bind host and the publish host at the same time (see
-[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/modules-network.html#common-network-settings)
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-network.html#common-network-settings)
 for more information).
 
 `networkBindHost=`
 : Set the String value of the network interface(s) a node should bind to in order
 to listen for incoming requests (see
-[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/modules-network.html#advanced-network-settings)
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-network.html#advanced-network-settings)
 for more information).
 
 `networkPublishHost=`
 : Set the String value of a single interface that the node advertises to other
 nodes in the cluster, so that those nodes can connect to it (see
-[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/modules-network.html#advanced-network-settings)
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-network.html#advanced-network-settings)
 for more information).
 
 `transportTcpPort=`
 : Set the String value for the port to bind for communication between nodes.
 Accepts a single value or a range
-(see [here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/modules-transport.html#_tcp_transport)
+(see [here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-transport.html#_tcp_transport)
 for more information).
 
 `transportAddresses=localhost:9300`
 : Set the String values for the addresses of the remote Elasticsearch nodes to
 connect to. This value is required when Operation Mode is set to remote (see
-[here](https://www.elastic.co/guide/en/elasticsearch/client/java-api/6.5/transport-client.html)
+[here](https://www.elastic.co/guide/en/elasticsearch/client/java-api/6.8/transport-client.html)
 for more information). Specify as many or few nodes as you see fit.
 
 `clientTransportSniff=true`
 : Set this booleant to true to enable cluster sniffing and dynamically discover
 available data nodes in the cluster
-(see [here](https://www.elastic.co/guide/en/elasticsearch/client/java-api/6.5/transport-client.html)
+(see [here](https://www.elastic.co/guide/en/elasticsearch/client/java-api/6.8/transport-client.html)
 for more information).
 
 `clientTransportIgnoreClusterName=false`
 : Set this boolean to true to ignore cluster name validation of connected nodes
-(see [here](https://www.elastic.co/guide/en/elasticsearch/client/java-api/6.5/transport-client.html)
+(see [here](https://www.elastic.co/guide/en/elasticsearch/client/java-api/6.8/transport-client.html)
 for more information).
 
 `clientTransportPingTimeout=`
@@ -115,30 +115,30 @@ unset, the default Elasticsearch `client.transport.ping_timeout` is used.
 `clientTransportNodesSamplerInterval=`
 : Set this String value to instruct the client node on how often to sample / ping
 the nodes listed and connected (see
-[here](https://www.elastic.co/guide/en/elasticsearch/client/java-api/6.5/transport-client.html)
+[here](https://www.elastic.co/guide/en/elasticsearch/client/java-api/6.8/transport-client.html)
 for more information).
 
 `httpEnabled=true`
 : Set this boolean to false to disable the http layer entirely on nodes which are
 not meant to serve REST requests directly. As this setting was 
-[deprecated in Elasticsearch 6.3](https://www.elastic.co/guide/en/elasticsearch/reference/current/release-notes-6.3.0.html#deprecation-6.3.0), the connector's corresponding setting is now also deprecated. This setting was only used for configuring the embedded Elasticsearch server, so its deprecation should have minimal impact to production deployments.
+[deprecated in Elasticsearch 6.3](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/release-notes-6.3.0.html#deprecation-6.3.0), the connector's corresponding setting is now also deprecated. This setting was only used for configuring the embedded Elasticsearch server, so its deprecation should have minimal impact to production deployments.
 
 `httpCORSEnabled=true`
 : Set this boolean to false to disable cross-origin resource sharing, i.e. whether
 a browser on another origin can do requests to Elasticsearch. If disabled, web
 front end tools like elasticsearch-head may be unable to connect (see
-[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/modules-http.html#_settings_2)
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-http.html#_settings_2)
 for more information).
 
 `httpCORSAllowOrigin=/https?:\\/\\/localhost(:[0-9]+)?/`
 : Set the String origins to allow when HTTP CORS is enabled (see
-[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/modules-http.html#_settings_2)
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-http.html#_settings_2)
 for more information).
 
 `httpCORSConfigurations=`
 : Set the String values for custom settings for HTTP CORS, in YML format
 (elasticsearch.yml) (see
-[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/modules-http.html#_settings_2)
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-http.html#_settings_2)
 for more information).
 
 `additionalConfigurations=`
@@ -187,5 +187,5 @@ remote Elasticsearch installations:
 - `httpCORSConfigurations` 
 - `syncSearch`
 
-You can easily configure these settings in the System Setting application, or
-as mentioned above, you can specify them in a deployable OSGi `.config` file.
+Configure these settings in the System Setting application, or as mentioned
+above, you can specify them in a deployable OSGi `.config` file.

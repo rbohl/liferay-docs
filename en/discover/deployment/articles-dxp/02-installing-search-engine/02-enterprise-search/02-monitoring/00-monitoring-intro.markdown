@@ -10,11 +10,13 @@ Monitor Elasticsearch with X-Pack Monitoring. First
 [install X-Pack onto Elasticsearch](discover/deployment/-/knowledge_base-7-1/installing-x-pack)
 and configure security if you're using X-Pack's security features. Then come
 back here for instructions on installing and configuring Kibana (the monitoring
-server) with X-Pack so that Elasticsearch (secured with X-Pack), Kibana (secured
-with X-Pack), and @product@ can communicate effortlessly and securely. A Liferay
-Enterprise Search Standard subscription (included with Premium) is necessary for
-this integration.  Contact 
+server) with X-Pack so that Elasticsearch (secured with X-Pack), Kibana
+(secured with X-Pack), and @product@ can communicate effortlessly and securely.
+A Liferay Enterprise Search (LES) subscription is necessary for this
+integration.  Contact 
 [Liferay's Sales department for more information](https://www.liferay.com/contact-us#contact-sales).
+
+Here's the generalized procedure:
 
 1.  Tell Elasticsearch to enable data collection.
 
@@ -53,7 +55,13 @@ for details.
 2.  Tell Kibana where to send monitoring data by setting Elasticsearch's URL in
     `kibana.yml`:
 
+    On Elasticsearch 6.1 and 6.5 the property was 
+
         elasticsearch.url: "http://localhost:9200"
+
+    On Elasticsearch 6.8 and above, use 
+
+        elasticsearch.hosts: [ "http://localhost:9200" ]
 
     If SSL is enabled on Elasticsearch, this is an `https` URL.
 
@@ -69,7 +77,7 @@ additional configuration required before starting Kibana.
 
 If X-Pack requires authentication to access the Elasticsearch cluster, follow
 these steps or refer to 
-[Elastic's documentation](https://www.elastic.co/guide/en/kibana/6.5/monitoring-xpack-kibana.html). 
+[Elastic's documentation](https://www.elastic.co/guide/en/kibana/6.8/monitoring-xpack-kibana.html). 
 
 1.  Set the password for the built-in `kibana` user in `[Kibana
     Home]/config/kibana.yml`:
@@ -87,16 +95,16 @@ these steps or refer to
         ./bin/kibana
 
 3.  Go to `localhost:5601` and make sure you can sign in as a 
-    [user](https://www.elastic.co/guide/en/x-pack/6.5/native-realm.html#native-add)
+    [user](https://www.elastic.co/guide/en/x-pack/6.8/native-realm.html#native-add)
     who has the `kibana_user` 
-    [role](https://www.elastic.co/guide/en/x-pack/6.5/built-in-roles.html) 
+    [role](https://www.elastic.co/guide/en/x-pack/6.8/built-in-roles.html) 
     or a superuser (like the `elastic` user).
 
 ### Configuring Kibana with Encryption
 
 Follow these steps to configure Kibana if X-Pack encrypts communication with the
 Elasticsearch cluster. Consult 
-[Elastic's guide](https://www.elastic.co/guide/en/kibana/6.5/using-kibana-with-security.html#using-kibana-with-security)
+[Elastic's guide](https://www.elastic.co/guide/en/kibana/6.8/using-kibana-with-security.html#using-kibana-with-security)
 for more information.
 
 Add these settings to `kibana.yml`:
@@ -114,7 +122,7 @@ Add these settings to `kibana.yml`:
 
 For more information about monitoring and security best practices in a clustered
 environment, refer to 
-[Elastic's documentation](https://www.elastic.co/guide/en/x-pack/6.5/secure-monitoring.html).
+[Elastic's documentation](https://www.elastic.co/guide/en/x-pack/6.8/secure-monitoring.html).
 
 After this step you can access Kibana at `https://localhost:5601` and sign in
 with a Kibana user. The last step is to connect Kibana to @product@.
@@ -200,4 +208,4 @@ servers are running, add the X-Pack Monitoring portlet to a page:
     the Search category onto the page.
 
 See the Elastic documentation for information on 
-[monitoring Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/es-monitoring.html).
+[monitoring Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/es-monitoring.html).
