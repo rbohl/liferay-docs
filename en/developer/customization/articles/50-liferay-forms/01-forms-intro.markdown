@@ -23,9 +23,7 @@ Here's a compilation of the Liferay Forms application's extension points that
 are ready for your customization:
 
 - Create a Form Storage Adapter by implementing a 
-    [`StorageAdapter`](https://github.com/liferay/liferay-portal/blob/7.2.0-ga1/modules/apps/dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/storage/StorageAdapter.java) 
-    or by extending the Abstract implementation,
-    [`BaseStorageAdapter`](https://github.com/liferay/liferay-portal/blob/7.2.0-ga1/modules/apps/dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/storage/BaseStorageAdapter.java).
+    [`DDMStorageAdapter`](https://github.com/liferay/liferay-portal/blob/7.2.0-ga1/modules/apps/dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/storage/DDMStorageAdapter.java) 
 - Create a Form Field Type by implementing a
     [`DDMFormFieldType`](https://github.com/liferay/liferay-portal/blob/7.2.0-ga1/modules/apps/dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/form/field/type/DDMFormFieldType.java),
     [`DDMFormFieldTypeSettings`](https://github.com/liferay/liferay-portal/blob/7.2.0-ga1/modules/apps/dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/form/field/type/DDMFormFieldTypeSettings.java),
