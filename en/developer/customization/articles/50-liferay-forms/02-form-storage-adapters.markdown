@@ -63,7 +63,7 @@ method.
 
 Each method of the storage adapter is passed a very useful
 `DDMStorageAdapter[Save/Delete/Get]Request`. The request objects contain getter
-methods that return of useful contextual information.
+methods that return useful contextual information.
 
 You must only worry about your implementation needs and building/returning the
 appropriate response objects. The Forms application's service code looks up the
@@ -80,7 +80,7 @@ DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
     ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
 ```
 
-## `DDMStorageAdapter[Save/Delete/get]Request` Getters
+## `DDMStorageAdapter[Save/Delete/Get]Request` Getters
 
 Call the request object's getters to access the necessary data:
 
@@ -98,11 +98,12 @@ Call the request object's getters to access the necessary data:
 - Method: `public long getPrimaryKey()`
     Returns the `storageId` <!-- ???--> of the form record, which is useful for
     any work that requires identifying a record. This will be unique for each
-    form, but isn't guaranteed to be unique throughout the @product@ database.
-    The first time a record is saved (whether through auto-save or user
-    submission of the form), this returns `0`. 
-    <!--why is the isInsert method needed. we could just check for a PK of
-    0? just convenience? -->
+    form record in the @product@ database, but isn't guaranteed to be unique
+    across portal environments like staging and live. Before the record is
+    persisted for the first time (whether through auto-save or user submission
+    of the form), this returns `0`.
+    <!--why is the isInsert method needed when we could just check whether
+    getPrimraryKey returns 0?  just convenience? -->
 
 - Method: `public long getScopeGroupId()`
     Returns the group ID of the current scope. For example, if the Form widget
@@ -117,34 +118,34 @@ Call the request object's getters to access the necessary data:
 
 - Method: `public String getUuid()`
     Returns the unique ID of the Form Record, which is useful for identifying
-    the form record across all other form records in the database. The first time
-    a record is saved, this returns `null`.
+    the form record across portal environments (like staged and live). This is
+    often needed to pass to the `ServiceContext` object used in a service call.
+    Before the record is persisted, this returns `null`.
 
 - Method: `public boolean isInsert()`
     Returns _true_ if the primary key is `0`, and _false_ if there's an existing
     ID for the form record. The default JSON storage adapter uses it to test
     whether an add or update is called for.
 
-`DDMStorageAdapterGetRequest`:
+`DDMStorageAdapterDeleteRequest`:
 
 - Method: `public long getPrimaryKey()`
     Returns the `storageId` <!-- ???--> of the form record, which is useful for
     any work that requires identifying a record. The default JSON storage
     adapter uses it to retrieve the `DDMContent` object associated with the
     primary key, which, in turn with the form itself (see the next method) is
-    used to get deserialized `DDMFormValues`, which can be passed tot he delete
+    used to get deserialized `DDMFormValues`, which can be passed to the delete
     request.
 
 - Method: `public DDMForm getDDMForm()`
     Returns the `DDMForm` object of the form the record is associated with, for
     deletion.
 
-`DDMStorageAdapterDeleteRequest`:
+`DDMStorageAdapterGetRequest`:
 
 - Method: `public long getPrimaryKey()`
     Returns the `storageId` <!-- ???--> of the form record, which is useful for
-    any work that requires identifying a record. You can use this to delete
-    the `DDMContent` for the form record.
+    any work that requires identifying a record.
 
 ## Implementing a `DDMStorageAdapter`
 
@@ -153,7 +154,7 @@ adapter method:
 
 `save`
 : Detect whether the form record is new or if it already exists (due to the
-auto-save feature). If new, call the DDM service for adding `DDMContent` to teh
+auto-save feature). If new, call the DDM service for adding `DDMContent` to the
 database, passing to it, among other things, the serialized version (transformed
 into your storage format) of the `DDMFormValues`.
 
@@ -165,7 +166,7 @@ method, passing the primary key of the form record, as retrieved from the delete
 request. This will be demonstrated in the next tutorial. 
 
 `get`
-: Get the DDM content using the primary key of the form record, retrieved from
+: Get the DDM content using the storage ID of the form record, retrieved from
 the request object, then construct the `DDMFormValues` object from the
 serialized data you've already stored, by calling the deserialization code. Set
 the now-deserialized `DDMFormValues` into the response object. Of course, if you

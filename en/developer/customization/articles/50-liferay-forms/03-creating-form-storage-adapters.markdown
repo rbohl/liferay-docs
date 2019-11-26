@@ -41,7 +41,7 @@ CRUD operations must be created to properly handle Form Records. Start with
 `save`, which serves as the method for adding and updating form records <!--(do we
 really do anything with updating?)-->
 
-The `save` method takes a `DDMStorageAdapterSaveRequest`.The interface demands
+The `save` method takes a `DDMStorageAdapterSaveRequest`. The interface demands
 that you return a `DDMStorageAdapterSaveResponse` and handle
 `StorageException`s.
 
@@ -158,7 +158,7 @@ protected DDMFormValuesSerializer jsonDDMFormValuesSerializer;
 
 Put form record deletion logic in the `delete` method.
 
-The `delete` method takes a `DDMStorageAdapterDeleteRequest`.The interface
+The `delete` method takes a `DDMStorageAdapterDeleteRequest`. The interface
 demands that you return a `DDMStorageAdapterDeleteResponse` and handle
 `StorageException`s.
 
@@ -195,7 +195,7 @@ public DDMStorageAdapterDeleteResponse delete(
 
 Put form record retrieval logic in the `get` method.
 
-The `get` method takes a `DDMStorageAdapterGetRequest`.The interface
+The `get` method takes a `DDMStorageAdapterGetRequest`. The interface
 demands that you return a `DDMStorageAdapterGetResponse` and handle
 `StorageException`s.
 
