@@ -1,8 +1,8 @@
 ---
-header-id: similar-results
+header-id: the-similar-results-search-widget
 ---
 
-# Similar Results
+# The Similar Results Search Widget
 
 [TOC levels=1-4]
 
@@ -19,16 +19,16 @@ content on the page, it's now the page's _main asset_. The Similar Results
 widget, if placed on the same page, will display a list of asset's that are
 similar enough to be returned by a [_More Like This_
 query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html).
-Note that the concept of a main asset is synonymous with Elasticsearch's concept
-of an
+Note that the concept of a main asset is synonymous with Elasticsearch's
+concept of an
 "[input document](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html#_how_it_works)".
 
-**Brief Technical Summary:** The input document/main asset is used to construct
-a query that would produce the input document as the best match to the query.
-This disjunctive query is sent to the search engine to return matching result
-documents. This whole process is configurable: how to process the input
-document, how to select terms from the processed content, and how to form the
-query itself. See the Elasticsearch documentation for the
+The input document/main asset is used to construct a query that would return
+itself as the best match to the query. This disjunctive query (or OR) is sent
+to the search engine to return matching result documents. This whole process is
+configurable: how to process the input document, how to select terms from the
+processed content, and how to form the query itself. See the Elasticsearch
+documentation for the
 [details](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html#_parameters_4).
 
 ## Configuring the Similar Results Widget
@@ -90,7 +90,8 @@ To configure this example,
     Blogs Entries
     Documents and Media files
     Documents and Media folders
-    Web Content
+    Web Content Articles
+    Web Content Folders
     Wiki Pages
     Message Boards threads
     Message Boards messages
@@ -169,7 +170,7 @@ To write your own widget template for the Similar Results display,
 The same template editor is accessible from the Widget Templates entry in the
 Site Menu's _Site Builder_ section.
 
-<!-- Whgat level of docs do we need for this? How much is specific to writing
+<!-- What level of docs do we need for this? How much is specific to writing
 templates for Similar Results, versus just generic template stuff?
 Fields
     Similar Results Display Context
@@ -189,42 +190,39 @@ Util
 
 ## Similar Results Configurations
 
-Talk about scopes
-
 The first configuration options are contained in a section called _Display
 Settings_.
 
 **Display Template**
 : Choose the widget template to configure how similar results are displayed.
 
-**Minimum Item Display**
+**Maximum Item Display**
 : Set the maximum number of results to display in the widget.
 
-The _Advanced Configuration_ section collects settings for tweaking the behavior
-of the widget. Many of these settings correspond to
+The _Advanced Configuration_ section collects settings for tweaking the
+behavior of the widget. Many of these settings are used to configure the More
+Like this Query for Elasticsearch
 [Elasticsearch settings](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html).
 
 **Fields**
-: Specify the fields whose content is used to determine whether another asset
-matches the Main Asset.
+: Use a comma-separated list to specify keyword or text fields whose content is
+used to determine whether another asset matches the Main Asset.
 
 **Maximum Query Terms**
 : Set the maximum number of query terms to extract from the main asset. These
 are the terms used for matching search results to the main asset. Increasing
 this value enhances the relevance of returned results at the expense of
-execution speed. If left blank, this defaults to 25.
+execution speed. If left blank, this defaults to `25`.
 
 **Minimum Term Frequency**
 : Set the minimum threshold for the times a term must appear in the index in
 order to be used for matching similar results. If left blank, this defaults to
-two.
-<!-- Help Text: The minimum term frequency below which the terms will be ignored from the input document. Defaults to 2.-->
+`2`.
 
 **Minimum Document Frequency**
 : Set the minimum threshold for the number of documents that contain a term in
 order for the term to be used in constructing the More Like This query. If left
-blank, this defaults to five.
-<!--Help Text: The minimum document frequency below which the terms will be ignored from the input document. Defaults to 5.-->
+blank, this defaults to `5`.
 
 **Maximum Document Frequency**
 : Set The maximum threshold for the number of documents in the index in which a
@@ -234,43 +232,32 @@ is set.
 
 **Minimum Word Length**
 : Set a minimum word length, below which terms will be omitted from the More
-Like This query.. If left blank, this defaults to 0.
+Like This query.. If left blank, this defaults to `0`.
 
 **Maximum Word Length**
 : Set a maximum word length, above which terms will be omitted from the More
 Like This query. If left blank, no upper bound is set.
 
 **Stop Words**
-: An array of uninteresting stop words that should be ignored for the purpose of
-finding similar results.<!--Sounds analyzer dependent?--> If the configured
-analyzer allows for stop words, these are words you can completely avoid sending
-to the More Like This query. 
-<!-- Needs more work and check with team-->
+: An array of uninteresting stop words (in a comma-separated list) that should
+be ignored for the purpose of finding similar results. If the configured
+analyzer allows for stop words, these are words you can completely avoid
+sending to the More Like This query. 
 
 **Analyzer**
-: Specify an analyzer to use when analyzing the free form text. If left blank,
-this defaults to the analyzer that's associated with the first field in the
-_Fields_ configuration.
-<!--I clearly don't understand the nuts and bolts of how this all works, since
-this makes no sense to me. What "free form text"?-->
+: Specify the analyzer to use on the input document's fields. If left blank,
+this defaults to the analyzer associated with the first entry in the fields
+configuration.
 
 **Minimum Should Match**
 : After the disjunctive query has been formed, this parameter controls the
 number of terms that must match. The syntax is the same as the minimum should
-match. (Defaults to "30%").
-<!-- Need help here-->
+match. (Defaults to `30%`).
 
-From ES docs:
-Indicates that this percent of the total number of optional clauses are
-necessary. The number computed from the percentage is rounded down and used as
-the minimum.
-
-<!-- Where do you set which term to boost?-->
 **Term Boost**
-: Each term in the formed query could be further boosted by their tf-idf score.
-This sets the boost factor to use when using this feature. Defaults to
-deactivated (0). Any other positive value activates terms boosting with the
-given boost factor.
+: Set the boost factor to use if boosting terms by their tf-idf score is
+desired. If left blank, this defaults to deactivated (`0`). Any other positive
+value activates terms boosting with the given boost factor.
 
 **Federated Search Key** 
 : Enter the key of an alternate Search this widget is participating on.
