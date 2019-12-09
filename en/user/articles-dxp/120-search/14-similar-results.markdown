@@ -39,8 +39,7 @@ documentation for the
 2.  To configure it, open the widget Options menu
     (![Options](../../images/icon-app-options.png)) and click _Configuration_.
 
-
-![Figure x: Configure the Similar Results widget's display settings.](../../images-dxp/search-similar-results-display-settings.png)
+![Figure x: Configure the Similar Results widget's display settings.](../../images-dxp/search-simres-widget-config.png)
 
 The full list of available properties is found
 [below](#similar-results-configurations).
@@ -49,11 +48,9 @@ The full list of available properties is found
 
 What happens when a Similar Results widget is placed on a page depends on the
 context and the assets currently displayed by the page. If no main asset is
-selected on the page or the backend search infrastructure can't find its indexed
-document <!--[EXPLAIN WHEN THIS MIGHT OCCUR: search engine not connected?]-->,
-the Similar Results widget won't display anything to the end user; its space on
-the page remains blank. Site administrators see the following informational
-message: 
+selected on the page, the Similar Results widget won't display anything to the
+end user; its space on the page remains blank. Site administrators see the
+following informational message: 
 
 _There are no similar results available._
 
@@ -68,9 +65,6 @@ Learn more by considering two use cases.
 **End Result:** Similar Results (those that would be returned as matching search
 hits) of the same asset type are displayed when an asset is selected in the
 Asset Publisher.
-
-<!-- take the screenshot-->
-Figure x: All these blogs entries are returned by a More Like This query constructed by analyzing the main asset.](../../images-dxp/search-simres-asspub.png)
 
 To configure this example, 
 
@@ -163,30 +157,14 @@ To write your own widget template for the Similar Results display,
 3.  Click the Add button (![Add](../../images/icon-add.png)) to open the
     template creator palette.
 
+    In addition to the standard [widget template](/docs/7-2/user/-/knowledge_base/u/styling-widgets-with-widget-templates) variables, leverage the seach-specific variables provided in the template editor.
+
 4.  Design the template to your liking. See the
     [widget template](/docs/7-2/user/-/knowledge_base/u/styling-widgets-with-widget-templates)
     documentation for more details.
 
 The same template editor is accessible from the Widget Templates entry in the
 Site Menu's _Site Builder_ section.
-
-<!-- What level of docs do we need for this? How much is specific to writing
-templates for Similar Results, versus just generic template stuff?
-Fields
-    Similar Results Display Context
-    Documents *
-General Variables
-    Current URL
-    Locale
-    Portlet Preferences
-    Template ID
-    Theme Display
-Util
-    HTTP Request
-    Liferay Taglib
-    Render Request
-    Render Response
--->
 
 ## Similar Results Configurations
 
