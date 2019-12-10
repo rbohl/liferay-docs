@@ -40,6 +40,7 @@ Elasticsearch.
 - [The Low Level Search Options widget](/docs/7-2/user/-/knowledge_base/u/low-level-search-options-searching-additional-or-alternate-indexes)
 - [Search Tuning: Customizing Search Results](https://help.liferay.com/hc/en-us/articles/360034473872-Search-Tuning-Customizing-Search-Results) 
 - [Search Tuning: Synonyms](https://help.liferay.com/hc/en-us/articles/360034473852-Search-Tuning-Synonym-Sets) 
+- [Similar Results widget](LINK TO HELP CENTER WHEN POSSIBLE)
 
 ### Developer Feature Limitations of Liferay's Solr Integration
 

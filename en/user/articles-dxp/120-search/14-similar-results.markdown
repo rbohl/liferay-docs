@@ -6,8 +6,6 @@ header-id: the-similar-results-search-widget
 
 [TOC levels=1-4]
 
-DON'T FORGET TO UPDATE THE CONFIGURATION ARTICLE AND THE SOLR LIST
-
 There are numerous ways to tune the search experience, and Similar Results is
 one of them. With Similar Results, you add a widget to a page and display
 results that are similar to the _main asset_ that's selected on the page.
@@ -39,7 +37,7 @@ documentation for the
 2.  To configure it, open the widget Options menu
     (![Options](../../images/icon-app-options.png)) and click _Configuration_.
 
-![Figure x: Configure the Similar Results widget's display settings.](../../images-dxp/search-simres-widget-config.png)
+![Figure 1: Configure the Similar Results widget's display settings.](../../images-dxp/search-simres-widget-config.png)
 
 The full list of available properties is found
 [below](#similar-results-configurations).
@@ -125,7 +123,7 @@ To configure an example for using Similar Results with Blogs,
 4.  Click one of the similar results. Its blog content is now rendered on the
     Blogs widget on the current page.
 
-![Figure x: The Similar Results widget must accompany widgets that display a main asset on the page.](../../images/search-simres-blogs.png)
+![Figure 2: The Similar Results widget must accompany widgets that display a main asset on the page.](../../images-dxp/search-simres-blogs.png)
 
 ## Similar Results Widget Templates
 

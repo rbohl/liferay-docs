@@ -325,3 +325,10 @@ fields in the index. For example, show results in alphabetic order of the Title
 field. The default order is determined by the search engine's _Relevance_
 calculation.
 
+**Similar Results**
+: Using a query constructed based on the selected asset on the page (for
+example, a Blogs Entry that's been selected in the Blogs widget from a list of
+Blogs Entries), the
+[DXP-only Similar Results widget](LINK TO HELP CENTER WHEN AVAILABLE)
+returns matching results in a list that can be styled using a Widget
+Template.
