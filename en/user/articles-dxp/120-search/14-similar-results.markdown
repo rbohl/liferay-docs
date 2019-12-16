@@ -77,8 +77,11 @@ To configure this example,
 3.  Create multiple similar assets of the types listed below. Make sure they're
     similar enough that the Similar Results widget would populate results.
 
-    <!-- What's similar about a similar asset? Its content? Keywords? What makes
-    one asset similar to another? -Rich -->
+    To create assets that will be returned by the More Like This Query, pay
+    attention to the content of the assets you create and to the
+    [Similar Results widget configuration](#similar-results-configurations).
+    For testing, it's advisable to set the _Minimum Term Frequency_ and the
+    _Minimum Document Frequency_ values both to `1`.
 
     Blogs Entries
     Documents and Media files
@@ -117,6 +120,12 @@ To configure an example for using Similar Results with Blogs,
 2.  Create multiple similar Blogs entries. Make sure they're
     similar enough that the Similar Results widget returns them as results.
 
+    To create assets that will be returned by the More Like This Query, pay
+    attention to the content of the assets you create and to the
+    [Similar Results widget configuration](#similar-results-configurations).
+    For testing, it's advisable to set the _Minimum Term Frequency_ and the
+    _Minimum Document Frequency_ values both to `1`.
+
 3.  Click on a Blogs post in the Blogs widget. The Blogs entry is displayed,
     and the Similar Results widget displays links to similar entries.
 
@@ -137,13 +146,13 @@ _Card Layout_.
 <!--Please add image captions below. -Rich -->
 
 The Compact Layout looks like this:
-![](../../images-dxp/search-simres-compact-layout.png)
+![The compact layout is a list of hyperlinked titles.](../../images-dxp/search-simres-compact-layout.png)
 
 The List Layout looks like this:
-![](../../images-dxp/search-simres-list-layout.png)
+![The list layout shows a summary of the asset, and includes the title, the User, modified date, asset type, and a snippet of content.](../../images-dxp/search-simres-list-layout.png)
 
 The Card Layout looks like this:
-![](../../images-dxp/search-simres-card-layout.png)
+![Similar to the list, the card layout puts the asset's summary fields into a card container.](../../images-dxp/search-simres-card-layout.png)
 
 ### Add a Custom Widget Template for Similar Results
 
