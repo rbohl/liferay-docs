@@ -9,6 +9,7 @@ header-id: creating-a-form-storage-adapter
 To create a storage adapter, implement the `DDMStorageAdapter` interface. The
 [`DDMJSONStorageAdapter`](https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/storage/DDMJSONStorageAdapter.java)
 is @product@'s default implementation.
+<!-- Once LPS-97208 or LPS-105739 are fixed, we can rpoceed with actually developing this.-->
 
 ## Step 1: Declare the Implementation as a Component
 
@@ -23,23 +24,11 @@ that the service registry can retrieve your implementation.
 public class DDMFileSystemStorageAdapter implements DDMStorageAdapter {
 ```
 
-<!-->
-The only method without a base implementation in the abstract class is
-`getStorageType`. For file system storage, it can return `"File System"`.
-
-```java
-@Override
-public String getStorageType() {
-return "File System";
-}
-```
-</!-->
-
 ## Step 2: Implement the `save` Method
 
 CRUD operations must be created to properly handle Form Records. Start with
-`save`, which serves as the method for adding and updating form records <!--(do we
-really do anything with updating?)-->
+`save`, which serves as the entry point for adding and updating form records
+<!--(do we really do anything with updating?)-->
 
 The `save` method takes a `DDMStorageAdapterSaveRequest`. The interface demands
 that you return a `DDMStorageAdapterSaveResponse` and handle
@@ -54,7 +43,8 @@ public DDMStorageAdapterSaveResponse save(
 The default JSON implementation responds differently depending on the value of
 a boolean value stored in the save request, `isInsert`. If true, logic for
 adding a new form record is invoked, and if false, an update is precipitated
-instead. This logic is contained in two protected methods.
+instead. This logic is contained in two protected methods, `insert` and
+`update`.
 
 ```java
 @Override
@@ -168,7 +158,7 @@ public DDMStorageAdapterDeleteResponse delete(
     throws StorageException;
 ```
 
-The default implementation:
+The default storage adapter's implementation:
 
 ```java
 @Override
@@ -214,7 +204,7 @@ public DDMStorageAdapterGetResponse get(
     throws StorageException {
 
     try {
-        // get the ddm content using the pk from the passed request
+        // get the ddm content using the storaeId from the passed request
         DDMContent ddmContent = ddmContentLocalService.getContent(
             ddmStorageAdapterGetRequest.getPrimaryKey());
 
@@ -245,177 +235,6 @@ protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
             jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
     return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
-}
-```
-
-### Create
-
-Next override the `doCreateMethod` to return a `long` that identifies each form
-record with a unique file ID: 
-
-```java
-@Override
-protected long doCreate(
-    long companyId, long ddmStructureId, DDMFormValues ddmFormValues, 
-    ServiceContext serviceContext)
-    throws Exception {
-
-    validate(ddmFormValues, serviceContext);
-
-    long fileId = _counterLocalService.increment();
-
-    DDMStructureVersion ddmStructureVersion =
-        _ddmStructureVersionLocalService.getLatestStructureVersion(
-            ddmStructureId);
-
-    long classNameId = PortalUtil.getClassNameId(
-        FileSystemStorageAdapter.class.getName());
-
-    _ddmStorageLinkLocalService.addStorageLink(
-        classNameId, fileId, ddmStructureVersion.getStructureVersionId(),
-        serviceContext);
-
-    saveFile(
-        ddmStructureVersion.getStructureVersionId(), fileId, ddmFormValues);
-
-    return fileId;
-}
-
-@Reference
-private CounterLocalService _counterLocalService;
-
-@Reference
-private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
-
-@Reference
-private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
-```
-
-These are the utility methods invoked in the create method:
-
-```java
-private File getFile(long structureId, long fileId) {
-    return new File(
-        getStructureFolder(structureId), String.valueOf(fileId));
-}
-
-private File getStructureFolder(long structureId) {
-    return new File(String.valueOf(structureId));
-}
-
-private void saveFile(
-        long structureVersionId, long fileId, DDMFormValues formValues)
-    throws IOException {
-
-    String serializedDDMFormValues = _ddmFormValuesJSONSerializer.serialize(
-        formValues);
-
-    File formEntryFile = getFile(structureVersionId, fileId);
-
-    FileUtil.write(formEntryFile, serializedDDMFormValues);
-}
-
-@Reference
-private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
-```
-
-### Read
-
-To retrieve the form record's values from the `File` object where they were
-written, override `doGetDDMFormValues`:
-
-```java
-@Override
-protected DDMFormValues doGetDDMFormValues(long classPK) throws Exception {
-    DDMStorageLink storageLink =
-        _ddmStorageLinkLocalService.getClassStorageLink(classPK);
-
-    DDMStructureVersion structureVersion =
-        _ddmStructureVersionLocalService.getStructureVersion(
-            storageLink.getStructureVersionId());
-
-    String serializedDDMFormValues = FileUtil.read(
-        getFile(structureVersion.getStructureVersionId(), classPK));
-
-    return _ddmFormValuesJSONDeserializer.deserialize(
-        structureVersion.getDDMForm(), serializedDDMFormValues);
-}
-
-@Reference
-private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
-```
-
-### Update
-
-Override the `doUpdate` method so the record's values can be overwritten. This
-example calls the `saveFile`  utility method provided earlier:
-
-```java
-@Override
-protected void doUpdate(
-        long classPK, DDMFormValues ddmFormValues,
-        ServiceContext serviceContext)
-    throws Exception {
-
-    validate(ddmFormValues, serviceContext);
-
-    DDMStorageLink storageLink =
-        _ddmStorageLinkLocalService.getClassStorageLink(classPK);
-
-    saveFile(
-        storageLink.getStructureVersionId(), storageLink.getClassPK(),
-        ddmFormValues);
-}
-```
-
-### Delete
-
-Override the `doDeleteByClass` method to delete the `File` representing the form
-record, using the `classPK`, and to delete the class storage links:
-
-```java
-@Override
-protected void doDeleteByClass(long classPK) throws Exception {
-    DDMStorageLink storageLink =
-        _ddmStorageLinkLocalService.getClassStorageLink(classPK);
-
-    FileUtil.delete(getFile(storageLink.getStructureId(), classPK));
-
-    _ddmStorageLinkLocalService.deleteClassStorageLink(classPK);
-}
-```
-
-Provide form record deletion logic to be called when deleting all the records
-and storage links associated with a form (using its `ddmStructureId`):
-
-```java
-@Override
-protected void doDeleteByDDMStructure(long ddmStructureId)
-    throws Exception {
-
-    FileUtil.deltree(getStructureFolder(ddmStructureId));
-
-    _ddmStorageLinkLocalService.deleteStructureStorageLinks(ddmStructureId);
-}
-```
-
-## Beyond CRUD: Validation
-
-Add a `validate` method to the `DDMStorageAdapter`:
-
-```java
-protected void validate(
-    DDMFormValues ddmFormValues, ServiceContext serviceContext)
-    throws Exception {
-
-    boolean validateDDMFormValues = GetterUtil.getBoolean(
-        serviceContext.getAttribute("validateDDMFormValues"), true);
-
-    if (!validateDDMFormValues) {
-        return;
-    }
-
-    _ddmFormValuesValidator.validate(ddmFormValues);
 }
 ```
 
