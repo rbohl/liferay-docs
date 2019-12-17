@@ -102,8 +102,6 @@ Call the request object's getters to access the necessary data:
     across portal environments like staging and live. Before the record is
     persisted for the first time (whether through auto-save or user submission
     of the form), this returns `0`.
-    <!--why is the isInsert method needed when we could just check whether
-    getPrimraryKey returns 0?  just convenience? -->
 
 - Method: `public long getScopeGroupId()`
     Returns the group ID of the current scope. For example, if the Form widget
@@ -127,25 +125,24 @@ Call the request object's getters to access the necessary data:
     ID for the form record. The default JSON storage adapter uses it to test
     whether an add or update is called for.
 
+`DDMStorageAdapterGetRequest`:
+
+- Method: `public long getPrimaryKey()`
+    Returns the `storageId` of the form record, which is useful for
+    any work that requires identifying a record.
+
+- Method: `public DDMForm getDDMForm()`
+    Returns the `DDMForm` object of the form the record is associated with.
+
 `DDMStorageAdapterDeleteRequest`:
 
 - Method: `public long getPrimaryKey()`
-    Returns the `storageId` <!-- ???--> of the form record, which is useful for
+    Returns the `storageId` of the form record, which is useful for
     any work that requires identifying a record. The default JSON storage
     adapter uses it to retrieve the `DDMContent` object associated with the
     primary key, which, in turn with the form itself (see the next method) is
     used to get deserialized `DDMFormValues`, which can be passed to the delete
     request.
-
-- Method: `public DDMForm getDDMForm()`
-    Returns the `DDMForm` object of the form the record is associated with, for
-    deletion.
-
-`DDMStorageAdapterGetRequest`:
-
-- Method: `public long getPrimaryKey()`
-    Returns the `storageId` <!-- ???--> of the form record, which is useful for
-    any work that requires identifying a record.
 
 ## Implementing a `DDMStorageAdapter`
 
@@ -189,49 +186,8 @@ and
 [here](https://github.com/liferay/liferay-portal/blob/7.2.x/modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/internal/io/DDMFormValuesJSONDeserializer.java),
 respectively.
 
-<!-- unnecessary now? Looks like we have a storage manager impl that calls
-validation for us? -->
-### Validating Form Entries
-
-Because the Storage Adapter handles User entered data during the `add` and
-`update` operations, it's important to validate that the entries include only
-appropriate data. Add a `validate` method to the `DDMStorageAdapter`, calling the
-Liferay Forms' `DDMFormValuesValidator` method to do the heavy lifting. 
-
-```java
-protected void validate(
-      DDMFormValues ddmFormValues, ServiceContext serviceContext)
-	throws Exception {
-
-	boolean validateDDMFormValues = GetterUtil.getBoolean(
-		serviceContext.getAttribute("validateDDMFormValues"), true);
-
-	if (!validateDDMFormValues) {
-		return;
-	}
-
-	_ddmFormValuesValidator.validate(ddmFormValues);
-}
-```
-
-Make sure to do three things:
-
-1.  Retrieve the value of the `boolean validateDDMFormValues` attribute from the
-    service context.
-
-2.  If `validateDDMFormValues` is false, exit the validation without doing
-    anything.
-
-    When a User accesses a form at its dedicated link, there's a periodic
-    auto-save process of in-progress form values. There's no need to validate
-    this data until the User hits the *Submit* button on the form, so the
-    auto-save process sets the `validateDDMFormValues` attribute to `false`.
-
-3.  Otherwise, call the validate method from the `DDMFormValuesValidator`
-    service.
-
 All the Java code for the logic discussed here is shown in the next article,
-[Creating Form Storage Adapters](/docs/7-2/customization/-/knowledge_base/c/creating-a-form-storage-adapter).
+[Creating a Form Storage Adapter](/docs/7-2/customization/-/knowledge_base/c/creating-a-form-storage-adapter).
 
 ## Enabling the Storage Adapter
 
