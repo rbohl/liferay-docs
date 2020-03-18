@@ -16,13 +16,15 @@ default field types. For example, perhaps you need a color picker field. You
 could create a select field that lists color names. Some users don't, however,
 know that *Gamboge* is the color of spicy mustard (maybe a little darker), and
 anyway, seeing colors is better than reading their names, so you can create
-a field that shows colors. Or, for instance, maybe you need to add a Slider (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range) to measure the level of satisfaction of a product.
+a field that shows colors. Or, for instance, maybe you need to add a [slider](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range) to measure the level of satisfaction of a product.
 
 These tutorials show you how to
 
 - create a module that adds a *Slider* form field type
 
 - add custom configuration options to your field types
+
+<!-- TODO: upload zip file and update its path below. -->
 
 | **Example project:** The source code for the example *slider* project developed in
 | these tutorials can be downloaded for your convenience. Click
@@ -51,40 +53,41 @@ tutorials:
         │           └── dynamic
         │               └── data
         │                   └── mapping
-        │                       └── type
-        │                           └── slider
-        │                               ├── SliderDDMFormFieldTemplateContextContributor.java
-        │                               ├── SliderDDMFormFieldType.java
-        │                               └── SliderDDMFormFieldTypeSettings.java
+        │                       └── form
+        │                           └── field
+        │                               └── type
+        │                                   └── slider
+        │                                       ├── SliderDDMFormFieldTemplateContextContributor.java
+        │                                       ├── SliderDDMFormFieldType.java
+        │                                       └── SliderDDMFormFieldTypeSettings.java
         └── resources
             ├── content
             │   └── Language.properties
             └── META-INF
                 └── resources
-                    ├── Slider
-                        ├── Slider.es.js
-                        ├── Slider.soy
-                        └── SliderRegister.soy
+                    ├── Slider.es.js
+                    ├── Slider.soy
+                    └── SliderRegister.soy
 
 You don't need `*TemplateContextContributor.java` or `*TypeSettings.java` in the
 initial module (see [Rendering Form Field Settings](/docs/7-1/tutorials/-/knowledge_base/t/rendering-form-field-settings) 
-to learn more about these classes). The initial module consists of these Java
-classes and resources:
+to learn more about these classes). The initial module consists of this Java
+class and resources:
 
 `*DDMFormFieldType.java`: Defines the form field type in the back-end. If you
 extend the abstract class that implements the interface, you automatically
 include the default form configuration options for your form field type. In
-that case, override the interface's `getName` method and you're done. To see
+that case, override the interface's `getModuleName`, `getName` and `isCustomDDMFormFieldType` methods and you're done. To see
 the default configuration options your form field type inherits, look at
 the `DefaultDDMFormFieldTypeSettings` class in the `dynamic-data-mapping-api`
 module.
 
-`[name-of-field-type].es.js`: The JavaScript file that configures the template
-rendering (the `[name-of-field-type].soy` rendering).
+`[name-of-field-type].es.js`: The JavaScript file modeling your field.
 
 `[name-of-field-type].soy`: The template that defines the appearance of the field.
 
-`[name-of-field-type]Register.soy`: The template that calls the template of field soy.
+`[name-of-field-type]Register.soy`: The template responsible for call the template which defines the field's appearance. 
+This Register template is used by the template that renders each of the form's page.
 
 `Language_xx_XX.properties`: Define any terms that must be 
 [translated into different languages](/docs/7-1/tutorials/-/knowledge_base/t/localizing-your-application).
@@ -106,4 +109,4 @@ configuration file.
 
 `package-lock.json`: Automatically generated to track the npm modules dependencies.
 
-Get started creating the time field in the next tutorial.
+Get started creating the slider field in the next tutorial.

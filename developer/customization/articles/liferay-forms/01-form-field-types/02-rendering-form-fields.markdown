@@ -43,8 +43,8 @@ and populate it with this:
             {param contentRenderer kind="html"}
                 {call .content}
                     {param name: $name /}
-                    {param predefinedValue: $predefinedValue /}
                     {param value: $value /}
+                    {param predefinedValue: $predefinedValue /}
                 {/call}
             {/param}
             {param label: $label /}
@@ -108,10 +108,10 @@ There are three important things to do in the template:
     these things:
 
     - Calls the FieldBase template, which is the template responsible to render the base
-    of all fields. This template has a parameter called ContentRenderer that receives the
+    of all fields. This template has a parameter called `contentRenderer` that receives the
     html content specific of a field type.
 
-    - Provides the markup for the slider field in the <input> tag.
+    - Provides the markup for the slider field in the `<input>` tag.
 
 Now that you have the template defined, you need to call it from a register template.
 
@@ -133,12 +133,12 @@ Once the templates are defined, write the JavaScript file modeling your field.
 
 Create a `Slider.es.js` file and give it these contents:
 
-   import '../FieldBase/FieldBase.es';
-import './SliderRegister.soy.js';
-import templates from './Slider.soy.js';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+    import 'dynamic-data-mapping-form-field-type/FieldBase/FieldBase.es';
+    import './SliderRegister.soy.js';
+    import templates from './Slider.soy.js';
+    import Component from 'metal-component';
+    import Soy from 'metal-soy';
+    import {Config} from 'metal-state';
 
     /**
      * Slider Component
@@ -172,13 +172,13 @@ The JavaScript above creates a component called `Slider`.
 ![Figure 1: Add your own form field types to the Forms application.](../../../images/forms-slider-field-type.png)
 
 If you build and deploy your new field type module, you get exactly what you
-described in the `Slider.soy` file: a input field of type range.  We can interact with the Slider, since this element was created to allow us to move the slider controler within the range. But we don't want to lose the value we've positined the slider when we save the Form. Now, we're going to add this behaviour to the field.
+described in the `Slider.soy` file: a input field of type range.  We can interact with the Slider, since this element was created to allow us to move the Slider controller within the range. But, we don't want to lose the value we've set in the Slider when we save the Form, therefore, in the next section, we're going to figure out how to save the Slider's value.
 
 ## Adding Behavior to the Field
 
 To do more than move within the range, define an additional behavior to handle the input in the `Slider.es.js` file.
 
-Add into Slider class, the _handleFieldChanged and dispatchEvent methods:
+Add into Slider class, the `_handleFieldChanged` and `dispatchEvent` methods:
 
     /**
      * Slider Component
@@ -205,9 +205,9 @@ Add into Slider class, the _handleFieldChanged and dispatchEvent methods:
         }
     }
 
-The _handleFieldChange method gets the position's value into the range and save it into the component's state. After this it emits the event to the class that will handle it.
+The `_handleFieldChange` method gets the position's value into the range and save it into the component's state. After this it emits the event to the class that will handle it.
 
-Now add a the parameter _handleFieldChanged to Slider.soy file, to handle the Slider input. You'll need to add the parameter:
+Next, add the parameter `_handleFieldChanged` to Slider.soy file, to handle the Slider input. You'll need to add the parameter:
 
     {@param? _handleFieldChanged: any}
 
@@ -240,10 +240,10 @@ The Slider.soy file now will be:
         {call FieldBase.render}
             {param contentRenderer kind="html"}
                 {call .content}
-                    {param _handleFieldChanged: $_handleFieldChanged /}
                     {param name: $name /}
-                    {param predefinedValue: $predefinedValue /}
                     {param value: $value /}
+                    {param predefinedValue: $predefinedValue /}
+                    {param _handleFieldChanged: $_handleFieldChanged /}
                 {/call}
             {/param}
             {param label: $label /}
@@ -258,8 +258,8 @@ The Slider.soy file now will be:
     {template .content}
         {@param name: string}
         {@param value: ?}
-        {@param? _handleFieldChanged: any}
         {@param? predefinedValue: any}
+        {@param? _handleFieldChanged: any}
         {let $attributes kind="attributes"}
             class="ddm-field-slider form-control slider"
 
@@ -291,5 +291,5 @@ This method updates the field's value.
 
 Now you know how to create a new field type and handle its behavior. Currently,
 the field type only contains the default settings it inherits from its
-superclasses. If that's not sufficient, create additional settings for your
+super classes. If that's not sufficient, create additional settings for your
 field type. See the next tutorial to learn how.
