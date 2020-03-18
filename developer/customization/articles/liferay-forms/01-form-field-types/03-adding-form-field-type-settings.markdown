@@ -10,8 +10,7 @@ Once you develop a
 [Form Field Type](/docs/7-1/tutorials/-/knowledge_base/t/creating-form-field-types), you
 might need to add settings to it. For example, a Slider field, behind the scenes, is a numeric
 field you will select a value within a range. Here you'll learn how to add settings to form field
-types by adding a restriction on Slider field predefined value and customise the bottom value and
-the top value of the range, which can only receive an integer
+types by setting the bottom value and the top value of the range, which can only receive an integer
 number as input.
 
 To add settings to form field types, take these steps:
@@ -25,7 +24,7 @@ To add settings to form field types, take these steps:
   configure the new settings and their default values.
 
 - Update the Soy template to include settings that must be rendered
-  in a form (the predefinedValue, min and max, in our example).
+  in a form (the min and max, in our example).
 
 First craft the interface that controls your field's settings.
 
@@ -41,7 +40,7 @@ This class sets up the *Field Type* configuration form.
 
 Here's what it looks like:
 
-    package com.liferay.dynamic.data.mapping.form.field.type.slider.internal;
+    package com.liferay.dynamic.data.mapping.form.field.type.slider;
 
     import com.liferay.dynamic.data.mapping.annotations.DDMForm;
     import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
@@ -54,87 +53,64 @@ Here's what it looks like:
     import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
     import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
-    @DDMForm(
-        rules = {
-            @DDMFormRule(
-                actions = {
-                    "setVisible('validation', false)"
-                },
-                condition = "TRUE"
-            )
-        }
-    )
+    @DDMForm
     @DDMFormLayout(
-	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
-	value = {
-		@DDMFormLayoutPage(
-			title = "%basic",
-			value = {
-				@DDMFormLayoutRow(
-					{
-						@DDMFormLayoutColumn(
-							size = 12,
-							value = {"label", "tip", "required"}
-						)
-					}
-				)
-			}
-		),
-		@DDMFormLayoutPage(
-			title = "%properties",
-			value = {
-				@DDMFormLayoutRow(
-					{
-						@DDMFormLayoutColumn(
-							size = 12,
-							value = {
-								"name", "predefinedValue", "showLabel", "validation", "min", "max"
-							}
-						)
-					}
-				)
-			}
-		)
-	}
+		paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
+		value = {
+			@DDMFormLayoutPage(
+				title = "%basic",
+				value = {
+					@DDMFormLayoutRow(
+						{
+							@DDMFormLayoutColumn(
+								size = 12,
+								value = {
+									"label", "predefinedValue", "required", "tip"
+								}
+							)
+						}
+					)
+				}
+			),
+			@DDMFormLayoutPage(
+				title = "%advanced",
+				value = {
+					@DDMFormLayoutRow(
+						{
+							@DDMFormLayoutColumn(
+								size = 12,
+								value = {
+									"dataType", "min", "max", "name", "showLabel", "repeatable",
+									"type", "validation", "visibilityExpression"
+								}
+							)
+						}
+					)
+				}
+			)
+		}
     )
     public interface SliderDDMFormFieldTypeSettings
-	extends DefaultDDMFormFieldTypeSettings {
+		extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(
-		label = "%predefined-value",
-		properties = {
-			"placeholder=%enter-a-default-value",
-			"tooltip=%enter-a-default-value-that-is-submitted-if-no-other-value-is-entered"
-		},
-		type = "numeric"
-	)
-	@Override
-	public LocalizedValue predefinedValue();
+		@DDMFormField(
+			label = "%min-value",
+			properties = {
+				"placeholder=%enter-the-bottom-limit-of-the-range"
+			},
+			type = "numeric"
+		)
+		public String min();
 
-	@DDMFormField(
-		label = "%min-value",
-		properties = {
-			"placeholder=%enter-the-bottom-limit-of-the-range"
-		},
-		type = "numeric"
-	)
-    public String min();
-
-	@DDMFormField(
-		label = "%max-value",
-		properties = {
-			"placeholder=%enter-the-top-limit-of-the-range"
-		},
-		type = "numeric"
-	)
-	public String max();
-
-	@DDMFormField(
-		dataType = "string", type = "validation", visibilityExpression = "FALSE"
-	)
-	@Override
-	public DDMFormFieldValidation validation();
-}
+		@DDMFormField(
+			label = "%max-value",
+			properties = {
+				"placeholder=%enter-the-top-limit-of-the-range"
+			},
+			type = "numeric"
+		)
+		public String max();
+	}
 
 Most of the work you need to do is in the class's annotations.
 
@@ -151,7 +127,7 @@ the field. Form field rules are configured using the `@DDMFormRule` annotation.
 
 The interface extends `DefaultDDMFormFieldTypeSettings`. That's why the default
 settings can be used in the class annotation without setting them up in the
-class, as was necessary for the predefinedValue, min and max.
+class, as was necessary for the min and max.
 
 | **DDM Annotations:** The `@DDMForm` annotation on this class allows the form engine to
 | convert the interface definition into a dynamic form. This makes it really
@@ -161,26 +137,20 @@ class, as was necessary for the predefinedValue, min and max.
 | example:
 |
 | `@DDMForm`
-| : Instantiates a new `DDMForm`. Creates a dynamic form from the annotation. It
-is responsible for create a Form Rule (@DDMFormRule) programatically.
-|
-`@DDMFormRule`
-| :  The Rule takes two variables: actions and conditions. In the case above, the action
- will always execute because its condition is equals to TRUE and the action associate
- to it is hide the validation of a specific Form field, in this case the Slider.
+| : Instantiates a new `DDMForm`. Creates a dynamic form from the annotation.
 |
 | `@DDMFormLayout`
 | : Takes two variables: `paginationMode` and `value`. The pagination mode is a
 | String that controls how the layout pages are displayed. The `paginationMode`
 | can be `TABBED_MODE`, `SINGLE_PAGE_MODE`, `SETTINGS_MODE`, or `WIZARD_MODE`.
-| Under `value`, specify any `@DDMFormLayoutPage`s that you want to use.
+| Under `value`, specify any `@DDMFormLayoutPage`'s that you want to use.
 |
 | `@DDMFormLayoutPage`
 | : The sections of the type settings form. It takes two
 | variables: `title` and `value`, where title is a String value that names the
-| section of the form and value is one or more `@DDMFormLayoutRow`s.
+| section of the form and value is one or more `@DDMFormLayoutRow`'s.
 |
-| The layout page titles `%basic` and `%properties` are common to all of
+| The layout page titles `%basic` and `%advanced` are common to all of
 | @product@'s field types, but you can use whatever titles you want. To change the
 | title of a layout page, specify the title in the annotation properties (`title
 | = "%advanced"`, for example), and then create a new key in the language
@@ -197,24 +167,22 @@ is responsible for create a Form Rule (@DDMFormRule) programatically.
 | `value`.
 |
 | `@DDMFormField`
-| : Add new fields to the settings form. In this example, the `mask` and
-| `placeholder` settings are configured with this annotation. Don't forget to add
-| the settings language keys (`mask` and `placeholder-text`) to the language
-| resources files.
+| : Add new fields to the settings form. In this example, the `min` and `max` settings are configured
+| with this annotation. Don't forget to add the settings language keys (`min-value` and `max-value`)
+| to the language resources files.
 
 Once your `*TypeSettings` class is finished, update the `*Type` class for your
 form field type.
 
 ## Updating the Type Class
 
-The class `SliderDDMFormFieldType` currently has one method, `getName`, returning
-the name of the current form field. Add a new method to reference
+In the class `SliderDDMFormFieldType`, add a new method to reference
 `SliderDDMFormFieldTypeSettings` that holds the specific settings of the Slider
 field. This method already exists in the base class (`BaseDDMFormFieldType`), so
 override it:
 
     @Override
-	public Class<? extends DDMFormFieldTypeSettings
+	public Class<? extends DDMFormFieldTypeSettings>
 		getDDMFormFieldTypeSettings() {
 
 		return SliderDDMFormFieldTypeSettings.class;
