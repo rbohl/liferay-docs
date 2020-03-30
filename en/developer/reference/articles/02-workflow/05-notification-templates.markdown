@@ -25,7 +25,7 @@ Definitively discover the variables available in your workflow notification
 context by enabling DEBUG level logging for the
 `TemplateNotificationMessageGenerator` class:
 
-1. Control Panel &rarr; Configuration &rarr; Server Administration.
+1. Go to Control Panel &rarr; Configuration &rarr; Server Administration.
  
 1. Click the Log Levels tab.
  
