@@ -105,7 +105,12 @@ categorized into two main types:
    familiarize yourself with the [Javadoc]() of the class or look into the source code
    to understand operations you have access to.
 
-   _Example:_ `portal.getClassNameId(LanguageEntry.class);` <!-- translate to FreeMarker-->
+   _Example:_ This FreeMarker gets you the current date, using the default
+   locale, in a specific pattern (_Month/Day/Year, Hour:Minute_): 
+
+   ```markup
+   ${dateUtil.getCurrentDate("MM/dd/yyyy, HH:mm",  localeUtil.getDefault())}`
+   ```
 
 | Variable Name                | Value    | Operation | Description or Link                       |
 | ---------------------------- | -------- | --------- |--------------------------------------------- |
