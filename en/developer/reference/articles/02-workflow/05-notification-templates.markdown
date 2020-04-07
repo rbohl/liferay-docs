@@ -1,7 +1,9 @@
 # Workflow Notification Templates
 
 There are a number of variables auto-injected into the workflow notification
-context. These are handy to use in your workflow notification templates.
+context.
+
+These are handy to use in your workflow notification templates.
 
 Normally in Freemarker, you must declare variables explicitly:
 
@@ -66,10 +68,10 @@ The snipped output above shows that `saxReaderUtil`, `getterUtil`,
 `expandoTableLocalService`, `localeUtil`, `groupId`, and `portalUtil` are
 available to the context that caused these messages to be printed in the log.
 
-### Using the Workflow Notification Variables
+### Using the Workflow Notification Template Variables
 
-It's nice to have a list of variables, but how do you use them? They can be
-categorized into two main types:
+The contextually injected notification variables can be categorized into two
+main types:
 
 1. **Value** variables provide a single value. If a variable provides
    a single value, it's mainly useful for displaying that value in the
@@ -112,6 +114,11 @@ categorized into two main types:
    ${dateUtil.getCurrentDate("MM/dd/yyyy, HH:mm",  localeUtil.getDefault())}`
    ```
 
+## Understanding the Workflow Notification Template Variables
+
+These are the variables logged when you enable the Single Approver Definition
+for Blogs Entries, then submit a new entry for publication:
+
 | Variable Name                | Value    | Operation | Description or Link                       |
 | ---------------------------- | -------- | --------- |--------------------------------------------- |
 | ${saxReaderUtil}             |          | &#10004;  | [SaxReaderUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/xml/SAXReaderUtil.html) |
@@ -130,7 +137,7 @@ categorized into two main types:
 | ${jsonFactoryUtil}           |          | &#10004;  | [JSONFactoryUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/json/JSONFactoryUtil.html) |
 | ${stringUtil}                |          | &#10004;  | [StringUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/StringUtil.html) |
 | ${freeMarkerPortletPreferences} |       | &#10004;  | [TemplatePortletPreferences](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-impl/com/liferay/portal/template/TemplatePortletPreferences.html) |
-| ${dateFormats}              | &#10004;  |           | DESCRIBE |
+| ${dateFormats}              |           | &#10004;  | [FastDateFormatFactory](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/FastDateFormatFactory.html) |
 | ${dateFormatFactory}         |          | &#10004;  | [DateFormatFactory](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/DateFormatFactory.html) |
 | ${userPortraitURL}           | &#10004; |           | DESCRIBE |
 | ${portal}                    |          | &#10004;  | [Portal](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/Portal.html) |
@@ -145,7 +152,7 @@ categorized into two main types:
 | ${staticFieldGetter}         |          | &#10004;  | [StaticFieldGetter](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/StaticFieldGetter.html) |
 | ${htmlUtil}                  |          | &#10004;  | [HtmlUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/HtmlUtil.html) |
 | ${languageUtil}              |          | &#10004;  | [LanguageUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/language/LanguageUtil.html) |
-| ${enumUtil}                  | &#10004; |           | DESCRIBE |
+| ${enumUtil}                  |          | &#10004;  | Returns the result of `beansWrapper.getEnumModels()`; for [Accessing Enums](https://freemarker.apache.org/docs/pgui_misc_beanwrapper.html#jdk_15_enums) |
 | ${windowStateFactory}        |          | &#10004;  | [WindowStateFactory](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/WindowStateFactory.html) |
 | ${companyId}                 | &#10004; |           | The ID of the portal's Company/Virtual Instance |
 | ${unicodeFormatter}          |          | &#10004;  | [UnicodeFormatter](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/UnicodeFormatter.html) |
@@ -155,7 +162,7 @@ categorized into two main types:
 | ${taskName}                  | &#10004; |           | The name of the task the notification is in |
 | ${httpUtil}                  |          | &#10004;  | [HttpUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/HttpUtil.html) |
 | ${portletURLFactory}         |          | &#10004;  | [PortletURLFactory](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/PortletURLFactory.html) |
-| ${imageToken}                | &#10004; |           | DESCRIBE |
+| ${imageToken}                | &#10004; |           | An image token from [WebServerServletToken.getToken(long imageId)](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/webserver/WebServerServletToken.html); is deprecated and will be removed |
 | ${groupPermission}           |          | &#10004;  | [GroupPermission](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/service/permission/GroupPermission.html) |
 | ${timeZoneUtil}              |          | &#10004;  | [TimeZoneUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/TimeZoneUtil.html) |
 | ${unicodeLanguageUtil}       |          | &#10004;  | [UnicodeLanguageUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/language/UnicodeLanguageUtil.html) |
@@ -163,15 +170,15 @@ categorized into two main types:
 | ${auditRouterUtil}           |          | &#10004;  | [AuditRouterUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/audit/AuditRouterUtil.html) |
 | ${kaleoTaskInstanceToken}    |          | &#10004;  | [See the documentation on workflow scripting](/docs/7-2/user/-/knowledge_base/u/leveraging-the-script-engine-in-workflow) |
 | ${accountPermission}         |          | &#10004;  | [AccountPermission](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/service/permission/AccountPermission.html) |
-| ${httpUtilUnsafe}            |          | &#10004;  | NEED HELP, does this access restricted variables somehow? [HttpUtilUnsafe]() |
+| ${httpUtilUnsafe}            |          | &#10004;  | Like `${httpUtil}`, an instance of [Http](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/Http.html), but can be used to access the local network |
 | ${workflowTaskAssignees}     | &#10004; |          | [See the documentation on workflow scripting](/docs/7-2/user/-/knowledge_base/u/leveraging-the-script-engine-in-workflow) |
-| ${random}                   |           |           | I DONT KNOW  |
+| ${random}                   |           | &#10004;  | A Java utility for generating [Random](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) numbers; is deprecated and will be removed in the future |
 | ${rolePermission}           |           | &#10004;  | [RolePermission](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/service/permission/RolePermission.html) |
 | ${portletPermission}        |           | &#10004;  | [PortletPermission](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/service/permission/PortletPermission.html) |
 | ${paramUtil}                |           | &#10004;  | [ParamUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/ParamUtil.html) |
 | ${locationPermission}       | &#10004;  |           | Returns the outcome of `OrganizationPermissionUtil.getOrganizationPermission()` |
 | ${calendarFactory}          |           | &#10004;  | [CalendarFactory](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/CalendarFactory.html) |
-| ${webServerToken}           | &#10004;  |           | DESCRIBE |
+| ${webServerToken}           | &#10004; |           | An image token from [WebServerServletToken.getToken(long imageId)](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/webserver/WebServerServletToken.html) |
 | ${sessionClicks}            |           | &#10004;  | [SessionClicks](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/SessionClicks.html) |
 | ${userPermission}           |           | &#10004;  | [UserPermission](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/service/permission/UserPermission.html) |
 | ${entryClassName}           | &#10004;  |
@@ -180,7 +187,7 @@ categorized into two main types:
 | ${userName}                 | &#10004;  |           | The User Name of the last user to intervene in the workflow |
 | ${userId}                   | &#10004;  |           | The User ID of the last user to intervene in the workflow. [See the Workflow Scripting article to understand the logic.](/docs/7-2/user/-/knowledge_base/u/leveraging-the-script-engine-in-workflow)
 | ${prefsPropsUtil}           |           | &#10004;  | [PrefsPropsUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/PrefsPropsUtil.html) |
-| ${url}                      | &#10004;  |           | DESCRIBE
+| ${url}                      | &#10004;  |           | a URL for certain content types that are displayed on a page (e.g., Blogs Entries, Message Boards Messages, and Wiki Pages
 | ${kaleoInstanceToken}       | &#10004;  |           | [See the Workflow Scripting article.](/docs/7-2/user/-/knowledge_base/u/leveraging-the-script-engine-in-workflow#variables-that-are-always-available)
 | ${utilLocator}              |           | &#10004;  | [UtilLocator](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-impl/com/liferay/portal/template/UtilLocator.html) |
 | ${objectUtil}               |           | &#10004;  | Returns a `new LiferayObjectConstructor()` |
@@ -188,100 +195,4 @@ categorized into two main types:
 | ${portletModeFactory}       |           | &#10004;  | [PortletModeFactory](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/PortletModeFactory.html) |
 | ${imageToolUtil}            |           | &#10004;  | [ImageToolUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/image/ImageToolUtil.html) |
 | ${auditMessageFactoryUtil}  |           | &#10004;  | [AuditMessageFactoryUtil](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/audit/AuditMessageFactoryUtil.html) |
-| ${staticUtil}               |           | &#10004;  | Returns the result of `beansWrapper.getStaticModels()` |
-
-
-
-<!-- 
-The ones listed in the LPS-102221 comment:
-
-
-workflowTaskAssignees
-random
-rolePermission
-portletPermission
-paramUtil
-locationPermission
-calendarFactory
-webServerToken
-sessionClicks
-userPermission
-entryClassName
-userGroupPermission
-arrayUtil
-userName
-userId
-prefsPropsUtil
-url
-kaleoInstanceToken
--->
-
-
-<!-- Remaining log output 
-2020-03-30 14:21:42.105 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] validator (class com.liferay.portal.kernel.util.Validator_IW)
-2020-03-30 14:21:42.106 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] dateUtil (class com.liferay.portal.kernel.util.DateUtil_IW)
-2020-03-30 14:21:42.106 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] serviceLocator (class com.liferay.portal.template.ServiceLocator)
-2020-03-30 14:21:42.107 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] serviceContext (class com.liferay.portal.kernel.service.ServiceContext)
-2020-03-30 14:21:42.108 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] jsonFactoryUtil (class com.liferay.portal.json.JSONFactoryImpl)
-2020-03-30 14:21:42.109 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] stringUtil (class com.liferay.portal.kernel.util.StringUtil_IW)
-2020-03-30 14:21:42.110 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] freeMarkerPortletPreferences (class com.liferay.portal.template.TemplatePortletPreferences)
-2020-03-30 14:21:42.110 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] dateFormats (class com.liferay.portal.util.FastDateFormatFactoryImpl)
-2020-03-30 14:21:42.110 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] dateFormatFactory (class com.liferay.portal.util.FastDateFormatFactoryImpl)
-2020-03-30 14:21:42.111 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] userPortraitURL (class java.lang.String)
-2020-03-30 14:21:42.111 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] portal (class com.liferay.portal.util.PortalImpl)
-2020-03-30 14:21:42.112 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] commonPermission (class com.liferay.portal.service.permission.CommonPermissionImpl)
-2020-03-30 14:21:42.112 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] userURL (class java.lang.String)
-2020-03-30 14:21:42.112 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] expandoValueLocalService (class com.sun.proxy.$Proxy45)
-2020-03-30 14:21:42.112 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] entryType (class java.lang.String)
-2020-03-30 14:21:42.112 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] organizationPermission (class com.liferay.portal.service.permission.OrganizationPermissionImpl)
-2020-03-30 14:21:42.112 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] passwordPolicyPermission (class com.liferay.portal.service.permission.PasswordPolicyPermissionImpl)
-2020-03-30 14:21:42.112 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] expandoColumnLocalService (class com.sun.proxy.$Proxy41)
-2020-03-30 14:21:42.113 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] taskComments (class java.lang.String)
-2020-03-30 14:21:42.113 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] staticFieldGetter (class com.liferay.portal.kernel.util.StaticFieldGetter)
-2020-03-30 14:21:42.113 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] htmlUtil (class com.liferay.portal.util.HtmlImpl)
-2020-03-30 14:21:42.113 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] languageUtil (class com.liferay.portal.language.LanguageImpl)
-2020-03-30 14:21:42.113 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] enumUtil (class freemarker.ext.beans._EnumModels)
-2020-03-30 14:21:42.114 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] windowStateFactory (class com.liferay.portal.kernel.portlet.WindowStateFactory_IW)
-2020-03-30 14:21:42.114 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] companyId (class java.lang.String)
-2020-03-30 14:21:42.114 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] unicodeFormatter (class com.liferay.portal.kernel.util.UnicodeFormatter_IW)
-2020-03-30 14:21:42.114 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] propsUtil (class com.liferay.portal.util.PropsImpl)
-2020-03-30 14:21:42.114 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] browserSniffer (class com.liferay.portal.servlet.BrowserSnifferImpl)
-2020-03-30 14:21:42.114 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] portletProviderAction (class java.util.HashMap)
-2020-03-30 14:21:42.114 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] taskName (class java.lang.String)
-2020-03-30 14:21:42.114 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] httpUtil (class com.liferay.portal.template.TemplateContextHelper$HttpWrapper)
-2020-03-30 14:21:42.115 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] portletURLFactory (class com.liferay.portlet.internal.PortletURLFactoryImpl)
-2020-03-30 14:21:42.115 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] imageToken (class com.liferay.portal.webserver.WebServerServletTokenImpl)
-2020-03-30 14:21:42.115 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] groupPermission (class com.liferay.portal.service.permission.GroupPermissionImpl)
-2020-03-30 14:21:42.115 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] timeZoneUtil (class com.liferay.portal.kernel.util.TimeZoneUtil_IW)
-2020-03-30 14:21:42.115 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] unicodeLanguageUtil (class com.liferay.portal.language.UnicodeLanguageImpl)
-2020-03-30 14:21:42.115 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] expandoRowLocalService (class com.sun.proxy.$Proxy42)
-2020-03-30 14:21:42.115 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] auditRouterUtil (class com.sun.proxy.$Proxy253)
-2020-03-30 14:21:42.115 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] kaleoTaskInstanceToken (class com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenImpl)
-2020-03-30 14:21:42.116 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] accountPermission (class com.liferay.portal.service.permission.AccountPermissionImpl)
-2020-03-30 14:21:42.116 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] httpUtilUnsafe (class com.liferay.portal.template.TemplateContextHelper$HttpWrapper)
-2020-03-30 14:21:42.116 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] workflowTaskAssignees (class java.util.ArrayList)
-2020-03-30 14:21:42.116 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] random (class java.util.Random)
-2020-03-30 14:21:42.116 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] rolePermission (class com.liferay.portal.service.permission.RolePermissionImpl)
-2020-03-30 14:21:42.116 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] portletPermission (class com.liferay.portal.service.permission.PortletPermissionImpl)
-2020-03-30 14:21:42.116 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] paramUtil (class com.liferay.portal.kernel.util.ParamUtil_IW)
-2020-03-30 14:21:42.116 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] locationPermission (class com.liferay.portal.service.permission.OrganizationPermissionImpl)
-2020-03-30 14:21:42.117 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] calendarFactory (class com.liferay.portal.util.CalendarFactoryImpl)
-2020-03-30 14:21:42.117 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] webServerToken (class com.liferay.portal.webserver.WebServerServletTokenImpl)
-2020-03-30 14:21:42.117 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] sessionClicks (class com.liferay.portal.kernel.util.SessionClicks_IW)
-2020-03-30 14:21:42.117 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] userPermission (class com.liferay.portal.service.permission.UserPermissionImpl)
-2020-03-30 14:21:42.117 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] entryClassName (class java.lang.String)
-2020-03-30 14:21:42.117 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] userGroupPermission (class com.liferay.portal.service.permission.UserGroupPermissionImpl)
-2020-03-30 14:21:42.117 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] arrayUtil (class com.liferay.portal.kernel.util.ArrayUtil_IW)
-2020-03-30 14:21:42.117 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] userName (class java.lang.String)
-2020-03-30 14:21:42.118 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] userId (class java.lang.Long)
-2020-03-30 14:21:42.118 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] prefsPropsUtil (class com.liferay.portal.util.PrefsPropsImpl)
-2020-03-30 14:21:42.118 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] url (class java.lang.String)
-2020-03-30 14:21:42.118 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] kaleoInstanceToken (class com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceTokenImpl)
-2020-03-30 14:21:42.118 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] utilLocator (class com.liferay.portal.template.UtilLocator)
-2020-03-30 14:21:42.118 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] objectUtil (class com.liferay.portal.template.freemarker.internal.LiferayObjectConstructor)
-2020-03-30 14:21:42.118 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] urlCodec (class com.liferay.portal.kernel.util.URLCodec_IW)
-2020-03-30 14:21:42.118 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] portletModeFactory (class com.liferay.portal.kernel.portlet.PortletModeFactory_IW)
-2020-03-30 14:21:42.119 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] imageToolUtil (class com.liferay.portal.image.ImageToolImpl)
-2020-03-30 14:21:42.119 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] auditMessageFactoryUtil (class com.liferay.portal.security.audit.internal.AuditMessageFactoryImpl)
-2020-03-30 14:21:42.119 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] staticUtil (class freemarker.ext.beans.StaticModels)
--->
+| ${staticUtil}               |           | &#10004;  | Returns the result of `beansWrapper.getStaticModels()`; for [Accessing static methods](https://freemarker.apache.org/docs/pgui_misc_beanwrapper.html#autoid_60) |
