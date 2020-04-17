@@ -63,7 +63,8 @@ Liferay DXP prints log messages exposing the list of available variables:
 2020-03-30 14:21:42.099 DEBUG [liferay/kaleo_graph_walker-2][TemplateNotificationMessageGenerator:94] portalUtil (class com.liferay.portal.util.PortalImpl)
 ...
 ```
-The snipped output above shows that `saxReaderUtil`, `getterUtil`,
+
+The snippet of output above shows that `saxReaderUtil`, `getterUtil`,
 `portalPermission`, `entryClassPK`, `layoutPermission`,
 `expandoTableLocalService`, `localeUtil`, `groupId`, and `portalUtil` are
 available to the context that caused these messages to be printed in the log.
@@ -139,10 +140,10 @@ for Blogs Entries, then submit a new entry for publication:
 | ${freeMarkerPortletPreferences} |       | &#10004;  | [TemplatePortletPreferences](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-impl/com/liferay/portal/template/TemplatePortletPreferences.html) |
 | ${dateFormats}              |           | &#10004;  | [FastDateFormatFactory](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/FastDateFormatFactory.html) |
 | ${dateFormatFactory}         |          | &#10004;  | [DateFormatFactory](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/DateFormatFactory.html) |
-| ${userPortraitURL}           | &#10004; |           | DESCRIBE |
+| ${userPortraitURL}           | &#10004; |           |  Applies only to Blogs Entries; returns the URL to the User's portrait.|
 | ${portal}                    |          | &#10004;  | [Portal](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/util/Portal.html) |
 | ${commonPermission}          |          | &#10004;  | [CommonPermission](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/service/permission/CommonPermission.html) |
-| ${userURL}                   | &#10004; |           | DESCRIBE |
+| ${userURL}                   | &#10004; |           | Applies only to Blogs Entries; returns the URL to a logged in User's profile page. See [](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-impl/com/liferay/portal/model/impl/UserImpl.html#getDisplayURL). |
 | ${expandoValueLocalService}  |          | &#10004;  | [ExpandoValueLocalService](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/expando/kernel/service/ExpandoValueLocalService.html) |
 | ${entryType}                 | &#10004; |           | The type of entry in the workflow (e.g., Blogs Entry) |
 | ${organizationPermission}    |          | &#10004;  | [OrganizationPermission](https://docs.liferay.com/dxp/portal/7.2-latest/javadocs/portal-kernel/com/liferay/portal/kernel/service/permission/OrganizationPermission.html) |
