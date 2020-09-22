@@ -74,6 +74,22 @@ ranking under a different name. See
 [LPS-96357](https://issues.liferay.com/browse/LPS-96357)
 for more information.
 
+Search Tuning modules (or @product@ completely) must be restarted using the [App Manager](/docs/7-2/user/-/knowledge_base/u/managing-and-configuring-apps) when switching to Remote mode in the Elasticsearch connector configuration. This allows @product@ to create the necessary indexes in Elasticsearch which will hold the Ranking entries.
+
+## Backup and Restore
+
+There are no data stored in the database for Result Rankings: the entries you create are stored inside Elasticsearch for each Virtual Instance in a dedicated index as follows:
+* `liferay-search-tuning-rankings` on @product-ver@ SP1-SP2
+* `liferay-<companyId>-search-tuning-rankings` on @product-ver@ SP3+/FP8+
+where the `<companyId>` (like `20101`) belongs to a given Company record in your the database. It is displayed as "Instance ID" in the UI and represents a [Virtual Instance](/docs/7-2/user/-/knowledge_base/u/virtual-instances).
+
+This has the following implications:
+* @product@'s reindex operation does not affect existing Ranking entries: they are preserved as long as @product@ connects to the same Elasticsearch cluster
+* Ranking entries created when @product@ is configured to connect to Elasticsearch running in Embedded mode are not preserved when switching to Remote mode and a full reindex does not restore them either.
+* When upgrading to a new major version of Elasticsearch or moving to a new Elasticsearch cluster, existing Ranking entries must be backed-up and restored manually
+
+Please refer to the [upgrading to Elasticsearch 7](/docs/7-2/user/-/knowledge_base/d/upgrading-to-elasticsearch-7) guide for an example usage of Elasticsearch's [snapshot and restore](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/snapshot-restore.html) feature to back-up and restore Result Rankings.
+
 ## Creating and Managing Result Rankings
 
 To manipulate result rankings, create a new _Alias_ containing the
