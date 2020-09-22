@@ -46,6 +46,22 @@ The `=>`
 [format](https://www.elastic.co/guide/en/elasticsearch/guide/current/synonym-formats.html)
 supported in Elasticsearch is not supported through the Synonyms Set UI.
 
+Search Tuning modules (or @product@ completely) must be restarted using the [App Manager](/docs/7-2/user/-/knowledge_base/u/managing-and-configuring-apps) when switching to Remote mode in the Elasticsearch connector configuration. This allows @product@ to create the necessary indexes in Elasticsearch which will hold the Synonym Sets.
+
+## Backup and Restore
+
+There are no data stored in the database for Synonyms Sets: the entries you create are stored inside Elasticsearch for each Virtual Instance in a dedicated index as follows:
+* `liferay-search-tuning-synonyms-liferay-<companyId>` on @product-ver@ SP2
+* `liferay-<companyId>-search-tuning-synonyms` on @product-ver@ SP3+/FP8+
+where the `<companyId>` (like `20101`) belongs to a given Company record in your the database. It is displayed as "Instance ID" in the UI and represents a [Virtual Instance](/docs/7-2/user/-/knowledge_base/u/virtual-instances).
+
+This has the following implications:
+* Existing Synonym Sets are preserved across subsequent reindex operations as long as @product@ connects to the same Elasticsearch cluster
+* Synonym Sets created when @product@ is configured to connect to Elasticsearch running in Embedded mode are not preserved when switching to Remote mode and a full reindex does not restore them either.
+* When upgrading to a new major version of Elasticsearch or moving to a new Elasticsearch cluster, existing Synonyms Sets must be backed-up and restored manually
+
+Please refer to the [upgrading to Elasticsearch 7](/docs/7-2/user/-/knowledge_base/d/upgrading-to-elasticsearch-7) guide for an example usage of Elasticsearch's [snapshot and restore](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/snapshot-restore.html) feature to back-up and restore Synonym Sets.
+
 ## Creating and Managing Synonym Sets
 
 Create a synonym set by adding as many synonymous keywords to a set as you
