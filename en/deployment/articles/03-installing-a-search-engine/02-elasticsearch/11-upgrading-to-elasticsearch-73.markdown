@@ -24,23 +24,25 @@ to configure the Elasticsearch adapter.
 Here, you'll learn to upgrade an
 existing Elasticsearch 6 server (or cluster) to Elasticsearch 7: 
 
-1.  [Install and configure Elasticsearch 7](/docs/7-2/deploy/-/knowledge_base/d/installing-elasticsearch).
+1. [Install and configure Elasticsearch 7](/docs/7-2/deploy/-/knowledge_base/d/installing-elasticsearch).
 
-2.  Back up the application specific indexes for Workflow Metrics and Result
-    Rankings.
+2. [Back up the application specific indexes for Search Tunings (Synonym Sets and Result
+    Rankings), see below this page.]
 
-3. In @product-ver@, security is now provided out of the box. If you're using
-   X-Pack security, enable it (it's disabled by default):
+3. Upgrade Elasticsearch
 
+4. If you're using X-Pack security, enable it (it's disabled by default):
     ```yml
     xpack.security.enabled: true
     ```
 
-4.  Blacklist the bundled Liferay Connector to Elasticsearch 6.
+5. Blacklist the bundled Liferay Connector to Elasticsearch 6.
 
-5.  Install and configure the Liferay Connector to Elasticsearch 7.
+6. Install and configure the Liferay Connector to Elasticsearch 7.
 
-6.  Re-index all search  and spell check indexes.
+7. Re-index all search and spell check indexes.
+
+8. Verify that Search Tuning entries have been carried over
 
 | **Known Issue:** See
 | [LPS-103938](https://issues.liferay.com/browse/LPS-103938). The Liferay
@@ -50,16 +52,10 @@ existing Elasticsearch 6 server (or cluster) to Elasticsearch 7:
 
 Learn about configuring Elasticsearch [here](/docs/7-2/deploy/-/knowledge_base/d/configuring-the-liferay-elasticsearch-connector).
 
-## Backing up Application-Specific Indexes
+## Upgrading Elasticsearch
 
-To preserve data stored in application-specific indexes, use a
-[rolling upgrade](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rolling-upgrades.html)
-for each index you need to preserve across the upgrade.
-
-| **Synonym Sets:** If you follow the workaround for the bug
-| [LPS-100272](https://issues.liferay.com/browse/LPS-100272), your Synonym sets
-| are preserved across the upgrade, as they are stored in the index settings
-| directly, and not in their own index.
+If you are using a rolling-restart eligible version (`6.8.x`), doing a [rolling upgrade](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rolling-upgrades.html) is the recommended way to ugprade your Elasticsearch cluster. Otherwise, follow the [full cluster restart upgrade
+](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/restart-upgrade.html) guide.
 
 ## Blacklisting Elasticsearch 6
 
@@ -108,3 +104,89 @@ procedure takes only a few steps:
 3.  Start the Elasticsearch server, and then restart the Liferay Connector to
     Elasticsearch 6.
 
+## Backing up and Restoring Search Tuning Indexes
+
+Creating a snapshot of your Elasticsearch indexes is highly recommended, especially for the indexes of the _Search Tuning_ features ([Synonym Sets](/docs/7-2/user/-/knowledge_base/u/search-tuning-synonym-sets) and [Result Rankings](/docs/7-2/user/-/knowledge_base/u/search-tuning-customizing-search-results)) as they are the primary storage of your entries, there are no records in the database.
+
+Here we provide an example usage of Elasticsearch's [snapshot and restore](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshot-restore.html) feature to back-up and restore _Search Tuning_ indexes and documents.
+
+1. Create a folder called `elasticsearch_local_backup` somewhere in your system where Elasticsearch has read and write access to, for example `/path/to/elasticsearch_local_backup`
+
+2. Edit the `elasticsearch.yml` on [all master and data nodes](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-register-repository.html#snapshots-filesystem-repository) in your Elasticsearch cluster and add
+
+    ```yaml
+    path.repo: [ "/path/to/elasticsearch_local_backup" ]
+    ```
+
+3. Restart your Elasticsearch nodes
+
+4. [Register the snapshot repository](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-register-repository.html): run the following API request (for example through the Dev Tools console in Kibana):
+
+    ```
+    PUT /_snapshot/elasticsearch_local_backup
+    {
+      "type": "fs",
+      "settings": {
+        "location": "/path/to/elasticsearch_local_backup"
+      }
+    }
+    ```
+
+5. [Create a snapshot](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-take-snapshot.html):
+
+    ```
+    PUT /_snapshot/elasticsearch_local_backup/snapshot1?wait_for_completion=true
+    {
+      "indices": "liferay-search-tuning*",
+      "ignore_unavailable": true,
+      "include_global_state": false
+    }
+    ```
+
+    If you want to create a snapshot for all Liferay indexes, you can use `"indices": "liferay*,workflow-metrics*"` instead.
+
+6. To [restore](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-restore-snapshot.html) only specific indexes from a snapshot under a different name, run an API call similar to this:
+
+    ```
+    POST /_snapshot/elasticsearch_local_backup/snapshot1/_restore
+    {
+      "indices": "liferay-20101-search-tuning-synonyms,liferay-20101-search-tuning-rankings",
+      "ignore_unavailable": true,
+      "include_global_state": false,
+      "rename_pattern": "(.+)",
+      "rename_replacement": "restored_$1",
+      "include_aliases": false
+    }
+    ```
+
+    where `indicies` sets the index names to restore from (as they are stored in the snapshot!). The indexes from the above call will be restored as `restored_liferay-20101-search-tuning-rankings` and `liferay-20101-search-tuning-synonyms` according to the `rename_pattern` and `rename_replacement` regular expressions.
+
+Restoring the _Search Tuning_ indexes from a snapshot under different names comes in handy, if you did not upgrade your Elasticsearch 6 cluster, but rather, you just set-up your new Elasticsearch 7 cluster, configured Elasticsearch 7 in @product-ver@ and performed a full reindex from @product@.
+
+In this case, existing _Search Tuning_ entries will be missing, because whose indexes will be empty.
+
+To restore your existing _Search Tuning_ index documents, you can use the [Reindex API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html#docs-reindex) of Elasticsearch, like this:
+
+```
+   POST _reindex/
+   {
+     "dest": {
+       "index": "liferay-20101-search-tuning-synonyms"
+     },
+     "source": {
+       "index": "restored_liferay-20101-search-tuning-synonyms"
+     }
+   }
+```
+
+Note: it is possible to create and manage snapshots through Kibana's UI in [Kibana 7.x](https://www.elastic.co/guide/en/kibana/7.x/snapshot-repositories.html).
+
+### Default Search Tuning Elasticsearch Index Names
+
+As a reference, here are the out-of-the-box _Search Tuning_ index names depending on your @product-ver@ patch level:
+* `liferay-search-tuning-rankings` on @product-ver@ SP1-SP2
+* `liferay-search-tuning-synonyms-liferay-<companyId>` on @product-ver@ SP2
+* `liferay-<companyId>-search-tuning-rankings` on @product-ver@ SP3+/FP8+
+* `liferay-<companyId>-search-tuning-synonyms` on @product-ver@ SP3+/FP8+
+
+where the `<companyId>` (like `20101`) belongs to a given Company record in your the database. It is displayed as "Instance ID" in the UI and represents a [Virtual Instance](/docs/7-2/user/-/knowledge_base/u/virtual-instances).
