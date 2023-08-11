@@ -34,7 +34,7 @@ engine. This assumes only 1 Elasticsearch JVM running on the machine.
 
 ## Memory
 
-Liferay recommends at least 16 GB of memory, with 64 GB preferred. The memory
+Liferay recommends at least 16 GB for the JVM heap size, with 64 GB preferred. The memory
 allocation depends upon the amount of index data. For index sizes 500 GB to 1
 TB, 64 GB of memory should suffice. 
 
