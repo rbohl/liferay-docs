@@ -37,7 +37,7 @@ engine, assuming only one Elasticsearch JVM is running on the machine.
 
 ## Memory
 
-At least 16 GB of memory is recommended, with 64 GB preferred. The precise
+At least 16 GB is recommended for the JVM heap size, with 64 GB preferred. The precise
 memory allocation required depends on how much data is indexed. For index sizes
 500 GB to 1 TB, 64 GB of memory suffices. 
 
